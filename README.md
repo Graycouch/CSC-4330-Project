@@ -28,7 +28,7 @@ Make sure you are inside the folder with teh *package.json* file.
 Install all of the dependencies needed on your local machine.
 
 `npm start`
-A window will open on localhost and show changes immediately for fast development.
+Information in terminal will show you how to view the app on Expo on mobile.
 
 
 
