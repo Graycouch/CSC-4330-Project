@@ -3,10 +3,10 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
-import HomeScreen from './screens/HomeScreen';
-import SearchScreen from './screens/SearchScreen';
-import MessageScreen from './screens/MessageScreen';
-import ProfileScreen from './screens/ProfileScreen';
+import HomeScreen from './screens/HomeScreen/HomeScreen';
+import SearchScreen from './screens/SearchScreen/SearchScreen';
+import MessageScreen from './screens/MessageScreen/MessageScreen';
+import ProfileScreen from './screens/ProfileScreen/ProfileScreen';
 
 const homeName = "Home";
 const searchName = "Search";
@@ -17,7 +17,7 @@ const Tab = createBottomTabNavigator();
 
 export default function MainContainer() {
     return (
-        <NavigationContainer>
+        <NavigationContainer independent={true}>
             <Tab.Navigator
                 initialRouteName={homeName}
                 screenOptions={({ route }) => ({
