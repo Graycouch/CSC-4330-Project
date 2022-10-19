@@ -41,13 +41,13 @@ export default function MainContainer() {
 
                         return <Ionicons name={iconName} size={size} color={color} />;
                     },
-                })}
-                tabBarOptions={{
-                    activeTintColor: '#5F59F7',
-                    inactiveTintColor: 'grey',
-                    labelStyle: { paddingBottom: 10, fontSize: 10 },
-                    style: { padding: 10, height: 70 }
-                }}>
+
+                    tabBarActiveTintColor: '#5F59F7',
+                    tabBarInactiveTintColor: 'grey',
+                    tabBarLabelStyle: { paddingBottom: 10, fontSize: 10 },
+                    tabBarStyle: { padding: 10, height: 70 }
+
+                })}>
 
                 <Tab.Screen name={homeName} component={HomeScreen} options={{ headerShown: false }} />
                 <Tab.Screen name={searchName} component={SearchScreen} options={{ headerShown: false }} />
