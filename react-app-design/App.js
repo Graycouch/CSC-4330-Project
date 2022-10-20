@@ -13,7 +13,7 @@ function App() {
 
   return (
     <NavigationContainer independent={true}>
-      <Stack.Navigator>
+      <Stack.Navigator screenOptions={{ animation: 'none' }}>
         {isLoggedIn ? (
           <Stack.Screen
             name="Home"
