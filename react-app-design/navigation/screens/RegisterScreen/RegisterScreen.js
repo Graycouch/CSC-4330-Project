@@ -1,9 +1,13 @@
-import * as React from 'react';
+import { useState } from 'react';
 import { View, Text, Button, Image, TextInput, Pressable } from 'react-native';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
 export default function RegisterScreen({ navigation }) {
+    const [username, setUsername] = useState(false);
+    const [email, setEmail] = useState(false);
+    const [password, setPassword] = useState(false);
+
     const handleLoginClick = (e) => {
         e.preventDefault();
         navigation.navigate('Login')
@@ -18,17 +22,17 @@ export default function RegisterScreen({ navigation }) {
             </Text>
 
             <View style={{ top: 175, flexDirection: 'row' }}>
-                <TextInput placeholder="Username" style={{ backgroundColor: '#F1F1F1', height: 50, width: 320, borderRadius: 15, paddingLeft: 40, fontSize: 15 }} />
+                <TextInput placeholder="Username" onChangeText={newText => setUsername(newText)} style={{ backgroundColor: '#F1F1F1', height: 50, width: 320, borderRadius: 15, paddingLeft: 40, fontSize: 15 }} />
                 <Ionicons name={"person"} color={"#9E9E9E"} size={24} style={{ top: 12, position: 'absolute', paddingLeft: 10 }} />
             </View>
 
             <View style={{ top: 200, flexDirection: 'row' }}>
-                <TextInput placeholder="Email" style={{ backgroundColor: '#F1F1F1', height: 50, width: 320, borderRadius: 15, paddingLeft: 40, fontSize: 15 }} />
+                <TextInput placeholder="Email" onChangeText={newText => setEmail(newText)} style={{ backgroundColor: '#F1F1F1', height: 50, width: 320, borderRadius: 15, paddingLeft: 40, fontSize: 15 }} />
                 <MaterialCommunityIcons name={"email"} color={"#9E9E9E"} size={24} style={{ top: 12, position: 'absolute', paddingLeft: 10 }} />
             </View>
 
             <View style={{ top: 225, flexDirection: 'row' }}>
-                <TextInput placeholder="Password" secureTextEntry={true} style={{ backgroundColor: '#F1F1F1', height: 50, width: 320, borderRadius: 15, paddingLeft: 40, fontSize: 15 }} />
+                <TextInput placeholder="Password" onChangeText={newText => setPassword(newText)} secureTextEntry={true} style={{ backgroundColor: '#F1F1F1', height: 50, width: 320, borderRadius: 15, paddingLeft: 40, fontSize: 15 }} />
                 <MaterialCommunityIcons name={"lock"} color={"#9E9E9E"} size={24} style={{ top: 12, position: 'absolute', paddingLeft: 10 }} />
                 <MaterialCommunityIcons name={"eye-off"} color={"#9E9E9E"} size={24} style={{ top: 12, position: 'absolute', paddingLeft: 280 }} />
             </View>
