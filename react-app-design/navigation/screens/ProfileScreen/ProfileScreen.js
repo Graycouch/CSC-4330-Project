@@ -9,12 +9,12 @@ export default function ProfileScreen({ navigation }) {
     }
 
     return (
-        <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-            <Text style={{ fontSize: 26, fontWeight: 'bold'}}>
+        <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center', backgroundColor: '#FFFFFF' }}>
+            <Text style={{ fontSize: 26, fontWeight: 'bold' }}>
                 Profile Screen
             </Text>
-            <View style={{padding: 20}}>
-            <Button title='Log Out' color={'#5F59F7'} onPress={handleLogOutClick}/>
+            <View style={{ padding: 20 }}>
+                <Button title='Log Out' color={'#5F59F7'} onPress={handleLogOutClick} />
             </View>
         </View>
     )

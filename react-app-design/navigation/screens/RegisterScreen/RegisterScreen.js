@@ -1,8 +1,10 @@
 import * as React from 'react';
 import { View, Text, Button, Image, TextInput, Pressable } from 'react-native';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 
 export default function RegisterScreen({ navigation }) {
-    const handleLogInClick = (e) => {
+    const handleLoginClick = (e) => {
         e.preventDefault();
         navigation.navigate('Login')
     }
@@ -15,29 +17,37 @@ export default function RegisterScreen({ navigation }) {
                 Create New Account
             </Text>
 
-            <TextInput placeholder="Username" style={{ backgroundColor: '#E5E5E5', height: 50, width: 320, borderRadius: 20, paddingLeft: 20, fontSize: 15, top: 175 }}>
+            <View style={{ top: 175, flexDirection: 'row' }}>
+                <TextInput placeholder="Username" style={{ backgroundColor: '#F1F1F1', height: 50, width: 320, borderRadius: 15, paddingLeft: 40, fontSize: 15 }} />
+                <Ionicons name={"person"} color={"#9E9E9E"} size={24} style={{ top: 12, position: 'absolute', paddingLeft: 10 }} />
+            </View>
 
-            </TextInput>
+            <View style={{ top: 200, flexDirection: 'row' }}>
+                <TextInput placeholder="Email" style={{ backgroundColor: '#F1F1F1', height: 50, width: 320, borderRadius: 15, paddingLeft: 40, fontSize: 15 }} />
+                <MaterialCommunityIcons name={"email"} color={"#9E9E9E"} size={24} style={{ top: 12, position: 'absolute', paddingLeft: 10 }} />
+            </View>
 
-            <TextInput placeholder="Email" style={{ backgroundColor: '#E5E5E5', height: 50, width: 320, borderRadius: 20, paddingLeft: 20, fontSize: 15, top: 200 }}>
+            <View style={{ top: 225, flexDirection: 'row' }}>
+                <TextInput placeholder="Password" secureTextEntry={true} style={{ backgroundColor: '#F1F1F1', height: 50, width: 320, borderRadius: 15, paddingLeft: 40, fontSize: 15 }} />
+                <MaterialCommunityIcons name={"lock"} color={"#9E9E9E"} size={24} style={{ top: 12, position: 'absolute', paddingLeft: 10 }} />
+                <MaterialCommunityIcons name={"eye-off"} color={"#9E9E9E"} size={24} style={{ top: 12, position: 'absolute', paddingLeft: 280 }} />
+            </View>
 
-            </TextInput>
-
-            <TextInput placeholder="Password" style={{ backgroundColor: '#E5E5E5', height: 50, width: 320, borderRadius: 20, paddingLeft: 20, fontSize: 15, top: 225 }}>
-
-            </TextInput>
-
-            <Pressable backgroundColor={'#5F59F7'} style={{ top: 275, height: 60, width: 320, borderRadius: 40, alignItems: 'center', justifyContent: 'center' }} onPress={handleLogInClick}>
+            <Pressable backgroundColor={'#5F59F7'} style={{ top: 260, height: 60, width: 320, borderRadius: 40, alignItems: 'center', justifyContent: 'center' }} onPress={handleLoginClick}>
                 <Text style={{ color: 'white', fontSize: 18 }}>
                     Create Account
                 </Text>
             </Pressable>
 
-            <Pressable backgroundColor={'#5F59F7'} style={{ top: 300, height: 50, width: 150, borderRadius: 40, alignItems: 'center', justifyContent: 'center' }} onPress={handleLogInClick}>
-                <Text style={{ color: 'white', fontSize: 18 }}>
-                    Back To Login
-                </Text>
-            </Pressable>
+            <View style={{ flexDirection: 'row' }}>
+                <Text style={{ color: '#A9A9A9', fontSize: 12, top: 285 }}>Already have an account?  </Text>
+
+                <Pressable style={{ top: 285 }} onPress={handleLoginClick}>
+                    <Text style={{ color: '#2970FE', fontSize: 12 }}>
+                        Login
+                    </Text>
+                </Pressable>
+            </View>
         </View>
     )
 }
