@@ -20,7 +20,6 @@ export default function RegisterScreen({ navigation }) {
             password: password
         })
             .then((response) => {
-                console.log(response.data);
                 setGlobalState("user", response.data);
                 setGlobalState("isLoggedIn", true);
             }, (error) => {
