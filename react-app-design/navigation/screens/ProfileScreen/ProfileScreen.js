@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { useGlobalState, setGlobalState } from '../../../index';
-import { View, Text, Button } from 'react-native';
+import { View, Text, Button, Image, TextInput, Pressable } from 'react-native';
 
 export default function ProfileScreen({ navigation }) {
     const [user] = useGlobalState("user");
@@ -13,11 +13,16 @@ export default function ProfileScreen({ navigation }) {
     return (
         <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center', backgroundColor: '#FFFFFF' }}>
             <Text style={{ fontSize: 26, fontWeight: 'bold' }}>
-                Profile Screen
+                {user.username}
             </Text>
-            <View style={{ padding: 20 }}>
-                <Button title='Log Out' color={'#5F59F7'} onPress={handleLogOutClick} />
-            </View>
+            <Text style={{ fontSize: 20 }}>
+                {user.email}
+            </Text>
+            <Pressable backgroundColor={'#5F59F7'} style={{ top: 220, height: 60, width: 320, borderRadius: 40, alignItems: 'center', justifyContent: 'center' }} onPress={handleLogOutClick}>
+                <Text style={{ color: 'white', fontSize: 18 }}>
+                    Log Out
+                </Text>
+            </Pressable>
         </View>
     )
 }

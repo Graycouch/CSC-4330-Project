@@ -23,6 +23,16 @@ const UserSchema = new mongoose.Schema(
             min: 6
         },
 
+        firstName: {
+            type: String,
+            default: ""
+        },
+
+        lastName: {
+            type: String,
+            default: ""
+        },
+
         profilePicture: {
             type: String,
             default: ""
