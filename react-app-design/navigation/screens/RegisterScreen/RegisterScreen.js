@@ -2,15 +2,35 @@ import { useState } from 'react';
 import { View, Text, Button, Image, TextInput, Pressable } from 'react-native';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import { useGlobalState, setGlobalState } from '../../../index';
+import axios from 'axios';
+import localhost from 'react-native-localhost';
 
 export default function RegisterScreen({ navigation }) {
     const [username, setUsername] = useState(false);
     const [email, setEmail] = useState(false);
     const [password, setPassword] = useState(false);
 
+    const handleCreateAccountClick = (e) => {
+        e.preventDefault();
+
+        axios.post(`http://${localhost}:8800/api/auth/register`, {
+            username: username,
+            email: email,
+            password: password
+        })
+            .then((response) => {
+                console.log(response.data);
+                setGlobalState("user", response.data);
+                setGlobalState("isLoggedIn", true);
+            }, (error) => {
+                console.log(error);
+            });
+    }
+
     const handleLoginClick = (e) => {
         e.preventDefault();
-        navigation.navigate('Login')
+        navigation.navigate('Login');
     }
 
     return (
@@ -37,7 +57,7 @@ export default function RegisterScreen({ navigation }) {
                 <MaterialCommunityIcons name={"eye-off"} color={"#9E9E9E"} size={24} style={{ top: 12, position: 'absolute', paddingLeft: 280 }} />
             </View>
 
-            <Pressable backgroundColor={'#5F59F7'} style={{ top: 260, height: 60, width: 320, borderRadius: 40, alignItems: 'center', justifyContent: 'center' }} onPress={handleLoginClick}>
+            <Pressable backgroundColor={'#5F59F7'} style={{ top: 260, height: 60, width: 320, borderRadius: 40, alignItems: 'center', justifyContent: 'center' }} onPress={handleCreateAccountClick}>
                 <Text style={{ color: 'white', fontSize: 18 }}>
                     Create Account
                 </Text>

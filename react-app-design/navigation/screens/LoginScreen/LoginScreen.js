@@ -3,6 +3,8 @@ import { useGlobalState, setGlobalState } from '../../../index';
 import { View, Text, Image, TextInput, Pressable } from 'react-native';
 import { CheckBox } from '@rneui/themed';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import axios from 'axios';
+import localhost from 'react-native-localhost';
 
 export default function LoginScreen({ navigation }) {
     const [checked, setchecked] = useState(false);
@@ -11,7 +13,17 @@ export default function LoginScreen({ navigation }) {
 
     const handleLogInClick = (e) => {
         e.preventDefault();
-        setGlobalState("isLoggedIn", true);
+
+        axios.post(`http://${localhost}:8800/api/auth/login`, {
+            email: email,
+            password: password
+        })
+            .then((response) => {
+                setGlobalState("user", response.data);
+                setGlobalState("isLoggedIn", true);
+            }, (error) => {
+                console.log(error);
+            });
     }
 
     const handleRegisterClick = (e) => {

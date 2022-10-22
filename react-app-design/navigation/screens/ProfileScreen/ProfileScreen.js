@@ -3,6 +3,8 @@ import { useGlobalState, setGlobalState } from '../../../index';
 import { View, Text, Button } from 'react-native';
 
 export default function ProfileScreen({ navigation }) {
+    const [user] = useGlobalState("user");
+
     const handleLogOutClick = (e) => {
         e.preventDefault();
         setGlobalState("isLoggedIn", false);
