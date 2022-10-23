@@ -23,14 +23,9 @@ const UserSchema = new mongoose.Schema(
             min: 6
         },
 
-        firstName: {
+        fullName: {
             type: String,
-            default: ""
-        },
-
-        lastName: {
-            type: String,
-            default: ""
+            default: "Enter Your Name"
         },
 
         profilePicture: {
@@ -40,13 +35,19 @@ const UserSchema = new mongoose.Schema(
 
         courses: {
             type: Array,
-            default: []
+            default: ["CSC 4330"]
         },
 
-        description: {
+        about: {
             type: String,
             max: 500,
-            default: ""
+            default: "Enter Some Information About Yourself"
+        },
+
+        major: {
+            type: String,
+            max: 50,
+            default: "Enter Your Major"
         },
 
         city: {
@@ -66,9 +67,9 @@ const UserSchema = new mongoose.Schema(
             default: 0
         },
 
-        isTutor: {
-            type: Boolean,
-            default: false
+        role: {
+            type: String,
+            default: "Select Your Role"
         }
     },
 
