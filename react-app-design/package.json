@@ -27,6 +27,7 @@
     "react-native": "0.69.6",
     "react-native-element-dropdown": "^2.3.0",
     "react-native-gesture-handler": "~2.5.0",
+    "react-native-image-picker": "^4.10.0",
     "react-native-localhost": "^1.0.0",
     "react-native-material-dropdown": "^0.11.1",
     "react-native-material-ui": "^1.30.1",
