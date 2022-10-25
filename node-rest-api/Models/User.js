@@ -47,7 +47,7 @@ const UserSchema = new mongoose.Schema(
         major: {
             type: String,
             max: 50,
-            default: "Enter Your Major"
+            default: "Computer Science"
         },
 
         city: {
@@ -69,7 +69,7 @@ const UserSchema = new mongoose.Schema(
 
         role: {
             type: String,
-            default: "Select Your Role"
+            default: "Student"
         }
     },
 
