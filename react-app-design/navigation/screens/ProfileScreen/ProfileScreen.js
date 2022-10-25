@@ -2,13 +2,13 @@ import { useState } from 'react';
 import { useGlobalState, setGlobalState } from '../../../index';
 import { View, Text, Button, Image, TextInput, Pressable, ScrollView, StyleSheet } from 'react-native';
 import { Divider } from '@rneui/themed';
+import axios from 'axios';
 import { Dropdown } from 'react-native-element-dropdown';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import axios from 'axios';
-import localhost from 'react-native-localhost';
 
 export default function ProfileScreen({ navigation }) {
     const [user] = useGlobalState("user");
+    const [localhost] = useGlobalState("localhost");
     const [editing, setEditing] = useState(false)
     const [fullName, setFullName] = useState(user.fullName)
     const [email, setEmail] = useState(user.email)

@@ -4,9 +4,9 @@ import { View, Text, Image, TextInput, Pressable } from 'react-native';
 import { CheckBox } from '@rneui/themed';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import axios from 'axios';
-import localhost from 'react-native-localhost';
 
 export default function LoginScreen({ navigation }) {
+    const [localhost] = useGlobalState("localhost");
     const [checked, setchecked] = useState(false);
     const [email, setEmail] = useState(false);
     const [password, setPassword] = useState(false);
