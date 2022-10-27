@@ -23,11 +23,6 @@ const UserSchema = new mongoose.Schema(
             min: 6
         },
 
-        fullName: {
-            type: String,
-            default: "Enter Your Name"
-        },
-
         profilePicture: {
             type: String,
             default: ""
@@ -40,7 +35,7 @@ const UserSchema = new mongoose.Schema(
 
         about: {
             type: String,
-            max: 500,
+            max: 200,
             default: "Enter Some Information About Yourself"
         },
 
@@ -53,23 +48,28 @@ const UserSchema = new mongoose.Schema(
         city: {
             type: String,
             max: 50,
-            default: ""
+            default: "Baton Rouge"
         },
 
         zipCode: {
             type: String,
             max: 50,
-            default: ""
+            default: "70803"
         },
 
         hourlyRate: {
             type: Number,
-            default: 0
+            default: 15
         },
 
         role: {
             type: String,
             default: "Student"
+        },
+
+        university: {
+            type: String,
+            default: "LSU"
         }
     },
 
