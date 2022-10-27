@@ -69,7 +69,7 @@ export default function ProfileScreen({ navigation }) {
             height: 200,
             width: 1,
             position: 'absolute',
-            top: 320,
+            top: 350,
             backgroundColor: '#E5E5E5',
         },
         horizontalLine1: {
@@ -77,28 +77,28 @@ export default function ProfileScreen({ navigation }) {
             width: windowWidth,
             position: 'absolute',
             backgroundColor: '#E5E5E5',
-            top: 320
+            top: 350
         },
         horizontalLine2: {
             height: 1,
             width: windowWidth,
             position: 'absolute',
             backgroundColor: '#E5E5E5',
-            top: 420
+            top: 450
         },
         horizontalLine3: {
             height: 1,
             width: windowWidth,
             position: 'absolute',
             backgroundColor: '#E5E5E5',
-            top: 520
+            top: 550
         },
         horizontalLine4: {
             height: 1,
             width: windowWidth,
             position: 'absolute',
             backgroundColor: '#E5E5E5',
-            top: 670
+            top: 700
         }
     });
 
@@ -118,10 +118,10 @@ export default function ProfileScreen({ navigation }) {
                     </View>
 
                     <View style={{ top: -15 }}>
-                        <Image source={require('../../../assets/defaultBackground.jpg')} style={{ height: 100, width: windowWidth }} />
+                        <Image source={require('../../../assets/defaultBackground.jpg')} style={{ height: 130, width: windowWidth }} />
 
                         <View style={{ top: -60, height: 120, width: 120, borderRadius: 60, paddingLeft: 20 }}>
-                            <Image source={require('../../../assets/nash.jpg')} style={{ height: 120, width: 120, borderRadius: 60, borderWidth: 3, borderColor: '#FFFFFF' }} />
+                            <Image source={require('../../../assets/abdel.jpg')} style={{ height: 120, width: 120, borderRadius: 60, borderWidth: 3, borderColor: '#FFFFFF' }} />
                         </View>
 
                         <Pressable onPress={handleDoneClick}>
@@ -195,7 +195,7 @@ export default function ProfileScreen({ navigation }) {
                             <Text style={{ fontSize: 18 }}>
                                 University:
                             </Text>
-                            <TextInput onChangeText={text => setMajor(text)} style={{
+                            <TextInput onChangeText={text => setUniversity(text)} style={{
                                 fontSize: 15, width: 230, borderRadius: 20,
                                 position: 'absolute', color: 'black', backgroundColor: '#F1F1F1', borderColor: '#9E9E9E', borderWidth: 1, marginTop: 30, marginLeft: 100, paddingLeft: 10, paddingRight: 10
                             }}>
@@ -207,7 +207,7 @@ export default function ProfileScreen({ navigation }) {
                             <Text style={{ fontSize: 18 }}>
                                 Location:
                             </Text>
-                            <TextInput onChangeText={text => setMajor(text)} style={{
+                            <TextInput onChangeText={text => setCity(text)} style={{
                                 fontSize: 15, width: 230, borderRadius: 20,
                                 position: 'absolute', color: 'black', backgroundColor: '#F1F1F1', borderColor: '#9E9E9E', borderWidth: 1, marginTop: 30, marginLeft: 100, paddingLeft: 10, paddingRight: 10
                             }}>
@@ -232,7 +232,7 @@ export default function ProfileScreen({ navigation }) {
                                 <Text style={{ fontSize: 18 }}>
                                     Rate:
                                 </Text>
-                                <TextInput onChangeText={text => setCourses(text)} style={{
+                                <TextInput onChangeText={text => setHourlyRate(text)} style={{
                                     fontSize: 15, width: 230, borderRadius: 20,
                                     position: 'absolute', color: 'black', backgroundColor: '#F1F1F1', borderColor: '#9E9E9E', borderWidth: 1, marginTop: 30, marginLeft: 100, paddingLeft: 10, paddingRight: 10
                                 }}>
@@ -268,10 +268,10 @@ export default function ProfileScreen({ navigation }) {
                     </View>
 
                     <View style={{ top: -15 }}>
-                        <Image source={require('../../../assets/defaultBackground.jpg')} style={{ height: 100, width: windowWidth }} />
+                        <Image source={require('../../../assets/defaultBackground.jpg')} style={{ height: 130, width: windowWidth }} />
 
                         <View style={{ top: -60, height: 120, width: 120, borderRadius: 60, paddingLeft: 20 }}>
-                            <Image source={require('../../../assets/nash.jpg')} style={{ height: 120, width: 120, borderRadius: 60, borderWidth: 3, borderColor: '#FFFFFF' }} />
+                            <Image source={require('../../../assets/abdel.jpg')} style={{ height: 120, width: 120, borderRadius: 60, borderWidth: 3, borderColor: '#FFFFFF' }} />
                         </View>
 
                         <Pressable onPress={handleEditProfileClick}>
@@ -289,45 +289,60 @@ export default function ProfileScreen({ navigation }) {
 
                     <View style={{ top: -80, flex: 1, flexDirection: 'row', flexWrap: 'wrap' }}>
                         <View style={{ alignItems: 'center', width: '50%', paddingTop: 30 }}>
-                            <Text style={{ fontSize: 15, fontWeight: 'bold', color: '#5F59F7' }}>
-                                Email Address:
-                            </Text>
+                            <View style={{ flexDirection: 'row' }}>
+                                <MaterialCommunityIcons name={"email"} color={"#5F59F7"} size={20} style={{ paddingRight: 5 }} />
+                                <Text style={{ fontSize: 15, fontWeight: 'bold', color: '#5F59F7' }}>
+                                    Email Address:
+                                </Text>
+                            </View>
                             <Text style={{ fontSize: 15, color: 'grey' }}>
                                 {email}
                             </Text>
                         </View>
 
                         <View style={{ alignItems: 'center', width: '50%', paddingTop: 30 }}>
-                            <Text style={{ fontSize: 15, fontWeight: 'bold', color: '#5F59F7' }}>
-                                University:
-                            </Text>
+                            <View style={{ flexDirection: 'row' }}>
+                                <MaterialCommunityIcons name={"school"} color={"#5F59F7"} size={20} style={{ paddingRight: 5 }} />
+                                <Text style={{ fontSize: 15, fontWeight: 'bold', color: '#5F59F7' }}>
+                                    University:
+                                </Text>
+                            </View>
                             <Text style={{ fontSize: 15, color: 'grey' }}>
                                 {university}
                             </Text>
                         </View>
 
                         <View style={{ alignItems: 'center', width: '50%', paddingTop: 60 }}>
-                            <Text style={{ fontSize: 15, fontWeight: 'bold', color: '#5F59F7' }}>
-                                Location:
-                            </Text>
+                            <View style={{ flexDirection: 'row' }}>
+                                <MaterialCommunityIcons name={"map-marker"} color={"#5F59F7"} size={20} style={{ paddingRight: 5 }} />
+                                <Text style={{ fontSize: 15, fontWeight: 'bold', color: '#5F59F7' }}>
+                                    Location:
+                                </Text>
+                            </View>
                             <Text style={{ fontSize: 15, color: 'grey' }}>
                                 {city}
                             </Text>
                         </View>
 
                         <View style={{ alignItems: 'center', width: '50%', paddingTop: 60 }}>
-                            <Text style={{ fontSize: 15, fontWeight: 'bold', color: '#5F59F7' }}>
-                                University Courses:
-                            </Text>
+                            <View style={{ flexDirection: 'row' }}>
+                                <MaterialCommunityIcons name={"book-open-variant"} color={"#5F59F7"} size={20} style={{ paddingRight: 5 }} />
+                                <Text style={{ fontSize: 15, fontWeight: 'bold', color: '#5F59F7' }}>
+                                    Courses:
+                                </Text>
+                            </View>
                             <Text style={{ fontSize: 15, color: 'grey' }}>
                                 {courses}
                             </Text>
                         </View>
 
                         <View style={{ alignItems: 'center', width: '100%', paddingTop: 40 }}>
-                            <Text style={{ fontSize: 15, fontWeight: 'bold', color: '#5F59F7' }}>
-                                About:
-                            </Text>
+                            <View style={{ flexDirection: 'row' }}>
+                                <MaterialCommunityIcons name={"lead-pencil"} color={"#5F59F7"} size={20} style={{ paddingRight: 5 }} />
+                                <Text style={{ fontSize: 15, fontWeight: 'bold', color: '#5F59F7' }}>
+                                    About:
+                                </Text>
+                            </View>
                             <Text style={{ fontSize: 15, textAlign: 'center', color: 'grey', paddingLeft: 10, paddingRight: 10 }}>
                                 {about}
                             </Text>
