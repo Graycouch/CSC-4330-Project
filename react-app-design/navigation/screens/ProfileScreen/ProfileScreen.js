@@ -107,7 +107,7 @@ export default function ProfileScreen({ navigation }) {
     return (
         <View style={{ backgroundColor: '#FFFFFF', flex: 1 }}>
             {editing ? (
-                <ScrollView contentContainerStyle={styles.contentContainer} style={{ backgroundColor: '#FFFFFF' }}>
+                <ScrollView showsVerticalScrollIndicator={false} showsHorizontalScrollIndicator={false} contentContainerStyle={styles.contentContainer} style={{ backgroundColor: '#FFFFFF' }}>
                     <View style={{ marginBottom: 10, top: -15, height: 40 }}>
                         <Text style={{ fontSize: 24, fontWeight: '500' }}>
                             Edit Profile
@@ -269,7 +269,7 @@ export default function ProfileScreen({ navigation }) {
                     <View style={{ padding: 100 }}></View>
                 </ScrollView>
             ) : (
-                <ScrollView contentContainerStyle={styles.contentContainer} style={{ backgroundColor: '#FFFFFF' }}>
+                <ScrollView showsVerticalScrollIndicator={false} showsHorizontalScrollIndicator={false} contentContainerStyle={styles.contentContainer} style={{ backgroundColor: '#FFFFFF' }}>
 
                     <View style={{ flexDirection: 'row', marginBottom: 10, top: -15 }}>
                         <TextInput placeholder="Search" value={searchValue} onChangeText={newText => setGlobalState("searchValue", newText)}
