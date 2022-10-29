@@ -1,15 +1,15 @@
 import { useState } from 'react';
 import { useGlobalState, setGlobalState } from '../../../index';
-import { View, Text, Button, Image, TextInput, Pressable, ScrollView, StyleSheet } from 'react-native';
-import { Divider } from '@rneui/themed';
+import { View, Text, Button, Image, TextInput, Pressable, ScrollView, StyleSheet, Dimensions } from 'react-native';
 import axios from 'axios';
-import { Dropdown } from 'react-native-element-dropdown';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import { Dimensions } from 'react-native';
+import * as ImagePicker from 'expo-image-picker';
 
 export default function ProfileScreen({ navigation }) {
     const [user] = useGlobalState("user");
     const [localhost] = useGlobalState("localhost");
+    const [searchValue] = useGlobalState("searchValue");
+
     const [editing, setEditing] = useState(false);
     const [username, setUsername] = useState(user.username);
     const [email, setEmail] = useState(user.email);
@@ -21,6 +21,8 @@ export default function ProfileScreen({ navigation }) {
     const [university, setUniversity] = useState(user.university);
     const [zipCode, setZipCode] = useState(user.zipCode);
     const [hourlyRate, setHourlyRate] = useState(user.hourlyRate);
+    const [profilePicture, setProfilePicture] = useState(user.profilePicture);
+    const [coverPicture, setCoverPicture] = useState(user.coverPicture);
 
     const windowWidth = Dimensions.get('window').width;
     const windowHeight = Dimensions.get('window').height;
@@ -101,11 +103,6 @@ export default function ProfileScreen({ navigation }) {
             top: 700
         }
     });
-
-    const dropdownData = [
-        { label: 'Student', value: '1' },
-        { label: 'Tutor', value: '2' }
-    ];
 
     return (
         <View style={{ backgroundColor: '#FFFFFF', flex: 1 }}>
@@ -217,6 +214,18 @@ export default function ProfileScreen({ navigation }) {
 
                         <View style={{ paddingTop: 30 }}>
                             <Text style={{ fontSize: 18 }}>
+                                Zip Code:
+                            </Text>
+                            <TextInput onChangeText={text => setZipCode(text)} style={{
+                                fontSize: 15, width: 230, borderRadius: 20,
+                                position: 'absolute', color: 'black', backgroundColor: '#F1F1F1', borderColor: '#9E9E9E', borderWidth: 1, marginTop: 30, marginLeft: 100, paddingLeft: 10, paddingRight: 10
+                            }}>
+                                {zipCode}
+                            </TextInput>
+                        </View>
+
+                        <View style={{ paddingTop: 30 }}>
+                            <Text style={{ fontSize: 18 }}>
                                 Courses:
                             </Text>
                             <TextInput onChangeText={text => setCourses(text)} style={{
@@ -263,7 +272,9 @@ export default function ProfileScreen({ navigation }) {
                 <ScrollView contentContainerStyle={styles.contentContainer} style={{ backgroundColor: '#FFFFFF' }}>
 
                     <View style={{ flexDirection: 'row', marginBottom: 10, top: -15 }}>
-                        <TextInput placeholder="Search" onChangeText={newText => setEmail(newText)} textContentType={'emailAddress'} style={{ backgroundColor: '#F1F1F1', height: 40, width: 350, borderRadius: 10, paddingLeft: 40, fontSize: 15 }} />
+                        <TextInput placeholder="Search" value={searchValue} onChangeText={newText => setGlobalState("searchValue", newText)}
+                            onSubmitEditing={() => navigation.navigate('Search', { screen: 'Search' })}
+                            style={{ backgroundColor: '#F1F1F1', height: 40, width: 350, borderRadius: 10, paddingLeft: 40, fontSize: 15 }} />
                         <MaterialCommunityIcons name={"magnify"} color={"#9E9E9E"} size={20} style={{ top: 10, position: 'absolute', paddingLeft: 10 }} />
                     </View>
 

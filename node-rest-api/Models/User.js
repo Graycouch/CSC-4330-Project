@@ -25,7 +25,12 @@ const UserSchema = new mongoose.Schema(
 
         profilePicture: {
             type: String,
-            default: ""
+            default: "defaultProfilePicture.png"
+        },
+
+        coverPicture: {
+            type: String,
+            default: "defaultBackground.jpg"
         },
 
         courses: {
