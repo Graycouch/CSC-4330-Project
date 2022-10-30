@@ -1,11 +1,14 @@
 import * as React from 'react';
-import { View, Text, Button, Image, TextInput, Pressable, ScrollView, StyleSheet } from 'react-native';
+import { View, Text, Button, Image, TextInput, Pressable, ScrollView, StyleSheet, Dimensions } from 'react-native';
 import { useGlobalState, setGlobalState } from '../../../index';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
 export default function MessageScreen({ navigation }) {
     const [user] = useGlobalState("user");
     const [searchValue] = useGlobalState("searchValue");
+
+    const windowWidth = Dimensions.get('window').width;
+    const windowHeight = Dimensions.get('window').height;
 
     const styles = StyleSheet.create({
         contentContainer: {
