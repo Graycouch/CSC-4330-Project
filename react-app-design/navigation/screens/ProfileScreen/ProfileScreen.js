@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useGlobalState, setGlobalState } from '../../../index';
 import { View, Text, Button, Image, TextInput, Pressable, ScrollView, StyleSheet, Dimensions } from 'react-native';
 import axios from 'axios';
@@ -9,6 +9,7 @@ export default function ProfileScreen({ navigation }) {
     const [user] = useGlobalState("user");
     const [localhost] = useGlobalState("localhost");
     const [searchValue] = useGlobalState("searchValue");
+    const publicFolder = `http://${localhost}:8800/images/`;
 
     const [editing, setEditing] = useState(false);
     const [username, setUsername] = useState(user.username);
@@ -24,6 +25,8 @@ export default function ProfileScreen({ navigation }) {
     const [profilePicture, setProfilePicture] = useState(user.profilePicture);
     const [coverPicture, setCoverPicture] = useState(user.coverPicture);
 
+    const [galleryPermission, setGalleryPermission] = useState(null);
+
     const windowWidth = Dimensions.get('window').width;
     const windowHeight = Dimensions.get('window').height;
 
@@ -35,6 +38,30 @@ export default function ProfileScreen({ navigation }) {
     const handleEditProfileClick = (e) => {
         e.preventDefault();
         setEditing(true);
+    }
+
+    const handleChooseProfilePicture = async () => {
+        let image = await ImagePicker.launchImageLibraryAsync({
+            mediaTypes: ImagePicker.MediaTypeOptions.Images
+        });
+
+        if (image.cancelled) {
+            return;
+        }
+
+        console.log(image);
+    }
+
+    const handleChooseCoverPicture = async () => {
+        let image = await ImagePicker.launchImageLibraryAsync({
+            mediaTypes: ImagePicker.MediaTypeOptions.Images
+        });
+
+        if (image.cancelled) {
+            return;
+        }
+
+        console.log(image);
     }
 
     const handleDoneClick = (e) => {
@@ -115,10 +142,14 @@ export default function ProfileScreen({ navigation }) {
                     </View>
 
                     <View style={{ top: -15 }}>
-                        <Image source={require('../../../assets/defaultBackground.jpg')} style={{ height: 130, width: windowWidth }} />
+                        <Pressable onPress={handleChooseCoverPicture}>
+                            <Image source={{ uri: publicFolder + coverPicture }} style={{ height: 130, width: windowWidth }} />
+                        </Pressable>
 
                         <View style={{ top: -60, height: 120, width: 120, borderRadius: 60, paddingLeft: 20 }}>
-                            <Image source={require('../../../assets/abdel.jpg')} style={{ height: 120, width: 120, borderRadius: 60, borderWidth: 3, borderColor: '#FFFFFF' }} />
+                            <Pressable onPress={handleChooseProfilePicture}>
+                                <Image source={{ uri: publicFolder + "abdel.jpg" }} style={{ height: 120, width: 120, borderRadius: 60, borderWidth: 3, borderColor: '#FFFFFF' }} />
+                            </Pressable>
                         </View>
 
                         <Pressable onPress={handleDoneClick}>
@@ -279,10 +310,10 @@ export default function ProfileScreen({ navigation }) {
                     </View>
 
                     <View style={{ top: -15 }}>
-                        <Image source={require('../../../assets/defaultBackground.jpg')} style={{ height: 130, width: windowWidth }} />
+                        <Image source={{ uri: publicFolder + coverPicture }} style={{ height: 130, width: windowWidth }} />
 
                         <View style={{ top: -60, height: 120, width: 120, borderRadius: 60, paddingLeft: 20 }}>
-                            <Image source={require('../../../assets/abdel.jpg')} style={{ height: 120, width: 120, borderRadius: 60, borderWidth: 3, borderColor: '#FFFFFF' }} />
+                            <Image source={{ uri: publicFolder + "abdel.jpg" }} style={{ height: 120, width: 120, borderRadius: 60, borderWidth: 3, borderColor: '#FFFFFF' }} />
                         </View>
 
                         <Pressable onPress={handleEditProfileClick}>
