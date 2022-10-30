@@ -4,6 +4,7 @@ import { View, Text, Button, Image, TextInput, Pressable, ScrollView, StyleSheet
 import axios from 'axios';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import * as ImagePicker from 'expo-image-picker';
+import * as FileSystem from 'expo-file-system';
 
 export default function ProfileScreen({ navigation }) {
     const [user] = useGlobalState("user");
@@ -41,27 +42,25 @@ export default function ProfileScreen({ navigation }) {
     }
 
     const handleChooseProfilePicture = async () => {
-        let image = await ImagePicker.launchImageLibraryAsync({
-            mediaTypes: ImagePicker.MediaTypeOptions.Images
-        });
-
-        if (image.cancelled) {
+        let permissionResult = await ImagePicker.requestMediaLibraryPermissionsAsync();
+        if (permissionResult.granted === false) {
+            alert("Permission to access camera roll is required!");
             return;
         }
+        let pickerResult = await ImagePicker.launchImageLibraryAsync();
 
-        console.log(image);
+        setProfilePicture(pickerResult.uri);
     }
 
     const handleChooseCoverPicture = async () => {
-        let image = await ImagePicker.launchImageLibraryAsync({
-            mediaTypes: ImagePicker.MediaTypeOptions.Images
-        });
-
-        if (image.cancelled) {
+        let permissionResult = await ImagePicker.requestMediaLibraryPermissionsAsync();
+        if (permissionResult.granted === false) {
+            alert("Permission to access camera roll is required!");
             return;
         }
+        let pickerResult = await ImagePicker.launchImageLibraryAsync();
 
-        console.log(image);
+        setCoverPicture(pickerResult.uri);
     }
 
     const handleDoneClick = (e) => {
@@ -79,7 +78,9 @@ export default function ProfileScreen({ navigation }) {
                 zipCode: zipCode,
                 university: university,
                 hourlyRate: hourlyRate,
-                about: about
+                about: about,
+                coverPicture: coverPicture,
+                profilePicture: profilePicture
             });
         } catch (err) {
             console.log(err);
@@ -143,12 +144,12 @@ export default function ProfileScreen({ navigation }) {
 
                     <View style={{ top: -15 }}>
                         <Pressable onPress={handleChooseCoverPicture}>
-                            <Image source={{ uri: publicFolder + coverPicture }} style={{ height: 130, width: windowWidth }} />
+                            <Image source={{ uri: coverPicture === "" ? publicFolder + "defaultBackground.jpg" : coverPicture }} style={{ height: 130, width: windowWidth }} />
                         </Pressable>
 
                         <View style={{ top: -60, height: 120, width: 120, borderRadius: 60, paddingLeft: 20 }}>
                             <Pressable onPress={handleChooseProfilePicture}>
-                                <Image source={{ uri: publicFolder + "abdel.jpg" }} style={{ height: 120, width: 120, borderRadius: 60, borderWidth: 3, borderColor: '#FFFFFF' }} />
+                                <Image source={{ uri: profilePicture === "" ? publicFolder + "defaultProfilePicture.png" : profilePicture }} style={{ height: 120, width: 120, borderRadius: 60, borderWidth: 3, borderColor: '#FFFFFF' }} />
                             </Pressable>
                         </View>
 
@@ -276,7 +277,7 @@ export default function ProfileScreen({ navigation }) {
                                     fontSize: 15, width: 230, borderRadius: 20,
                                     position: 'absolute', color: 'black', backgroundColor: '#F1F1F1', borderColor: '#9E9E9E', borderWidth: 1, marginTop: 30, marginLeft: 100, paddingLeft: 10, paddingRight: 10
                                 }}>
-                                    ${hourlyRate}/hr
+                                    {hourlyRate}
                                 </TextInput>
                             </View>
                         ) : (
@@ -305,15 +306,15 @@ export default function ProfileScreen({ navigation }) {
                     <View style={{ flexDirection: 'row', marginBottom: 10, top: -15 }}>
                         <TextInput placeholder="Search" value={searchValue} onChangeText={newText => setGlobalState("searchValue", newText)}
                             onSubmitEditing={() => navigation.navigate('Search', { screen: 'Search' })}
-                            style={{ backgroundColor: '#F1F1F1', height: 40, width: 350, borderRadius: 10, paddingLeft: 40, fontSize: 15 }} />
+                            style={{ backgroundColor: '#F1F1F1', height: 40, width: windowWidth * 0.95, borderRadius: 20, paddingLeft: 40, fontSize: 15 }} />
                         <MaterialCommunityIcons name={"magnify"} color={"#9E9E9E"} size={20} style={{ top: 10, position: 'absolute', paddingLeft: 10 }} />
                     </View>
 
                     <View style={{ top: -15 }}>
-                        <Image source={{ uri: publicFolder + coverPicture }} style={{ height: 130, width: windowWidth }} />
+                        <Image source={{ uri: coverPicture === "" ? publicFolder + "defaultBackground.jpg" : coverPicture }} style={{ height: 130, width: windowWidth }} />
 
                         <View style={{ top: -60, height: 120, width: 120, borderRadius: 60, paddingLeft: 20 }}>
-                            <Image source={{ uri: publicFolder + "abdel.jpg" }} style={{ height: 120, width: 120, borderRadius: 60, borderWidth: 3, borderColor: '#FFFFFF' }} />
+                            <Image source={{ uri: profilePicture === "" ? publicFolder + "defaultProfilePicture.png" : profilePicture }} style={{ height: 120, width: 120, borderRadius: 60, borderWidth: 3, borderColor: '#FFFFFF' }} />
                         </View>
 
                         <Pressable onPress={handleEditProfileClick}>

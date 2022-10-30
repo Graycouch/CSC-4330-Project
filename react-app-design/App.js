@@ -1,6 +1,8 @@
 import { useGlobalState, setGlobalState } from './index';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { useEffect } from 'react';
+import axios from 'axios';
 
 import MainContainer from './navigation/MainContainer';
 import LoginScreen from './navigation/screens/LoginScreen/LoginScreen';
@@ -11,6 +13,18 @@ const Stack = createNativeStackNavigator();
 
 function App() {
   const [isLoggedIn] = useGlobalState("isLoggedIn");
+  const [localhost] = useGlobalState("localhost");
+
+  useEffect(() => {
+    axios.get(`http://${localhost}:8800/api/users/all`, {
+    })
+      .then((response) => {
+        setGlobalState("allUsers", response.data);
+      }, (error) => {
+        console.log(error);
+      });
+  }, [])
+
 
   return (
     <NavigationContainer independent={true}>
