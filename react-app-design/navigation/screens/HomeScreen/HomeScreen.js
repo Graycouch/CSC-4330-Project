@@ -1,6 +1,6 @@
 import * as React from 'react';
+import { View, Text, Button, Image, TextInput, Pressable, ScrollView, StyleSheet, Dimensions } from 'react-native';
 import { useState, useEffect } from 'react';
-import { View, Text, Button, Image, TextInput, Pressable, ScrollView, StyleSheet } from 'react-native';
 import { useGlobalState, setGlobalState } from '../../../index';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
@@ -11,6 +11,8 @@ export default function HomeScreen({ navigation }) {
     const [user] = useGlobalState("user");
     const [searchValue] = useGlobalState("searchValue");
 
+    const windowWidth = Dimensions.get('window').width;
+    const windowHeight = Dimensions.get('window').height;
 
     const [username, setUsername] = useState(user.username);
 
@@ -21,19 +23,19 @@ export default function HomeScreen({ navigation }) {
         headerContainer: {
             paddingVertical: 50, //apprently we need this to keep the header in the safe-space
             flex: 1,
-            flexDirection: 'column', 
-            alignItems: 'center', 
-            justifyContent: 'center', 
+            flexDirection: 'column',
+            alignItems: 'center',
+            justifyContent: 'center',
             backgroundColor: '#FFFFFF',
         },
 
         // Inner Container for each Section
         sectionContainer: {
-            flexDirection: 'row', 
-            alignContent: 'flex-start', 
-            justifyContent: "flex-start", 
-            borderColor: 'blue', 
-            borderWidth: 2, 
+            flexDirection: 'row',
+            alignContent: 'flex-start',
+            justifyContent: "flex-start",
+            borderColor: 'blue',
+            borderWidth: 2,
             width: '100%',
             marginTop: 30,
             marginBottom: 30
@@ -45,11 +47,7 @@ export default function HomeScreen({ navigation }) {
     return (
         <View style={styles.headerContainer}>
             <ScrollView showsVerticalScrollIndicator={false} showsHorizontalScrollIndicator={false} contentContainerStyle={styles.contentContainer} style={{ backgroundColor: '#FFFFFF' }}>
- 
                 <Header navigation={navigation} />
-
- 
-
                 <Text style={{ fontSize: 26, fontWeight: 'bold', margin: 30 }}>
                     Welcome back, {username}!
                 </Text>

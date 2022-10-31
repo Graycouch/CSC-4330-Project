@@ -62,4 +62,15 @@ router.get("/", async (req, res) => {
 }
 );
 
+// Get All User
+router.get("/all", async (req, res) => {
+    User.find({}, function (err, users) {
+        if(err){
+            res.status(500).json(err);
+        }
+        res.json(users);
+    })
+}
+);
+
 module.exports = router;
