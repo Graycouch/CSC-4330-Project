@@ -30,7 +30,7 @@ export default function SearchScreen({ navigation }) {
 
     const styles = StyleSheet.create({
         contentContainer: {
-            paddingVertical: 50,
+            paddingVertical: windowHeight * 0.064,
             alignItems: 'center',
             flexGrow: 1
         },
@@ -98,11 +98,11 @@ export default function SearchScreen({ navigation }) {
         <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center', backgroundColor: '#FFFFFF' }}>
             {!boxClicked ? (
                 <ScrollView showsVerticalScrollIndicator={false} showsHorizontalScrollIndicator={false} contentContainerStyle={styles.contentContainer} style={{ backgroundColor: '#FFFFFF' }}>
-                    <View style={{ flexDirection: 'row', marginBottom: 10, top: -windowHeight * 0.019 }}>
+                    <View style={{ flexDirection: 'row', marginBottom: windowHeight * 0.0128, top: -windowHeight * 0.019 }}>
                         <TextInput placeholder="Search" value={searchValue} onChangeText={newText => setGlobalState("searchValue", newText)}
                             onSubmitEditing={() => navigation.navigate('Search', { screen: 'Search' })}
-                            style={{ backgroundColor: '#F1F1F1', height: 40, width: windowWidth * 0.95, borderRadius: 20, paddingLeft: 40, fontSize: 15 }} />
-                        <MaterialCommunityIcons name={"magnify"} color={"#9E9E9E"} size={20} style={{ top: windowHeight * 0.0128, position: 'absolute', paddingLeft: 10 }} />
+                            style={{ backgroundColor: '#F1F1F1', height: windowHeight * 0.0512, width: windowWidth * 0.95, borderRadius: windowHeight * 0.0256, paddingLeft: windowWidth * 0.104, fontSize: 15 }} />
+                        <MaterialCommunityIcons name={"magnify"} color={"#9E9E9E"} size={20} style={{ top: windowHeight * 0.0128, position: 'absolute', paddingLeft: windowWidth * 0.026 }} />
                     </View>
 
                     <View>
@@ -113,33 +113,58 @@ export default function SearchScreen({ navigation }) {
                                 ) : (
                                     <Pressable key={currentUser.username} onPress={() => handleUserBoxClick(currentUser)}>
                                         <View style={{
-                                            height: windowHeight / 5, width: 0.85 * windowWidth, backgroundColor: '#F5F5F5', borderWidth: 1,
-                                            borderColor: '#9E9E9E', borderRadius: 20, marginBottom: 25
+                                            height: windowHeight * 0.2, width: 0.85 * windowWidth, backgroundColor: '#F5F5F5', borderWidth: 1,
+                                            borderColor: '#9E9E9E', borderRadius: windowHeight * 0.0256, marginBottom: windowHeight * 0.032
                                         }}>
 
-                                            <Image source={{ uri: currentUser.coverPicture === "" ? publicFolder + "defaultBackground.jpg" : currentUser.coverPicture }} style={{ height: 50, width: windowWidth * 0.845, borderTopLeftRadius: 20, borderTopRightRadius: 20 }} />
+                                            <Image source={{ uri: currentUser.coverPicture === "" ? publicFolder + "defaultBackground.jpg" : currentUser.coverPicture }}
+                                                style={{
+                                                    height: windowHeight * 0.064, width: windowWidth * 0.845,
+                                                    borderTopLeftRadius: windowHeight * 0.0256, borderTopRightRadius: windowHeight * 0.0256
+                                                }} />
 
-                                            <View style={{ top: -40, height: 80, width: 80, borderRadius: 40, paddingLeft: 15 }}>
-                                                <Image source={{ uri: currentUser.profilePicture === "" ? publicFolder + "defaultProfilePicture.png" : currentUser.profilePicture }} style={{ height: 80, width: 80, borderRadius: 40, borderWidth: 2, borderColor: '#FFFFFF' }} />
+                                            <View style={{
+                                                top: -windowHeight * 0.0512, height: windowHeight * 0.1024, width: windowHeight * 0.1024,
+                                                borderRadius: windowHeight * 0.0512, paddingLeft: windowWidth * 0.039
+                                            }}>
+                                                <Image source={{ uri: currentUser.profilePicture === "" ? publicFolder + "defaultProfilePicture.png" : currentUser.profilePicture }}
+                                                    style={{
+                                                        height: windowHeight * 0.1024, width: windowHeight * 0.1024,
+                                                        borderRadius: windowHeight * 0.0512, borderWidth: 2, borderColor: '#FFFFFF'
+                                                    }} />
                                             </View>
 
                                             <View style={{ flexDirection: 'row' }}>
                                                 <View>
-                                                    <Text style={{ top: -windowHeight * 0.05, fontSize: 15, textAlign: 'left', fontWeight: '500', textAlignVertical: 'top', paddingLeft: 15 }}>
+                                                    <Text style={{
+                                                        top: -windowHeight * 0.05, fontSize: 15, textAlign: 'left', fontWeight: '500',
+                                                        textAlignVertical: 'top', paddingLeft: windowWidth * 0.039
+                                                    }}>
                                                         {currentUser.username}
                                                     </Text>
                                                     {courses.map((course) => (
-                                                        <Text key={course} style={{ top: -windowHeight * 0.05, fontSize: 12, textAlign: 'left', fontWeight: '400', textAlignVertical: 'top', paddingLeft: 15, paddingTop: 10, color: 'gray' }}>
+                                                        <Text key={course} style={{
+                                                            top: -windowHeight * 0.05, fontSize: 12, textAlign: 'left', fontWeight: '400',
+                                                            textAlignVertical: 'top', paddingLeft: windowWidth * 0.039, paddingTop: windowHeight * 0.0128, color: 'gray'
+                                                        }}>
                                                             {currentUser.courses}
                                                         </Text>
                                                     ))}
                                                 </View>
 
-                                                <Text style={{ position: 'absolute', top: -windowHeight * 0.028, right: windowHeight * 0.025, fontSize: 15, textAlign: 'left', fontWeight: '400', textAlignVertical: 'top', paddingLeft: 15, paddingTop: 10, color: '#2970FE' }}>
+                                                <Text style={{
+                                                    position: 'absolute', top: -windowHeight * 0.028, right: windowHeight * 0.025,
+                                                    fontSize: 15, textAlign: 'left', fontWeight: '400', textAlignVertical: 'top', paddingLeft: windowWidth * 0.039,
+                                                    paddingTop: windowHeight * 0.0128, color: '#2970FE'
+                                                }}>
                                                     ${currentUser.hourlyRate}/hr
                                                 </Text>
 
-                                                <Text style={{ position: 'absolute', top: -windowHeight * 0.06, right: windowHeight * 0.025, fontSize: 12, textAlign: 'left', fontWeight: '400', textAlignVertical: 'top', paddingLeft: 15, paddingTop: 10, color: 'gray' }}>
+                                                <Text style={{
+                                                    position: 'absolute', top: -windowHeight * 0.06, right: windowHeight * 0.025,
+                                                    fontSize: 12, textAlign: 'left', fontWeight: '400', textAlignVertical: 'top', paddingLeft: windowWidth * 0.039,
+                                                    paddingTop: windowHeight * 0.0128, color: 'gray'
+                                                }}>
                                                     {currentUser.city}, {currentUser.zipCode}
                                                 </Text>
                                             </View>
@@ -156,7 +181,7 @@ export default function SearchScreen({ navigation }) {
             ) : (
                 <ScrollView showsVerticalScrollIndicator={false} showsHorizontalScrollIndicator={false} contentContainerStyle={styles.contentContainer} style={{ backgroundColor: '#FFFFFF' }}>
 
-                    <View style={{ marginBottom: 10, top: -windowHeight * 0.019, height: 40 }}>
+                    <View style={{ marginBottom: windowHeight * 0.0128, top: -windowHeight * 0.019, height: windowHeight * 0.0512 }}>
                         <Text style={{ fontSize: 24, fontWeight: '500' }}>
                             View Profile
                         </Text>
@@ -167,10 +192,12 @@ export default function SearchScreen({ navigation }) {
                     </View>
 
                     <View style={{ top: -windowHeight * 0.019 }}>
-                        <Image source={{ uri: coverPicture === "" ? publicFolder + "defaultBackground.jpg" : coverPicture }} style={{ height: 130, width: windowWidth }} />
+                        <Image source={{ uri: coverPicture === "" ? publicFolder + "defaultBackground.jpg" : coverPicture }} style={{ height: windowHeight * 0.166, width: windowWidth }} />
 
                         <View style={{ top: -windowHeight * 0.0768, height: 120, width: 120, borderRadius: 60, paddingLeft: 20 }}>
-                            <Image source={{ uri: profilePicture === "" ? publicFolder + "defaultProfilePicture.png" : profilePicture }} style={{ height: 120, width: 120, borderRadius: 60, borderWidth: 3, borderColor: '#FFFFFF' }} />
+                            <Image source={{ uri: profilePicture === "" ? publicFolder + "defaultProfilePicture.png" : profilePicture }} style={{
+                                height: windowHeight * 0.1536, width: windowHeight * 0.1536, borderRadius: windowHeight * 0.0768, borderWidth: 3, borderColor: '#FFFFFF'
+                            }} />
                         </View>
 
                         <Pressable>
@@ -181,19 +208,19 @@ export default function SearchScreen({ navigation }) {
                             <Ionicons name={"calendar"} color={"#5F59F7"} size={24} style={{ position: 'absolute', top: -windowHeight * 0.1, right: windowWidth * 0.05 }} />
                         </Pressable>
 
-                        <Text style={{ top: -windowHeight * 0.105, fontSize: 24, textAlign: 'left', fontWeight: '500', textAlignVertical: 'top', paddingLeft: 20 }}>
+                        <Text style={{ top: -windowHeight * 0.105, fontSize: 24, textAlign: 'left', fontWeight: '500', textAlignVertical: 'top', paddingLeft: windowWidth * 0.052 }}>
                             {username}
                         </Text>
 
-                        <Text style={{ top: -windowHeight * 0.105, fontSize: 15, textAlign: 'left', textAlignVertical: 'top', paddingLeft: 20 }}>
+                        <Text style={{ top: -windowHeight * 0.105, fontSize: 15, textAlign: 'left', textAlignVertical: 'top', paddingLeft: windowWidth * 0.052 }}>
                             {major} {role}
                         </Text>
                     </View>
 
                     <View style={{ top: -windowHeight * 0.105, flex: 1, flexDirection: 'row', flexWrap: 'wrap' }}>
-                        <View style={{ alignItems: 'center', width: '50%', paddingTop: 30 }}>
+                        <View style={{ alignItems: 'center', width: '50%', paddingTop: windowHeight * 0.0384 }}>
                             <View style={{ flexDirection: 'row' }}>
-                                <MaterialCommunityIcons name={"email"} color={"#5F59F7"} size={20} style={{ paddingRight: 5 }} />
+                                <MaterialCommunityIcons name={"email"} color={"#5F59F7"} size={20} style={{ paddingRight: windowWidth * 0.013 }} />
                                 <Text style={{ fontSize: 15, fontWeight: 'bold', color: '#5F59F7' }}>
                                     Email Address:
                                 </Text>
@@ -203,9 +230,9 @@ export default function SearchScreen({ navigation }) {
                             </Text>
                         </View>
 
-                        <View style={{ alignItems: 'center', width: '50%', paddingTop: 30 }}>
+                        <View style={{ alignItems: 'center', width: '50%', paddingTop: windowHeight * 0.0384 }}>
                             <View style={{ flexDirection: 'row' }}>
-                                <MaterialCommunityIcons name={"school"} color={"#5F59F7"} size={20} style={{ paddingRight: 5 }} />
+                                <MaterialCommunityIcons name={"school"} color={"#5F59F7"} size={20} style={{ paddingRight: windowWidth * 0.013 }} />
                                 <Text style={{ fontSize: 15, fontWeight: 'bold', color: '#5F59F7' }}>
                                     University:
                                 </Text>
@@ -215,9 +242,9 @@ export default function SearchScreen({ navigation }) {
                             </Text>
                         </View>
 
-                        <View style={{ alignItems: 'center', width: '50%', paddingTop: 60 }}>
+                        <View style={{ alignItems: 'center', width: '50%', paddingTop: windowHeight * 0.0768 }}>
                             <View style={{ flexDirection: 'row' }}>
-                                <MaterialCommunityIcons name={"map-marker"} color={"#5F59F7"} size={20} style={{ paddingRight: 5 }} />
+                                <MaterialCommunityIcons name={"map-marker"} color={"#5F59F7"} size={20} style={{ paddingRight: windowWidth * 0.013 }} />
                                 <Text style={{ fontSize: 15, fontWeight: 'bold', color: '#5F59F7' }}>
                                     Location:
                                 </Text>
@@ -227,9 +254,9 @@ export default function SearchScreen({ navigation }) {
                             </Text>
                         </View>
 
-                        <View style={{ alignItems: 'center', width: '50%', paddingTop: 60 }}>
+                        <View style={{ alignItems: 'center', width: '50%', paddingTop: windowHeight * 0.0768 }}>
                             <View style={{ flexDirection: 'row' }}>
-                                <MaterialCommunityIcons name={"book-open-variant"} color={"#5F59F7"} size={20} style={{ paddingRight: 5 }} />
+                                <MaterialCommunityIcons name={"book-open-variant"} color={"#5F59F7"} size={20} style={{ paddingRight: windowWidth * 0.013 }} />
                                 <Text style={{ fontSize: 15, fontWeight: 'bold', color: '#5F59F7' }}>
                                     Courses:
                                 </Text>
@@ -239,14 +266,14 @@ export default function SearchScreen({ navigation }) {
                             </Text>
                         </View>
 
-                        <View style={{ alignItems: 'center', width: '100%', paddingTop: 40 }}>
+                        <View style={{ alignItems: 'center', width: '100%', paddingTop: windowHeight * 0.0512 }}>
                             <View style={{ flexDirection: 'row' }}>
-                                <MaterialCommunityIcons name={"lead-pencil"} color={"#5F59F7"} size={20} style={{ paddingRight: 5 }} />
+                                <MaterialCommunityIcons name={"lead-pencil"} color={"#5F59F7"} size={20} style={{ paddingRight: windowWidth * 0.013 }} />
                                 <Text style={{ fontSize: 15, fontWeight: 'bold', color: '#5F59F7' }}>
                                     About:
                                 </Text>
                             </View>
-                            <Text style={{ fontSize: 15, textAlign: 'center', color: 'grey', paddingLeft: 10, paddingRight: 10 }}>
+                            <Text style={{ fontSize: 15, textAlign: 'center', color: 'grey', paddingLeft: windowWidth * 0.026, paddingRight: windowWidth * 0.026 }}>
                                 {about}
                             </Text>
                         </View>
