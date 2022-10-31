@@ -78,6 +78,7 @@ export default function SearchScreen({ navigation }) {
         setEmail(currentUser.email);
         setRole(currentUser.role);
         setMajor(currentUser.major);
+        setCourses(currentUser.courses);
         setAbout(currentUser.about);
         setCity(currentUser.city);
         setUniversity(currentUser.university);
@@ -129,7 +130,7 @@ export default function SearchScreen({ navigation }) {
                                                     </Text>
                                                     {courses.map((course) => (
                                                         <Text key={course} style={{ top: -windowHeight * 0.05, fontSize: 12, textAlign: 'left', fontWeight: '400', textAlignVertical: 'top', paddingLeft: 15, paddingTop: 10, color: 'gray' }}>
-                                                            {currentUser.course}
+                                                            {currentUser.courses}
                                                         </Text>
                                                     ))}
                                                 </View>
