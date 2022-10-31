@@ -8,8 +8,6 @@ import SearchScreen from './screens/SearchScreen/SearchScreen';
 import MessageScreen from './screens/MessageScreen/MessageScreen';
 import ProfileScreen from './screens/ProfileScreen/ProfileScreen';
 
-// import Header from './header/header.js';
-
 const homeName = "Home";
 const searchName = "Search";
 const messageName = "Message";
@@ -23,7 +21,6 @@ export default function MainContainer() {
             <Tab.Navigator
                 initialRouteName={homeName}
                 screenOptions={({ route }) => ({
-                    
                     tabBarIcon: ({ focused, color, size }) => {
                         let iconName;
                         let rn = route.name;
@@ -44,7 +41,6 @@ export default function MainContainer() {
 
                         return <Ionicons name={iconName} size={size} color={color} />;
                     },
-                    // header: Header,
                     
                     tabBarActiveTintColor: '#5F59F7',
                     tabBarInactiveTintColor: 'grey',
