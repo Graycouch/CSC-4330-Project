@@ -24,6 +24,7 @@ export default function ProfileScreen({ navigation }) {
     const [hourlyRate, setHourlyRate] = useState(user.hourlyRate);
     const [profilePicture, setProfilePicture] = useState(user.profilePicture);
     const [coverPicture, setCoverPicture] = useState(user.coverPicture);
+    const [coursesView, setCoursesView] = useState(courses.join(", "));
 
     const windowWidth = Dimensions.get('window').width;
     const windowHeight = Dimensions.get('window').height;
@@ -62,6 +63,8 @@ export default function ProfileScreen({ navigation }) {
 
     const handleDoneClick = (e) => {
         e.preventDefault();
+
+        setCourses(coursesView.split(", "));
 
         try {
             axios.put(`http://${localhost}:8800/api/users/${user._id}`, {
@@ -158,11 +161,11 @@ export default function ProfileScreen({ navigation }) {
                             <MaterialCommunityIcons name={"check"} color={"#5F59F7"} size={24} style={{ marginLeft: 'auto', marginRight: 'auto', top: -windowHeight * 0.128, right: -windowWidth * 0.417 }} />
                         </Pressable>
 
-                        <Text style={{ top: -windowHeight * 0.102, fontSize: 24, textAlign: 'left', fontWeight: '500', textAlignVertical: 'top', paddingLeft: windowWidth * 0.052 }}>
+                        <Text style={{ top: -windowHeight * 0.105, fontSize: 24, textAlign: 'left', fontWeight: '500', textAlignVertical: 'top', paddingLeft: windowWidth * 0.052 }}>
                             {username}
                         </Text>
 
-                        <Text style={{ top: -windowHeight * 0.102, fontSize: 15, textAlign: 'left', textAlignVertical: 'top', paddingLeft: windowWidth * 0.052 }}>
+                        <Text style={{ top: -windowHeight * 0.105, fontSize: 15, textAlign: 'left', textAlignVertical: 'top', paddingLeft: windowWidth * 0.052 }}>
                             {major} {role}
                         </Text>
                     </View>
@@ -269,12 +272,12 @@ export default function ProfileScreen({ navigation }) {
                             <Text style={{ fontSize: 18 }}>
                                 Courses:
                             </Text>
-                            <TextInput onChangeText={text => setCourses(text)} style={{
+                            <TextInput onChangeText={text => setCoursesView(text)} style={{
                                 fontSize: 15, width: windowWidth * 0.5989, borderRadius: windowHeight * 0.0256,
                                 position: 'absolute', color: 'black', borderColor: '#9E9E9E', backgroundColor: '#F1F1F1', borderWidth: 1,
                                 marginTop: windowHeight * 0.0384, marginLeft: windowWidth * 0.26, paddingLeft: windowWidth * 0.026, paddingRight: windowWidth * 0.026
                             }}>
-                                {courses}
+                                {coursesView}
                             </TextInput>
                         </View>
 
@@ -374,7 +377,7 @@ export default function ProfileScreen({ navigation }) {
                                     Location:
                                 </Text>
                             </View>
-                            <Text style={{ fontSize: 15, color: 'grey' }}>
+                            <Text style={{ fontSize: 15, color: 'grey', paddingLeft: windowWidth * 0.03 }}>
                                 {city}
                             </Text>
                         </View>
@@ -386,12 +389,23 @@ export default function ProfileScreen({ navigation }) {
                                     Courses:
                                 </Text>
                             </View>
-                            <Text style={{ fontSize: 15, color: 'grey' }}>
-                                {courses}
+                            <Text style={{ textAlign: 'center', lineHeight: windowHeight * 0.029449 }}>
+                                {courses.map((course) => {
+                                    let color = parseInt(course.split(" ")[1]) > 4000 ? '#343090' :
+                                        parseInt(course.split(" ")[1]) > 3000 ? '#5F59F7' : parseInt(course.split(" ")[1]) > 2000 ? '#8C61FF' : '#44C2FD'
+                                    return (
+                                        <Text key={course}
+                                            style={{
+                                                top: -windowHeight * 0.05, fontSize: 12, fontWeight: '400', color: 'gray'
+                                            }}>
+                                            {course}{"  "}
+                                        </Text>
+                                    )
+                                })}
                             </Text>
                         </View>
 
-                        <View style={{ alignItems: 'center', width: '100%', paddingTop: windowHeight * 0.0512 }}>
+                        <View style={{ alignItems: 'center', width: '100%', position: 'absolute', top: windowHeight * 0.27 }}>
                             <View style={{ flexDirection: 'row' }}>
                                 <MaterialCommunityIcons name={"lead-pencil"} color={"#5F59F7"} size={20} style={{ paddingRight: windowWidth * 0.013 }} />
                                 <Text style={{ fontSize: 15, fontWeight: 'bold', color: '#5F59F7' }}>

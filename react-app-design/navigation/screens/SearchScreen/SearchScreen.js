@@ -181,7 +181,7 @@ export default function SearchScreen({ navigation }) {
             ) : (
                 <ScrollView showsVerticalScrollIndicator={false} showsHorizontalScrollIndicator={false} contentContainerStyle={styles.contentContainer} style={{ backgroundColor: '#FFFFFF' }}>
 
-                    <View style={{ marginBottom: windowHeight * 0.0128, top: -windowHeight * 0.019, height: windowHeight * 0.0512 }}>
+                    <View style={{ marginBottom: windowHeight * 0.0128, top: -windowHeight * 0.019, height: windowHeight * 0.05 }}>
                         <Text style={{ fontSize: 24, fontWeight: '500' }}>
                             View Profile
                         </Text>
@@ -212,7 +212,7 @@ export default function SearchScreen({ navigation }) {
                             {username}
                         </Text>
 
-                        <Text style={{ top: -windowHeight * 0.105, fontSize: 15, textAlign: 'left', textAlignVertical: 'top', paddingLeft: windowWidth * 0.052 }}>
+                        <Text style={{ top: -windowHeight * 0.106, fontSize: 15, textAlign: 'left', textAlignVertical: 'top', paddingLeft: windowWidth * 0.052 }}>
                             {major} {role}
                         </Text>
                     </View>
@@ -249,7 +249,7 @@ export default function SearchScreen({ navigation }) {
                                     Location:
                                 </Text>
                             </View>
-                            <Text style={{ fontSize: 15, color: 'grey' }}>
+                            <Text style={{ fontSize: 15, color: 'grey', paddingLeft: windowWidth * 0.03 }}>
                                 {city}
                             </Text>
                         </View>
@@ -261,12 +261,18 @@ export default function SearchScreen({ navigation }) {
                                     Courses:
                                 </Text>
                             </View>
-                            <Text style={{ fontSize: 15, color: 'grey' }}>
-                                {courses}
+                            <Text style={{ textAlign: 'center', lineHeight: windowHeight * 0.029449 }}>
+                                {courses.map((course) => (
+                                    <Text key={course} style={{
+                                        top: -windowHeight * 0.05, fontSize: 12, fontWeight: '400', color: 'gray'
+                                    }}>
+                                        {course}{"  "}
+                                    </Text>
+                                ))}
                             </Text>
                         </View>
 
-                        <View style={{ alignItems: 'center', width: '100%', paddingTop: windowHeight * 0.0512 }}>
+                        <View style={{ alignItems: 'center', width: '100%', position: 'absolute', top: windowHeight * 0.27 }}>
                             <View style={{ flexDirection: 'row' }}>
                                 <MaterialCommunityIcons name={"lead-pencil"} color={"#5F59F7"} size={20} style={{ paddingRight: windowWidth * 0.013 }} />
                                 <Text style={{ fontSize: 15, fontWeight: 'bold', color: '#5F59F7' }}>
