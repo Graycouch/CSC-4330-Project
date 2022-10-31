@@ -26,8 +26,6 @@ export default function ProfileScreen({ navigation }) {
     const [profilePicture, setProfilePicture] = useState(user.profilePicture);
     const [coverPicture, setCoverPicture] = useState(user.coverPicture);
 
-    const [galleryPermission, setGalleryPermission] = useState(null);
-
     const windowWidth = Dimensions.get('window').width;
     const windowHeight = Dimensions.get('window').height;
 
@@ -96,10 +94,10 @@ export default function ProfileScreen({ navigation }) {
             flexGrow: 1
         },
         verticalLine: {
-            height: 200,
+            height: windowHeight * 0.256,
             width: 1,
             position: 'absolute',
-            top: 350,
+            top: windowHeight * 0.448,
             backgroundColor: '#E5E5E5',
         },
         horizontalLine1: {
@@ -107,28 +105,28 @@ export default function ProfileScreen({ navigation }) {
             width: windowWidth,
             position: 'absolute',
             backgroundColor: '#E5E5E5',
-            top: 350
+            top: windowHeight * 0.448
         },
         horizontalLine2: {
             height: 1,
             width: windowWidth,
             position: 'absolute',
             backgroundColor: '#E5E5E5',
-            top: 450
+            top: windowHeight * 0.576
         },
         horizontalLine3: {
             height: 1,
             width: windowWidth,
             position: 'absolute',
             backgroundColor: '#E5E5E5',
-            top: 550
+            top: windowHeight * 0.704
         },
         horizontalLine4: {
             height: 1,
             width: windowWidth,
             position: 'absolute',
             backgroundColor: '#E5E5E5',
-            top: 700
+            top: windowHeight * 0.896
         }
     });
 
@@ -136,37 +134,37 @@ export default function ProfileScreen({ navigation }) {
         <View style={{ backgroundColor: '#FFFFFF', flex: 1 }}>
             {editing ? (
                 <ScrollView showsVerticalScrollIndicator={false} showsHorizontalScrollIndicator={false} contentContainerStyle={styles.contentContainer} style={{ backgroundColor: '#FFFFFF' }}>
-                    <View style={{ marginBottom: 10, top: -15, height: 40 }}>
+                    <View style={{ marginBottom: 10, top: -windowHeight * 0.019, height: 40 }}>
                         <Text style={{ fontSize: 24, fontWeight: '500' }}>
                             Edit Profile
                         </Text>
                     </View>
 
-                    <View style={{ top: -15 }}>
+                    <View style={{ top: -windowHeight * 0.019 }}>
                         <Pressable onPress={handleChooseCoverPicture}>
                             <Image source={{ uri: coverPicture === "" ? publicFolder + "defaultBackground.jpg" : coverPicture }} style={{ height: 130, width: windowWidth }} />
                         </Pressable>
 
-                        <View style={{ top: -60, height: 120, width: 120, borderRadius: 60, paddingLeft: 20 }}>
+                        <View style={{ top: -windowHeight * 0.0768, height: 120, width: 120, borderRadius: 60, paddingLeft: 20 }}>
                             <Pressable onPress={handleChooseProfilePicture}>
                                 <Image source={{ uri: profilePicture === "" ? publicFolder + "defaultProfilePicture.png" : profilePicture }} style={{ height: 120, width: 120, borderRadius: 60, borderWidth: 3, borderColor: '#FFFFFF' }} />
                             </Pressable>
                         </View>
 
                         <Pressable onPress={handleDoneClick}>
-                            <MaterialCommunityIcons name={"check"} color={"#5F59F7"} size={24} style={{ marginLeft: 'auto', marginRight: 'auto', top: -100, right: -160 }} />
+                            <MaterialCommunityIcons name={"check"} color={"#5F59F7"} size={24} style={{ marginLeft: 'auto', marginRight: 'auto', top: -windowHeight * 0.128, right: -windowWidth * 0.417 }} />
                         </Pressable>
 
-                        <Text style={{ top: -80, fontSize: 24, textAlign: 'left', fontWeight: '500', textAlignVertical: 'top', paddingLeft: 20 }}>
+                        <Text style={{ top: -windowHeight * 0.102, fontSize: 24, textAlign: 'left', fontWeight: '500', textAlignVertical: 'top', paddingLeft: 20 }}>
                             {username}
                         </Text>
 
-                        <Text style={{ top: -80, fontSize: 15, textAlign: 'left', textAlignVertical: 'top', paddingLeft: 20 }}>
+                        <Text style={{ top: -windowHeight * 0.102, fontSize: 15, textAlign: 'left', textAlignVertical: 'top', paddingLeft: 20 }}>
                             {major} {role}
                         </Text>
                     </View>
 
-                    <View style={{ top: -80, alignItems: 'flex-start', display: 'flex', marginRight: 250 }}>
+                    <View style={{ top: -windowHeight * 0.102, alignItems: 'flex-start', display: 'flex', marginRight: windowWidth * 0.651 }}>
 
                         <View style={{ paddingTop: 10 }}>
                             <Text style={{ fontSize: 18 }}>
@@ -174,7 +172,7 @@ export default function ProfileScreen({ navigation }) {
                             </Text>
                             <TextInput onChangeText={text => setUsername(text)} style={{
                                 fontSize: 15, width: 230, borderRadius: 20,
-                                position: 'absolute', color: 'black', borderColor: '#9E9E9E', backgroundColor: '#F1F1F1', borderWidth: 1, marginTop: 10, marginLeft: 100, paddingLeft: 10, paddingRight: 10
+                                position: 'absolute', color: 'black', borderColor: '#9E9E9E', backgroundColor: '#F1F1F1', borderWidth: 1, marginTop: 10, marginLeft: windowWidth * 0.26, paddingLeft: 10, paddingRight: 10
                             }}>
                                 <Text style={{ paddingLeft: 20 }}>
                                     {username}
@@ -188,7 +186,7 @@ export default function ProfileScreen({ navigation }) {
                             </Text>
                             <TextInput onChangeText={text => setEmail(text)} style={{
                                 fontSize: 15, width: 230, borderRadius: 20,
-                                position: 'absolute', color: 'black', borderColor: '#9E9E9E', backgroundColor: '#F1F1F1', borderWidth: 1, marginTop: 30, marginLeft: 100, paddingLeft: 10, paddingRight: 10
+                                position: 'absolute', color: 'black', borderColor: '#9E9E9E', backgroundColor: '#F1F1F1', borderWidth: 1, marginTop: 30, marginLeft: windowWidth * 0.26, paddingLeft: 10, paddingRight: 10
                             }}>
                                 <Text style={{ paddingLeft: 20 }}>
                                     {email}
@@ -202,7 +200,7 @@ export default function ProfileScreen({ navigation }) {
                             </Text>
                             <TextInput onChangeText={text => setMajor(text)} style={{
                                 fontSize: 15, width: 230, borderRadius: 20,
-                                position: 'absolute', color: 'black', backgroundColor: '#F1F1F1', borderColor: '#9E9E9E', borderWidth: 1, marginTop: 30, marginLeft: 100, paddingLeft: 10, paddingRight: 10
+                                position: 'absolute', color: 'black', backgroundColor: '#F1F1F1', borderColor: '#9E9E9E', borderWidth: 1, marginTop: 30, marginLeft: windowWidth * 0.26, paddingLeft: 10, paddingRight: 10
                             }}>
                                 {major}
                             </TextInput>
@@ -214,7 +212,7 @@ export default function ProfileScreen({ navigation }) {
                             </Text>
                             <TextInput onChangeText={text => setRole(text)} style={{
                                 fontSize: 15, width: 230, borderRadius: 20,
-                                position: 'absolute', color: 'black', backgroundColor: '#F1F1F1', borderColor: '#9E9E9E', borderWidth: 1, marginTop: 30, marginLeft: 100, paddingLeft: 10, paddingRight: 10
+                                position: 'absolute', color: 'black', backgroundColor: '#F1F1F1', borderColor: '#9E9E9E', borderWidth: 1, marginTop: 30, marginLeft: windowWidth * 0.26, paddingLeft: 10, paddingRight: 10
                             }}>
                                 {role}
                             </TextInput>
@@ -226,7 +224,7 @@ export default function ProfileScreen({ navigation }) {
                             </Text>
                             <TextInput onChangeText={text => setUniversity(text)} style={{
                                 fontSize: 15, width: 230, borderRadius: 20,
-                                position: 'absolute', color: 'black', backgroundColor: '#F1F1F1', borderColor: '#9E9E9E', borderWidth: 1, marginTop: 30, marginLeft: 100, paddingLeft: 10, paddingRight: 10
+                                position: 'absolute', color: 'black', backgroundColor: '#F1F1F1', borderColor: '#9E9E9E', borderWidth: 1, marginTop: 30, marginLeft: windowWidth * 0.26, paddingLeft: 10, paddingRight: 10
                             }}>
                                 {university}
                             </TextInput>
@@ -238,7 +236,7 @@ export default function ProfileScreen({ navigation }) {
                             </Text>
                             <TextInput onChangeText={text => setCity(text)} style={{
                                 fontSize: 15, width: 230, borderRadius: 20,
-                                position: 'absolute', color: 'black', backgroundColor: '#F1F1F1', borderColor: '#9E9E9E', borderWidth: 1, marginTop: 30, marginLeft: 100, paddingLeft: 10, paddingRight: 10
+                                position: 'absolute', color: 'black', backgroundColor: '#F1F1F1', borderColor: '#9E9E9E', borderWidth: 1, marginTop: 30, marginLeft: windowWidth * 0.26, paddingLeft: 10, paddingRight: 10
                             }}>
                                 {city}
                             </TextInput>
@@ -250,7 +248,7 @@ export default function ProfileScreen({ navigation }) {
                             </Text>
                             <TextInput onChangeText={text => setZipCode(text)} style={{
                                 fontSize: 15, width: 230, borderRadius: 20,
-                                position: 'absolute', color: 'black', backgroundColor: '#F1F1F1', borderColor: '#9E9E9E', borderWidth: 1, marginTop: 30, marginLeft: 100, paddingLeft: 10, paddingRight: 10
+                                position: 'absolute', color: 'black', backgroundColor: '#F1F1F1', borderColor: '#9E9E9E', borderWidth: 1, marginTop: 30, marginLeft: windowWidth * 0.26, paddingLeft: 10, paddingRight: 10
                             }}>
                                 {zipCode}
                             </TextInput>
@@ -262,7 +260,7 @@ export default function ProfileScreen({ navigation }) {
                             </Text>
                             <TextInput onChangeText={text => setCourses(text)} style={{
                                 fontSize: 15, width: 230, borderRadius: 20,
-                                position: 'absolute', color: 'black', backgroundColor: '#F1F1F1', borderColor: '#9E9E9E', borderWidth: 1, marginTop: 30, marginLeft: 100, paddingLeft: 10, paddingRight: 10
+                                position: 'absolute', color: 'black', backgroundColor: '#F1F1F1', borderColor: '#9E9E9E', borderWidth: 1, marginTop: 30, marginLeft: windowWidth * 0.26, paddingLeft: 10, paddingRight: 10
                             }}>
                                 {courses}
                             </TextInput>
@@ -275,7 +273,7 @@ export default function ProfileScreen({ navigation }) {
                                 </Text>
                                 <TextInput onChangeText={text => setHourlyRate(text)} style={{
                                     fontSize: 15, width: 230, borderRadius: 20,
-                                    position: 'absolute', color: 'black', backgroundColor: '#F1F1F1', borderColor: '#9E9E9E', borderWidth: 1, marginTop: 30, marginLeft: 100, paddingLeft: 10, paddingRight: 10
+                                    position: 'absolute', color: 'black', backgroundColor: '#F1F1F1', borderColor: '#9E9E9E', borderWidth: 1, marginTop: 30, marginLeft: windowWidth * 0.26, paddingLeft: 10, paddingRight: 10
                                 }}>
                                     {hourlyRate}
                                 </TextInput>
@@ -290,7 +288,7 @@ export default function ProfileScreen({ navigation }) {
                             </Text>
                             <TextInput multiline={true} onChangeText={text => setAbout(text)} style={{
                                 fontSize: 15, width: 230, borderRadius: 20, paddingTop: 5,
-                                position: 'absolute', color: 'black', backgroundColor: '#F1F1F1', borderColor: '#9E9E9E', borderWidth: 1, marginTop: 30, marginLeft: 100, paddingLeft: 10, paddingRight: 10
+                                position: 'absolute', color: 'black', backgroundColor: '#F1F1F1', borderColor: '#9E9E9E', borderWidth: 1, marginTop: 30, marginLeft: windowWidth * 0.26, paddingLeft: 10, paddingRight: 10
                                 , textAlignVertical: "top", height: 200
                             }}>
                                 {about}
@@ -303,34 +301,34 @@ export default function ProfileScreen({ navigation }) {
             ) : (
                 <ScrollView showsVerticalScrollIndicator={false} showsHorizontalScrollIndicator={false} contentContainerStyle={styles.contentContainer} style={{ backgroundColor: '#FFFFFF' }}>
 
-                    <View style={{ flexDirection: 'row', marginBottom: 10, top: -15 }}>
+                    <View style={{ flexDirection: 'row', marginBottom: 10, top: -windowHeight * 0.019 }}>
                         <TextInput placeholder="Search" value={searchValue} onChangeText={newText => setGlobalState("searchValue", newText)}
                             onSubmitEditing={() => navigation.navigate('Search', { screen: 'Search' })}
                             style={{ backgroundColor: '#F1F1F1', height: 40, width: windowWidth * 0.95, borderRadius: 20, paddingLeft: 40, fontSize: 15 }} />
-                        <MaterialCommunityIcons name={"magnify"} color={"#9E9E9E"} size={20} style={{ top: 10, position: 'absolute', paddingLeft: 10 }} />
+                        <MaterialCommunityIcons name={"magnify"} color={"#9E9E9E"} size={20} style={{ top: windowHeight * 0.0128, position: 'absolute', paddingLeft: 10 }} />
                     </View>
 
-                    <View style={{ top: -15 }}>
+                    <View style={{ top: -windowHeight * 0.019 }}>
                         <Image source={{ uri: coverPicture === "" ? publicFolder + "defaultBackground.jpg" : coverPicture }} style={{ height: 130, width: windowWidth }} />
 
-                        <View style={{ top: -60, height: 120, width: 120, borderRadius: 60, paddingLeft: 20 }}>
+                        <View style={{ top: -windowHeight * 0.0768, height: 120, width: 120, borderRadius: 60, paddingLeft: 20 }}>
                             <Image source={{ uri: profilePicture === "" ? publicFolder + "defaultProfilePicture.png" : profilePicture }} style={{ height: 120, width: 120, borderRadius: 60, borderWidth: 3, borderColor: '#FFFFFF' }} />
                         </View>
 
                         <Pressable onPress={handleEditProfileClick}>
-                            <MaterialCommunityIcons name={"pencil-outline"} color={"#5F59F7"} size={24} style={{ marginLeft: 'auto', marginRight: 'auto', top: -100, right: -160 }} />
+                            <MaterialCommunityIcons name={"pencil-outline"} color={"#5F59F7"} size={24} style={{ marginLeft: 'auto', marginRight: 'auto', top: -windowHeight * 0.128, right: -windowWidth * 0.4167 }} />
                         </Pressable>
 
-                        <Text style={{ top: -80, fontSize: 24, textAlign: 'left', fontWeight: '500', textAlignVertical: 'top', paddingLeft: 20 }}>
+                        <Text style={{ top: -windowHeight * 0.105, fontSize: 24, textAlign: 'left', fontWeight: '500', textAlignVertical: 'top', paddingLeft: 20 }}>
                             {username}
                         </Text>
 
-                        <Text style={{ top: -80, fontSize: 15, textAlign: 'left', textAlignVertical: 'top', paddingLeft: 20 }}>
+                        <Text style={{ top: -windowHeight * 0.105, fontSize: 15, textAlign: 'left', textAlignVertical: 'top', paddingLeft: 20 }}>
                             {major} {role}
                         </Text>
                     </View>
 
-                    <View style={{ top: -80, flex: 1, flexDirection: 'row', flexWrap: 'wrap' }}>
+                    <View style={{ top: -windowHeight * 0.105, flex: 1, flexDirection: 'row', flexWrap: 'wrap' }}>
                         <View style={{ alignItems: 'center', width: '50%', paddingTop: 30 }}>
                             <View style={{ flexDirection: 'row' }}>
                                 <MaterialCommunityIcons name={"email"} color={"#5F59F7"} size={20} style={{ paddingRight: 5 }} />
@@ -400,7 +398,7 @@ export default function ProfileScreen({ navigation }) {
 
                     <View style={{ padding: 100 }}></View>
 
-                    <Pressable backgroundColor={'#5F59F7'} style={{ top: 720, height: 60, width: 320, borderRadius: 40, alignItems: 'center', justifyContent: 'center', position: 'absolute' }} onPress={handleLogOutClick}>
+                    <Pressable backgroundColor={'#5F59F7'} style={{ top: windowHeight * 0.922, height: 60, width: 320, borderRadius: 40, alignItems: 'center', justifyContent: 'center', position: 'absolute' }} onPress={handleLogOutClick}>
                         <Text style={{ color: 'white', fontSize: 18 }}>
                             Log Out
                         </Text>

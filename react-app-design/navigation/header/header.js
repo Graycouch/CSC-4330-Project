@@ -1,11 +1,14 @@
 import * as React from 'react';
-import { View, Text, Button, Image, TextInput, Pressable, ScrollView, StyleSheet } from 'react-native';
+import { View, Text, Button, Image, TextInput, Pressable, ScrollView, StyleSheet, Dimensions } from 'react-native';
 import { useGlobalState, setGlobalState } from '../../index';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
 
 export default function Header({ navigation }) {
     const [searchValue] = useGlobalState("searchValue");
+
+    const windowWidth = Dimensions.get('window').width;
+    const windowHeight = Dimensions.get('window').height;
 
     //TODO
     //const [profilePicture, setProfilePicture] = useState(user.profilePicture);
@@ -43,34 +46,34 @@ export default function Header({ navigation }) {
             {/* Top Bar */}
             <View style={styles.logoProfileContainer}>
                 {/* Logo */}
-                <Image 
-                    source={require('../../assets/logo2.png')} 
-                    style={{height: 60, width: 100, resizeMode: "contain"  }}
+                <Image
+                    source={require('../../assets/logo2.png')}
+                    style={{ height: 60, width: 100, resizeMode: "contain" }}
                     onPress={() =>
                         navigation.navigate('Home')
-                      } 
+                    }
                 />
 
                 {/* User Profile Picture */}
                 <Pressable
                     onPress={() =>
                         navigation.navigate('Profile')
-                    } 
+                    }
                 >
-                <Image 
-                    source={require('../../assets/abdel.jpg')} 
-                    style={{ height: 60, width: 60, borderRadius: 60, borderWidth: 3, borderColor: '#FFFFFF' }}
-                />
+                    <Image
+                        source={require('../../assets/abdel.jpg')}
+                        style={{ height: 60, width: 60, borderRadius: 60, borderWidth: 3, borderColor: '#FFFFFF' }}
+                    />
                 </Pressable>
             </View>
 
 
             {/* Search Bar */}
-            <View style={{ flexDirection: 'row', marginBottom: 10, marginTop: 10, justifyContent: "center" }}>
+            <View style={{ flexDirection: 'row', marginBottom: 10, top: -windowHeight * 0.019 }}>
                 <TextInput placeholder="Search" value={searchValue} onChangeText={newText => setGlobalState("searchValue", newText)}
                     onSubmitEditing={() => navigation.navigate('Search', { screen: 'Search' })}
-                    style={{ backgroundColor: '#F1F1F1', height: 40, width: 350, borderRadius: 10, paddingLeft: 40, fontSize: 15 }} />
-                <MaterialCommunityIcons name={"magnify"} color={"#9E9E9E"} size={20} style={{ top: 10, position: 'absolute', left: 10, paddingLeft: 10 }} />
+                    style={{ backgroundColor: '#F1F1F1', height: 40, width: windowWidth * 0.95, borderRadius: 20, paddingLeft: 40, fontSize: 15 }} />
+                <MaterialCommunityIcons name={"magnify"} color={"#9E9E9E"} size={20} style={{ top: windowHeight * 0.0128, position: 'absolute', paddingLeft: 10 }} />
             </View>
 
 
