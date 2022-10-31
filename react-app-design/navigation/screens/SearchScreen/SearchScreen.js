@@ -37,39 +37,41 @@ export default function SearchScreen({ navigation }) {
                             role === user.role ? (
                                 <View key={username} />
                             ) : (
-                                <View key={username} style={{
-                                    height: windowHeight / 5, width: 0.85 * windowWidth, backgroundColor: '#F5F5F5', borderWidth: 1,
-                                    borderColor: '#9E9E9E', borderRadius: 20, marginBottom: 25
-                                }}>
+                                <Pressable key={username} onPress={() => console.log("Hello")}>
+                                    <View style={{
+                                        height: windowHeight / 5, width: 0.85 * windowWidth, backgroundColor: '#F5F5F5', borderWidth: 1,
+                                        borderColor: '#9E9E9E', borderRadius: 20, marginBottom: 25
+                                    }}>
 
-                                    <Image source={{ uri: coverPicture === "" ? publicFolder + "defaultBackground.jpg" : coverPicture }} style={{ height: 50, width: windowWidth * 0.845, borderTopLeftRadius: 20, borderTopRightRadius: 20 }} />
+                                        <Image source={{ uri: coverPicture === "" ? publicFolder + "defaultBackground.jpg" : coverPicture }} style={{ height: 50, width: windowWidth * 0.845, borderTopLeftRadius: 20, borderTopRightRadius: 20 }} />
 
-                                    <View style={{ top: -40, height: 80, width: 80, borderRadius: 40, paddingLeft: 15 }}>
-                                        <Image source={{ uri: profilePicture === "" ? publicFolder + "defaultProfilePicture.png" : profilePicture }} style={{ height: 80, width: 80, borderRadius: 40, borderWidth: 2, borderColor: '#FFFFFF' }} />
-                                    </View>
-
-                                    <View style={{ flexDirection: 'row' }}>
-                                        <View>
-                                            <Text style={{ top: -windowHeight * 0.05, fontSize: 15, textAlign: 'left', fontWeight: '500', textAlignVertical: 'top', paddingLeft: 15 }}>
-                                                {username}
-                                            </Text>
-                                            {courses.map((course) => (
-                                                <Text key={course} style={{ top: -windowHeight * 0.05, fontSize: 12, textAlign: 'left', fontWeight: '400', textAlignVertical: 'top', paddingLeft: 15, paddingTop: 10, color: 'gray' }}>
-                                                    {course}
-                                                </Text>
-                                            ))}
+                                        <View style={{ top: -40, height: 80, width: 80, borderRadius: 40, paddingLeft: 15 }}>
+                                            <Image source={{ uri: profilePicture === "" ? publicFolder + "defaultProfilePicture.png" : profilePicture }} style={{ height: 80, width: 80, borderRadius: 40, borderWidth: 2, borderColor: '#FFFFFF' }} />
                                         </View>
 
-                                        <Text style={{ position: 'absolute', top: -windowHeight * 0.028, right: windowHeight * 0.025, fontSize: 15, textAlign: 'left', fontWeight: '400', textAlignVertical: 'top', paddingLeft: 15, paddingTop: 10, color: '#2970FE' }}>
-                                            ${hourlyRate}/hr
-                                        </Text>
+                                        <View style={{ flexDirection: 'row' }}>
+                                            <View>
+                                                <Text style={{ top: -windowHeight * 0.05, fontSize: 15, textAlign: 'left', fontWeight: '500', textAlignVertical: 'top', paddingLeft: 15 }}>
+                                                    {username}
+                                                </Text>
+                                                {courses.map((course) => (
+                                                    <Text key={course} style={{ top: -windowHeight * 0.05, fontSize: 12, textAlign: 'left', fontWeight: '400', textAlignVertical: 'top', paddingLeft: 15, paddingTop: 10, color: 'gray' }}>
+                                                        {course}
+                                                    </Text>
+                                                ))}
+                                            </View>
 
-                                        <Text style={{ position: 'absolute', top: -windowHeight * 0.06, right: windowHeight * 0.025, fontSize: 12, textAlign: 'left', fontWeight: '400', textAlignVertical: 'top', paddingLeft: 15, paddingTop: 10, color: 'gray' }}>
-                                            {city}, {zipCode}
-                                        </Text>
+                                            <Text style={{ position: 'absolute', top: -windowHeight * 0.028, right: windowHeight * 0.025, fontSize: 15, textAlign: 'left', fontWeight: '400', textAlignVertical: 'top', paddingLeft: 15, paddingTop: 10, color: '#2970FE' }}>
+                                                ${hourlyRate}/hr
+                                            </Text>
+
+                                            <Text style={{ position: 'absolute', top: -windowHeight * 0.06, right: windowHeight * 0.025, fontSize: 12, textAlign: 'left', fontWeight: '400', textAlignVertical: 'top', paddingLeft: 15, paddingTop: 10, color: 'gray' }}>
+                                                {city}, {zipCode}
+                                            </Text>
+                                        </View>
+
                                     </View>
-
-                                </View>
+                                </Pressable>
                             )
                         )
                         )}

@@ -2,6 +2,7 @@ import * as React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import { Dimensions } from 'react-native';
 
 import HomeScreen from './screens/HomeScreen/HomeScreen';
 import SearchScreen from './screens/SearchScreen/SearchScreen';
@@ -12,6 +13,9 @@ const homeName = "Home";
 const searchName = "Search";
 const messageName = "Message";
 const profileName = "Profile";
+
+const windowWidth = Dimensions.get('window').width;
+const windowHeight = Dimensions.get('window').height;
 
 const Tab = createBottomTabNavigator();
 
@@ -41,11 +45,11 @@ export default function MainContainer() {
 
                         return <Ionicons name={iconName} size={size} color={color} />;
                     },
-                    
+
                     tabBarActiveTintColor: '#5F59F7',
                     tabBarInactiveTintColor: 'grey',
                     tabBarLabelStyle: { paddingBottom: 10, fontSize: 10 },
-                    tabBarStyle: { padding: 10, height: 70, backgroundColor: '#F1F1F1' }
+                    tabBarStyle: { padding: 10, height: windowHeight * 0.0896, backgroundColor: '#F1F1F1' }
                 })}>
 
                 <Tab.Screen name={homeName} component={HomeScreen} options={{ headerShown: false }} />
