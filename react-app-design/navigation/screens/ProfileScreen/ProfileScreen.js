@@ -73,7 +73,7 @@ export default function ProfileScreen({ navigation }) {
                 email: email,
                 role: role,
                 major: major,
-                courses: courses,
+                courses: coursesView.split(", "),
                 city: city,
                 zipCode: zipCode,
                 university: university,

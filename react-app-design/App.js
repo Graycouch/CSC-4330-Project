@@ -14,17 +14,7 @@ const Stack = createNativeStackNavigator();
 function App() {
   const [isLoggedIn] = useGlobalState("isLoggedIn");
   const [localhost] = useGlobalState("localhost");
-
-  useEffect(() => {
-    axios.get(`http://${localhost}:8800/api/users/all`, {
-    })
-      .then((response) => {
-        setGlobalState("allUsers", response.data);
-      }, (error) => {
-        console.log(error);
-      });
-  }, [])
-
+  const [user] = useGlobalState("user");
 
   return (
     <NavigationContainer independent={true}>

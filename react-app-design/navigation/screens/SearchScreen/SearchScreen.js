@@ -108,9 +108,7 @@ export default function SearchScreen({ navigation }) {
                     <View>
                         <>
                             {allUsers.map((currentUser, index) => (
-                                currentUser.role === user.role ? (
-                                    <View key={currentUser.username} />
-                                ) : (
+                                currentUser.role !== user.role && (searchValue !== "" ? (currentUser.major === searchValue) : (true)) ? (
                                     <Pressable key={currentUser.username} onPress={() => handleUserBoxClick(currentUser)}>
                                         <View style={{
                                             height: windowHeight * 0.2, width: 0.85 * windowWidth, backgroundColor: '#F5F5F5', borderWidth: 1,
@@ -142,18 +140,27 @@ export default function SearchScreen({ navigation }) {
                                                     }}>
                                                         {currentUser.username}
                                                     </Text>
-                                                    {courses.map((course) => (
-                                                        <Text key={course} style={{
-                                                            top: -windowHeight * 0.05, fontSize: 12, textAlign: 'left', fontWeight: '400',
-                                                            textAlignVertical: 'top', paddingLeft: windowWidth * 0.039, paddingTop: windowHeight * 0.0128, color: 'gray'
-                                                        }}>
-                                                            {currentUser.courses}
-                                                        </Text>
-                                                    ))}
+
+                                                    <Text style={{
+                                                        top: -windowHeight * 0.05, fontSize: 12, textAlign: 'left', fontWeight: '400',
+                                                        textAlignVertical: 'top', paddingLeft: windowWidth * 0.039
+                                                    }}>
+                                                        {currentUser.major} {currentUser.role}
+                                                    </Text>
+
+                                                    <Text style={{ paddingLeft: windowWidth * 0.042, top: -windowHeight * 0.045 }}>
+                                                        {currentUser.courses.map((course) => (
+                                                            <Text key={course} style={{
+                                                                fontSize: 10, textAlign: 'left', fontWeight: '400', color: 'gray'
+                                                            }}>
+                                                                {course} {"  "}
+                                                            </Text>
+                                                        ))}
+                                                    </Text>
                                                 </View>
 
                                                 <Text style={{
-                                                    position: 'absolute', top: -windowHeight * 0.028, right: windowHeight * 0.025,
+                                                    position: 'absolute', top: -windowHeight * 0.073, right: windowHeight * 0.025,
                                                     fontSize: 15, textAlign: 'left', fontWeight: '400', textAlignVertical: 'top', paddingLeft: windowWidth * 0.039,
                                                     paddingTop: windowHeight * 0.0128, color: '#2970FE'
                                                 }}>
@@ -161,7 +168,7 @@ export default function SearchScreen({ navigation }) {
                                                 </Text>
 
                                                 <Text style={{
-                                                    position: 'absolute', top: -windowHeight * 0.06, right: windowHeight * 0.025,
+                                                    position: 'absolute', top: -windowHeight * 0.1, right: windowHeight * 0.025,
                                                     fontSize: 12, textAlign: 'left', fontWeight: '400', textAlignVertical: 'top', paddingLeft: windowWidth * 0.039,
                                                     paddingTop: windowHeight * 0.0128, color: 'gray'
                                                 }}>
@@ -171,6 +178,8 @@ export default function SearchScreen({ navigation }) {
 
                                         </View>
                                     </Pressable>
+                                ) : (
+                                    <View key={currentUser.username} />
                                 )
                             )
                             )}

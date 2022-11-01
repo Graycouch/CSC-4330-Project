@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useGlobalState, setGlobalState } from '../../../index';
 import { View, Text, Button, Image, TextInput, Pressable, ScrollView, StyleSheet, Dimensions } from 'react-native';
 import { CheckBox } from '@rneui/themed';
@@ -10,9 +10,20 @@ export default function LoginScreen({ navigation }) {
     const [checked, setchecked] = useState(false);
     const [email, setEmail] = useState(false);
     const [password, setPassword] = useState(false);
+    const [viewPassword, setViewPassword] = useState(true);
 
     const windowWidth = Dimensions.get('window').width;
     const windowHeight = Dimensions.get('window').height;
+
+    useEffect(() => {
+        axios.get(`http://${localhost}:8800/api/users/all`, {
+        })
+            .then((response) => {
+                setGlobalState("allUsers", response.data);
+            }, (error) => {
+                console.log(error);
+            });
+    }, [])
 
     const handleLogInClick = (e) => {
         e.preventDefault();
@@ -39,6 +50,11 @@ export default function LoginScreen({ navigation }) {
         navigation.navigate('ForgotPassword');
     }
 
+    const handleViewPasswordClick = (e) => {
+        e.preventDefault();
+        setViewPassword(!viewPassword);
+    }
+
     return (
         <View style={{ alignItems: 'center', justifyContent: 'center' }}>
             <Image source={require('../../../assets/logo2.png')} style={{ top: windowHeight * 0.11, height: windowHeight * 0.153, width: windowWidth * 0.57 }} />
@@ -58,12 +74,14 @@ export default function LoginScreen({ navigation }) {
 
             <View style={{ top: windowHeight * 0.25, flexDirection: 'row' }}>
                 <TextInput placeholder="Password" onChangeText={newText => setPassword(newText)} textContentType={'password'}
-                    secureTextEntry={true} style={{
+                    secureTextEntry={viewPassword} style={{
                         backgroundColor: '#F1F1F1', height: windowHeight * 0.064, width: windowWidth * 0.833,
                         borderRadius: windowHeight * 0.019, paddingLeft: windowWidth * 0.104, fontSize: 15
                     }} />
                 <MaterialCommunityIcons name={"lock"} color={"#9E9E9E"} size={24} style={{ top: windowHeight * 0.015, position: 'absolute', paddingLeft: windowWidth * 0.026 }} />
-                <MaterialCommunityIcons name={"eye-off"} color={"#9E9E9E"} size={24} style={{ top: windowHeight * 0.015, position: 'absolute', paddingLeft: windowWidth * 0.729 }} />
+                <Pressable onPress={handleViewPasswordClick}>
+                    <MaterialCommunityIcons name={"eye-off"} color={"#9E9E9E"} size={24} style={{ top: windowHeight * 0.015, right: windowWidth * 0.04, position: 'absolute' }} />
+                </Pressable>
             </View>
 
             <View style={{ top: windowHeight * 0.27 }}>

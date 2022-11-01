@@ -10,6 +10,8 @@ export default function RegisterScreen({ navigation }) {
     const [username, setUsername] = useState(false);
     const [email, setEmail] = useState(false);
     const [password, setPassword] = useState(false);
+    const [viewPassword, setViewPassword] = useState(true);
+
 
     const windowWidth = Dimensions.get('window').width;
     const windowHeight = Dimensions.get('window').height;
@@ -35,6 +37,11 @@ export default function RegisterScreen({ navigation }) {
         navigation.navigate('Login');
     }
 
+    const handleViewPasswordClick = (e) => {
+        e.preventDefault();
+        setViewPassword(!viewPassword);
+    }
+
     return (
         <View style={{ alignItems: 'center', justifyContent: 'center' }}>
             <Image source={require('../../../assets/logo2.png')} style={{ top: windowHeight * 0.11, height: windowHeight * 0.153, width: windowWidth * 0.57 }} />
@@ -57,12 +64,14 @@ export default function RegisterScreen({ navigation }) {
             </View>
 
             <View style={{ top: windowHeight * 0.28, flexDirection: 'row' }}>
-                <TextInput placeholder="Password" onChangeText={newText => setPassword(newText)} secureTextEntry={true} style={{
+                <TextInput placeholder="Password" onChangeText={newText => setPassword(newText)} secureTextEntry={viewPassword} style={{
                     backgroundColor: '#F1F1F1', height: windowHeight * 0.064, width: windowWidth * 0.833,
                     borderRadius: windowHeight * 0.019, paddingLeft: windowWidth * 0.104, fontSize: 15
                 }} />
                 <MaterialCommunityIcons name={"lock"} color={"#9E9E9E"} size={24} style={{ top: windowHeight * 0.015, position: 'absolute', paddingLeft: windowWidth * 0.026 }} />
-                <MaterialCommunityIcons name={"eye-off"} color={"#9E9E9E"} size={24} style={{ top: windowHeight * 0.015, position: 'absolute', paddingLeft: windowWidth * 0.729 }} />
+                <Pressable onPress={handleViewPasswordClick}>
+                    <MaterialCommunityIcons name={"eye-off"} color={"#9E9E9E"} size={24} style={{ top: windowHeight * 0.015, right: windowWidth * 0.04, position: 'absolute' }} />
+                </Pressable>
             </View>
 
             <Pressable backgroundColor={'#5F59F7'} style={{
