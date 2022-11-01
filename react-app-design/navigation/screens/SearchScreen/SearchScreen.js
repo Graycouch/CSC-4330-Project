@@ -24,9 +24,12 @@ export default function SearchScreen({ navigation }) {
     const [hourlyRate, setHourlyRate] = useState("");
     const [profilePicture, setProfilePicture] = useState("");
     const [coverPicture, setCoverPicture] = useState("");
+    const [searchPageBar, setSearchPageBar] = useState(searchValue);
 
     const windowWidth = Dimensions.get('window').width;
     const windowHeight = Dimensions.get('window').height;
+
+    allUsers.sort((a, b) => parseInt(a.zipCode) - parseInt(b.zipCode));
 
     const styles = StyleSheet.create({
         contentContainer: {
@@ -99,16 +102,18 @@ export default function SearchScreen({ navigation }) {
             {!boxClicked ? (
                 <ScrollView showsVerticalScrollIndicator={false} showsHorizontalScrollIndicator={false} contentContainerStyle={styles.contentContainer} style={{ backgroundColor: '#FFFFFF' }}>
                     <View style={{ flexDirection: 'row', marginBottom: windowHeight * 0.0128, top: -windowHeight * 0.019 }}>
-                        <TextInput placeholder="Search" value={searchValue} onChangeText={newText => setGlobalState("searchValue", newText)}
-                            onSubmitEditing={() => navigation.navigate('Search', { screen: 'Search' })}
-                            style={{ backgroundColor: '#F1F1F1', height: windowHeight * 0.0512, width: windowWidth * 0.95, borderRadius: windowHeight * 0.0256, paddingLeft: windowWidth * 0.104, fontSize: 15 }} />
+                        <TextInput placeholder="Search" value={searchPageBar} onChangeText={newText => setSearchPageBar(newText)}
+                            onSubmitEditing={() => setGlobalState("searchValue", searchPageBar)} style={{
+                                backgroundColor: '#F1F1F1', height: windowHeight * 0.0512,
+                                width: windowWidth * 0.95, borderRadius: windowHeight * 0.0256, paddingLeft: windowWidth * 0.104, fontSize: 15
+                            }} />
                         <MaterialCommunityIcons name={"magnify"} color={"#9E9E9E"} size={20} style={{ top: windowHeight * 0.0128, position: 'absolute', paddingLeft: windowWidth * 0.026 }} />
                     </View>
 
                     <View>
                         <>
                             {allUsers.map((currentUser, index) => (
-                                currentUser.role !== user.role && (searchValue !== "" ? (currentUser.major === searchValue) : (true)) ? (
+                                currentUser.role !== user.role && (searchValue !== "" ? (currentUser.major.toLowerCase() === searchValue.toLowerCase()) : (true)) ? (
                                     <Pressable key={currentUser.username} onPress={() => handleUserBoxClick(currentUser)}>
                                         <View style={{
                                             height: windowHeight * 0.2, width: 0.85 * windowWidth, backgroundColor: '#F5F5F5', borderWidth: 1,
