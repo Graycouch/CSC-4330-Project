@@ -1,3 +1,4 @@
+import * as React from 'react';
 import { useState, useEffect } from 'react';
 import { useGlobalState, setGlobalState } from '../../../index';
 import { View, Text, Button, Image, TextInput, Pressable, ScrollView, StyleSheet, Dimensions } from 'react-native';
@@ -29,7 +30,11 @@ export default function SearchScreen({ navigation }) {
     const windowWidth = Dimensions.get('window').width;
     const windowHeight = Dimensions.get('window').height;
 
-    allUsers.sort((a, b) => parseInt(a.zipCode) - parseInt(b.zipCode));
+    allUsers.sort((a, b) => {
+        let aZipCode = Math.abs(parseInt(a.zipCode) - parseInt(user.zipCode));
+        let bZipCode = Math.abs(parseInt(b.zipCode) - parseInt(user.zipCode));
+        return aZipCode - bZipCode;
+    });
 
     const styles = StyleSheet.create({
         contentContainer: {
