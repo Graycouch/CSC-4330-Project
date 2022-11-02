@@ -17,9 +17,11 @@ export default function HomeScreen({ navigation }) {
 
     const [username, setUsername] = useState(user.username);
 
+    const [staticContentURL] = useGlobalState("staticContentURL");
+    const imageURL = staticContentURL + '/images/';
 
     // Temporary Hardcoding for Mid-term Demo
-    const UpcomingLessons = [...allUsers.slice(0,1), ...allUsers.slice(0,1)]; //allUsers;//[...allUsers.slice(0,1), ...allUsers.slice(0,1)];
+    const UpcomingLessons = [...allUsers.slice(0,1), ...allUsers.slice(0,1)];
     const MyTeachers = allUsers.slice(0,1);
     const SuggestedTeachers = allUsers.slice(2,5);
 
@@ -93,13 +95,13 @@ export default function HomeScreen({ navigation }) {
                                 currentUser.role !== user.role && (searchValue !== "" ? (currentUser.major.toLowerCase() === searchValue.toLowerCase()) : (true)) ? (
                                     <Pressable key={index} onPress={() => handleUserBoxClick(currentUser)}>
                                         <View style={{
-                                            height: 200, width: '100%', backgroundColor: '#F5F5F5', borderWidth: 1,
+                                            height: 200, width: '100%', backgroundColor: "rgba(245,245,245, 0.4)", borderWidth: 1,
                                             borderColor: '#9E9E9E', borderRadius: windowHeight * 0.0256, marginBottom: windowHeight * 0.032
                                         }}>
 
-                                            <Image source={{ uri: currentUser.coverPicture === "" ? publicFolder + "defaultBackground.jpg" : currentUser.coverPicture }}
+                                            <Image source={{ uri: currentUser.coverPicture === "" ? imageURL + "defaultBackground.jpg" : imageURL + 'banner_LSUtemp.jpeg' }}
                                                 style={{
-                                                    height: windowHeight * 0.064, width: windowWidth * 0.845,
+                                                    height: windowHeight * 0.12, width: '100%',
                                                     borderTopLeftRadius: windowHeight * 0.0256, borderTopRightRadius: windowHeight * 0.0256
                                                 }} />
 
@@ -107,7 +109,7 @@ export default function HomeScreen({ navigation }) {
                                                 top: -windowHeight * 0.0512, height: windowHeight * 0.1024, width: windowHeight * 0.1024,
                                                 borderRadius: windowHeight * 0.0512, paddingLeft: windowWidth * 0.039
                                             }}>
-                                                <Image source={{ uri: currentUser.profilePicture === "" ? publicFolder + "defaultProfilePicture.png" : currentUser.profilePicture }}
+                                                <Image source={{ uri: currentUser.profilePicture !== "" ? imageURL + "defaultProfilePicture.png" : currentUser.profilePicture }}
                                                     style={{
                                                         height: windowHeight * 0.1024, width: windowHeight * 0.1024,
                                                         borderRadius: windowHeight * 0.0512, borderWidth: 2, borderColor: '#FFFFFF'
