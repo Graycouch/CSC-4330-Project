@@ -86,22 +86,6 @@ export default function ProfileScreen({ navigation }) {
             console.log(err);
         }
 
-        const tempUser = user;
-        tempUser.username = username;
-        tempUser.email = email;
-        tempUser.role = role;
-        tempUser.major = major;
-        tempUser.courses = coursesView.split(", ");
-        tempUser.city = city;
-        tempUser.zipCode = zipCode;
-        tempUser.university = university;
-        tempUser.hourlyRate = hourlyRate;
-        tempUser.about = about;
-        tempUser.coverPicture = coverPicture;
-        tempUser.profilePicture = profilePicture;
-
-        setGlobalState("user", tempUser);
-
         setEditing(false);
     }
 
