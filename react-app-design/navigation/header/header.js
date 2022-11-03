@@ -7,21 +7,19 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 export default function Header({ navigation }) {
     const [searchValue] = useGlobalState("searchValue");
 
-    const windowWidth = Dimensions.get('window').width;
-    const windowHeight = Dimensions.get('window').height;
-
     //TODO
     //const [profilePicture, setProfilePicture] = useState(user.profilePicture);
-
-
-
 
     const styles = StyleSheet.create({
 
         // Overall Header Container
         Container: {
-            flexGrow: 1,
-            maxHeight: 120,
+            // flexGrow: 1,
+            display: 'fixed',
+            // flexDirection: 'column',
+            // flex: 1,
+            // height: 120,
+            backgroundColor: '#ffffff',
             // // border for debugging flex
             // border: "solid",
             // borderColor: "blue",
@@ -34,10 +32,36 @@ export default function Header({ navigation }) {
             // border: "solid",
             // borderColor: "blue",
             // borderWidth: 1,
-            backgroundColor: "#FFFFFF",
+            // backgroundColor: "#FFFFFF",
             flexDirection: "row",
-            justifyContent: "space-between"
-        }
+            justifyContent: "space-between",
+            padding: 10,
+            marginTop: 40
+        },
+
+
+        searchSection: {
+            flex: 1,
+            flexDirection: 'row',
+            justifyContent: 'center',
+            alignItems: 'center',
+            backgroundColor: '#F1F1F1',
+            borderRadius: 20,
+            height: 80
+        },
+        searchIcon: {
+            padding: 10,
+        },
+        input: {
+            flex: 1,
+            paddingTop: 10,
+            paddingRight: 10,
+            paddingBottom: 10,
+            paddingLeft: 0,
+            backgroundColor: '#F1F1F1',
+            color: '#424242',
+            height: 40
+        },
     });
 
     return (
@@ -48,7 +72,7 @@ export default function Header({ navigation }) {
                 {/* Logo */}
                 <Image
                     source={require('../../assets/logo2.png')}
-                    style={{ height: 60, width: 100, resizeMode: "contain" }}
+                    style={{ height: 50, width: 85, resizeMode: "contain" }}
                     onPress={() =>
                         navigation.navigate('Home')
                     }
@@ -62,19 +86,19 @@ export default function Header({ navigation }) {
                 >
                     <Image
                         source={require('../../assets/abdel.jpg')}
-                        style={{ height: 60, width: 60, borderRadius: 60, borderWidth: 3, borderColor: '#FFFFFF' }}
+                        style={{ height: 50, width: 50, borderRadius: 60, borderWidth: 3, borderColor: '#FFFFFF' }}
                     />
                 </Pressable>
             </View>
 
 
             {/* Search Bar */}
-            <View style={{ flexDirection: 'row', marginBottom: windowHeight * 0.0128, top: -windowHeight * 0.019 }}>
+            {/* <View style={styles.searchSection}>
+                <MaterialCommunityIcons name={"magnify"} color={"#9E9E9E"} size={20} style={styles.searchIcon} />
                 <TextInput placeholder="Search" value={searchValue} onChangeText={newText => setGlobalState("searchValue", newText)}
                     onSubmitEditing={() => navigation.navigate('Search', { screen: 'Search' })}
-                    style={{ backgroundColor: '#F1F1F1', height: windowHeight * 0.0512, width: windowWidth * 0.95, borderRadius: windowHeight * 0.0256, paddingLeft: windowWidth * 0.104, fontSize: 15 }} />
-                <MaterialCommunityIcons name={"magnify"} color={"#9E9E9E"} size={20} style={{ top: windowHeight * 0.0128, position: 'absolute', paddingLeft: windowWidth * 0.026 }} />
-            </View>
+                    style={styles.input} />
+            </View> */}
 
 
 

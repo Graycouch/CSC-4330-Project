@@ -1,7 +1,7 @@
 import { bundleDirectory } from 'expo-file-system';
 import { View, Text, Button, Image, ImageBackground, TextInput, Pressable, ScrollView, StyleSheet, Dimensions } from 'react-native';
 import { useGlobalState, setGlobalState } from '../../index.js';
-
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
 
 
@@ -10,24 +10,24 @@ const windowHeight = 1600;
 
 
 
-export function CardFactory(props) {
 
-
-    switch (props.CardType) {
+function renderSwitch(cardType, currentUser) {
+    switch (cardType) {
       case "UpcomingLesson":
-        return UpcomingLesson(props.users);
-      case "B":
-        return <B />;
-      case "C":
-        return <C />;
+        return upcomingLesson(currentUser);
+      case "MyTeachers":
+        return myTeachers(currentUser);
+      case "SuggestedTeachers":
+        return suggestedTeachers(currentUser);
       default:
-        return <Text>Reload...</Text>;
+        return <Text>card factory error...</Text>;
     }
 }
 
 
-const styles = StyleSheet.create({
 
+
+const styles = StyleSheet.create({
 
     //CardContainer
     cardContainer : {
@@ -37,14 +37,14 @@ const styles = StyleSheet.create({
         width: '100%', 
         borderWidth: 1,
         borderColor: '#9E9E9E', 
-        borderRadius: windowHeight * 0.0256, 
-        marginBottom: windowHeight * 0.032,
+        borderRadius: 20, 
+        marginBottom: 30,
     },
 
     // ProfilePicture
     profilePicture : {
-        height: 100, 
-        width: 100,
+        height: 80, 
+        width: 80,
         borderRadius: 999, 
         borderWidth: 2, 
         borderColor: '#FFFFFF',
@@ -60,29 +60,33 @@ const styles = StyleSheet.create({
 
     /// Text 
     blue : {
-        color: '#2970FE',
+        color: '#2970FE'
     },
 
     right : {
-        textAlign: 'right'
+        textAlign: 'right',
+        marginRight: 20,
+        marginleft: 0
     },
 
     top : {
-        fontSize: 22, 
+        fontSize: 18, 
         fontWeight: '500',
 
-        margin: 10,
+        
         marginTop: 0,
+        marginLeft: 20,
+        marginBottom: 10,
 
-        lineHeight: 30
+        lineHeight: 20
     },
 
     bottom : {
-        fontSize: 18 , 
+        fontSize: 14, 
 
-        margin: 10,
-        marginBottom: 40,
         marginTop: 0,
+        marginLeft: 20,
+        marginBottom: 20,
 
         color: 'grey',
 
@@ -102,17 +106,18 @@ const styles = StyleSheet.create({
             //Info
 
 
-function UpcomingLesson(users) { 
+
+export function CardFactory(props) {
     const [staticContentURL] = useGlobalState("staticContentURL");
     const imageURL = staticContentURL + '/images/';
     return (
-    users.map((currentUser, index) => (
+    props.users.map((currentUser, index) => (
             
         <Pressable key={index} onPress={() => handleUserBoxClick(currentUser)}>
             {/* Card Container */}
             <View style={[styles.cardContainer, {backgroundImage: currentUser.coverPicture === "" ? "url("+imageURL+"defaultBackground.jpg)" : "url("+imageURL+'lsuBannerTemp2.jpeg)'}]}>
                 {/* BackgroundImage */}                
-                <ImageBackground source={{uri: imageURL+'lsuBannerTemp3.jpg'}} resizeMode="stretch" imageStyle={{borderRadius: windowHeight * 0.0256}}>
+                <ImageBackground source={{uri: imageURL+'lsuBannerTemp3.jpg'}} resizeMode="stretch" imageStyle={{borderRadius: 18}}>
 
                 {/* ProfilePictureContainer */}
                 <View style={{flexDirection: 'row'}}>
@@ -121,26 +126,86 @@ function UpcomingLesson(users) {
                         style={styles.profilePicture} />
                 </View>
 
-                {/* ProfileInfoContainer */}
-                <View style={[styles.profileInfoContainer, { flexDirection: 'row', justifyContent: 'space-between', backgroundColor: "rgba(255,255,255,0)" }]}>
-                    {/* Info (Left Column) */}
-                    <View style={{ flexDirection: 'column', justifyContent: 'flex-start'}}>
-                        {/* Username */}
-                        <Text style={styles.userName}>{currentUser.username}</Text>
-                        {/* Major */}
-                        <Text style={styles.major}>{currentUser.major}</Text>
-                    </View>
-                    {/* Info (Right Column) */}
-                    <View style={{ flexDirection: 'column', justifyContent: 'flex-start' }}>
-                        {/* hourlyRate */}
-                        <Text style={styles.hourlyRate}> ${currentUser.hourlyRate} (60 min)</Text>
-                        {/* LocationInfo */}
-                        <Text style={styles.locationInfo}>Thursday 5:00PM</Text>
-                    </View>
-                </View>
+
+                {/* Text part of card that changes based on type */}
+                {renderSwitch(props.CardType, currentUser)}
+
+
                 </ImageBackground>
             </View>
         </Pressable>     
     ))
+    );
+}
+
+
+function upcomingLesson(currentUser) {
+    return (
+                <View style={[styles.profileInfoContainer, { flexDirection: 'row', justifyContent: 'space-between', backgroundColor: "rgba(255,255,255,0)" }]}>
+                    {/* Info (Left Column) */}
+                    <View style={{ flexDirection: 'column', justifyContent: 'flex-start'}}>
+                        {/* Username */}
+                        <Text style={styles.top}>{currentUser.username}</Text>
+                        {/* Major */}
+                        <Text style={styles.bottom}>{currentUser.major}</Text>
+                    </View>
+                    {/* Info (Right Column) */}
+                    <View style={{ flexDirection: 'column', justifyContent: 'flex-start' }}>
+                        {/* hourlyRate */}
+                        <Text style={[styles.blue, styles.top, styles.right]}> ${currentUser.hourlyRate}/hr</Text>
+                        {/* LocationInfo */}
+                        <Text style={[styles.locationInfo, styles.bottom, styles.right]}>Thursday 5:00PM</Text>
+                    </View>
+                </View>
+    );
+}
+
+
+function myTeachers(currentUser) {
+    return (
+                <View style={[styles.profileInfoContainer, { flexDirection: 'row', justifyContent: 'space-between', backgroundColor: "rgba(255,255,255,0)" }]}>
+                    {/* Info (Left Column) */}
+                    <View style={{ flexDirection: 'column', justifyContent: 'flex-start'}}>
+                        {/* Username */}
+                        <Text style={styles.top}>{currentUser.username}</Text>
+                        {/* Major */}
+                        <Text style={styles.bottom}>{currentUser.major}</Text>
+                    </View>
+                    {/* Info (Right Column) */}
+                    <View style={{ flexDirection: 'column', justifyContent: 'flex-start' }}>
+                        {/* hourlyRate */}
+                        <Text style={[styles.blue, styles.top, styles.right]}> ${currentUser.hourlyRate}/hr</Text>
+                        {/* LocationInfo */}
+                        <Text style={[styles.locationInfo, styles.bottom, styles.right]}>
+                        <MaterialCommunityIcons name={"calendar-clock-outline"} color={"#9E9E9E"} size={20} style={{}} />
+                             &nbsp;Schedule
+                        </Text>
+                        
+                    </View>
+                </View>
+    );
+}
+
+function suggestedTeachers(currentUser) {
+    return (
+                <View style={[styles.profileInfoContainer, { flexDirection: 'row', justifyContent: 'space-between', backgroundColor: "rgba(255,255,255,0)" }]}>
+                    {/* Info (Left Column) */}
+                    <View style={{ flexDirection: 'column', justifyContent: 'flex-start'}}>
+                        {/* Username */}
+                        <Text style={styles.top}>{currentUser.username}</Text>
+                        {/* Major */}
+                        <Text style={styles.bottom}>{currentUser.major}</Text>
+                    </View>
+                    {/* Info (Right Column) */}
+                    <View style={{ flexDirection: 'column', justifyContent: 'flex-start' }}>
+                        {/* hourlyRate */}
+                        <Text style={[styles.blue, styles.top, styles.right]}> ${currentUser.hourlyRate}/hr</Text>
+                        {/* LocationInfo */}
+                        <Text style={[styles.locationInfo, styles.bottom, styles.right]}>
+                        <MaterialCommunityIcons name={"card-account-details-outline"} color={"#9E9E9E"} size={20} style={{}} />
+                             &nbsp;Check Profile
+                        </Text>
+                    </View>
+                </View>
     );
 }
