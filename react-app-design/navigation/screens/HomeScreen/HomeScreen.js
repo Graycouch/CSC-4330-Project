@@ -6,6 +6,7 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 
 
 import Header from '../../header/header.js';
+import { CardFactory } from '../../../components/Card/Factory';
 
 export default function HomeScreen({ navigation }) {
     const [user] = useGlobalState("user");
@@ -39,7 +40,7 @@ export default function HomeScreen({ navigation }) {
             flexDirection: 'column',
             alignItems: 'center',
             justifyContent: 'center',
-            backgroundColor: '#FFFFFF',
+            backgroundColor: '#f9f9f9',
         },
 
         // Inner Container for each Section
@@ -47,17 +48,18 @@ export default function HomeScreen({ navigation }) {
             flexDirection: 'column',
             alignContent: 'flex-start',
             justifyContent: "flex-start",
-            borderColor: debugBorders ? 'blue' : 'white',
+            borderColor: debugBorders ? 'blue' : '#f9f9f9',
             borderWidth: 2,
             width: '100%',
             marginTop: 30,
             marginBottom: 30,
+            
         },
 
         heading : {
             fontSize: 22, 
             fontWeight: 'medium', 
-            borderColor: debugBorders ? 'blue' : 'white', 
+            borderColor: debugBorders ? 'blue' : '#f9f9f9', 
             borderWidth: 12, 
             flexDirection: 'row',
             marginBottom: 20
@@ -72,7 +74,7 @@ export default function HomeScreen({ navigation }) {
 
     return (
         <View style={styles.headerContainer}>
-            <ScrollView showsVerticalScrollIndicator={false} showsHorizontalScrollIndicator={false} contentContainerStyle={styles.contentContainer} style={{ backgroundColor: '#FFFFFF' }}>
+            <ScrollView showsVerticalScrollIndicator={false} showsHorizontalScrollIndicator={false} contentContainerStyle={styles.contentContainer} style={{}}>
                 
                 {/* Header */}
                 <Header navigation={navigation} />
@@ -91,7 +93,23 @@ export default function HomeScreen({ navigation }) {
 
                     <View style={{ flexDirection: 'column' }}>
                         <>
-                            {UpcomingLessons.map((currentUser, index) => (
+
+
+                        <CardFactory CardType="UpcomingLesson" users={UpcomingLessons} />
+
+
+                       
+
+
+
+
+
+
+
+
+
+
+                            {/* {UpcomingLessons.map((currentUser, index) => (
                                 currentUser.role !== user.role && (searchValue !== "" ? (currentUser.major.toLowerCase() === searchValue.toLowerCase()) : (true)) ? (
                                     <Pressable key={index} onPress={() => handleUserBoxClick(currentUser)}>
                                         <View style={{
@@ -166,7 +184,7 @@ export default function HomeScreen({ navigation }) {
                                     <View key={index} />
                                 )
                             )
-                            )}
+                            )} */}
                         </>
                     </View>
 
