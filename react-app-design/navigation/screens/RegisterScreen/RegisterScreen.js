@@ -16,6 +16,9 @@ export default function RegisterScreen({ navigation }) {
     const windowWidth = Dimensions.get('window').width;
     const windowHeight = Dimensions.get('window').height;
 
+    const [staticContentURL] = useGlobalState("staticContentURL");
+    const imageURL = staticContentURL + '/images/';
+
     const handleCreateAccountClick = (e) => {
         e.preventDefault();
 
@@ -44,7 +47,7 @@ export default function RegisterScreen({ navigation }) {
 
     return (
         <View style={{ alignItems: 'center', justifyContent: 'center' }}>
-            <Image source={require('../../../assets/logo2.png')} style={{ top: windowHeight * 0.11, height: windowHeight * 0.153, width: windowWidth * 0.57 }} />
+            <Image source={{uri: imageURL + 'logo2.png'}} style={{ top: windowHeight * 0.11, height: windowHeight * 0.153, width: windowWidth * 0.57 }} />
 
             <Text style={{ fontSize: 30, fontWeight: 'bold', top: windowHeight * 0.19 }}>
                 Create New Account

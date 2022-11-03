@@ -13,6 +13,9 @@ export default function MessageScreen({ navigation }) {
     const windowWidth = Dimensions.get('window').width;
     const windowHeight = Dimensions.get('window').height;
 
+    const [staticContentURL] = useGlobalState("staticContentURL");
+    const imageURL = staticContentURL + '/images/';
+
     const styles = StyleSheet.create({
         contentContainer: {
             paddingVertical: 50,
@@ -63,7 +66,7 @@ export default function MessageScreen({ navigation }) {
                     <View style={styles.horizontalLine1} />
                     <View style={{ paddingLeft: 5, top: 20 }}>
                         <Image
-                            source={require('../../../assets/abdel.jpg')}
+                            source={{uri: imageURL + 'abdel.jpg'}}
                             style={{ height: 70, width: 70, borderRadius: 70, borderWidth: 2, borderColor: '#FFFFFF' }}
                         />
                     </View>
@@ -81,7 +84,7 @@ export default function MessageScreen({ navigation }) {
                 <Pressable>
                     <View style={{ paddingLeft: 5, top: -15 }}>
                         <Image
-                            source={require('../../../assets/nash.jpg')}
+                            source={{uri: imageURL + 'nash.jpg'}}
                             style={{ height: 70, width: 70, borderRadius: 70, borderWidth: 2, borderColor: '#FFFFFF' }}
                         />
                     </View>

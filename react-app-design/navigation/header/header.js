@@ -7,6 +7,9 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 export default function Header({ navigation }) {
     const [searchValue] = useGlobalState("searchValue");
 
+    const [staticContentURL] = useGlobalState("staticContentURL");
+    const imageURL = staticContentURL + '/images/';
+
     //TODO
     //const [profilePicture, setProfilePicture] = useState(user.profilePicture);
 
@@ -71,7 +74,7 @@ export default function Header({ navigation }) {
             <View style={styles.logoProfileContainer}>
                 {/* Logo */}
                 <Image
-                    source={require('../../assets/logo2.png')}
+                    source={{uri : imageURL + 'logo2.png'}}
                     style={{ height: 50, width: 85, resizeMode: "contain" }}
                     onPress={() =>
                         navigation.navigate('Home')
@@ -85,7 +88,7 @@ export default function Header({ navigation }) {
                     }
                 >
                     <Image
-                        source={require('../../assets/abdel.jpg')}
+                        source={{uri : imageURL + 'abdel.jpg'}}
                         style={{ height: 50, width: 50, borderRadius: 60, borderWidth: 3, borderColor: '#FFFFFF' }}
                     />
                 </Pressable>
