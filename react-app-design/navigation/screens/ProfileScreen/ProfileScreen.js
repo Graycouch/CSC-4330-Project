@@ -245,7 +245,7 @@ export default function ProfileScreen({ navigation }) {
 
                         <View style={{ paddingTop: windowHeight * 0.0384 }}>
                             <Text style={{ fontSize: 18 }}>
-                                University:
+                                School:
                             </Text>
                             <TextInput onChangeText={text => setUniversity(text)} style={{
                                 fontSize: 15, width: windowWidth * 0.5989, borderRadius: windowHeight * 0.0256,
@@ -258,7 +258,7 @@ export default function ProfileScreen({ navigation }) {
 
                         <View style={{ paddingTop: windowHeight * 0.0384 }}>
                             <Text style={{ fontSize: 18 }}>
-                                Location:
+                                City:
                             </Text>
                             <TextInput onChangeText={text => setCity(text)} style={{
                                 fontSize: 15, width: windowWidth * 0.5989, borderRadius: windowHeight * 0.0256,
@@ -390,10 +390,6 @@ export default function ProfileScreen({ navigation }) {
                             <MaterialCommunityIcons name={"pencil-outline"} color={"#5F59F7"} size={24} style={{ marginLeft: 'auto', marginRight: 'auto', top: -windowHeight * 0.128, right: -windowWidth * 0.4167 }} />
                         </Pressable>
 
-                        {/* <Pressable onPress={handleEditProfileClick}>
-                            <MaterialCommunityIcons name={"email"} color={"#5F59F7"} size={24} style={{ position: 'absolute', top: -windowHeight * 0.16, right: windowWidth * 0.2}} />
-                        </Pressable> */}
-
                         <Text style={{ top: -windowHeight * 0.105, fontSize: 24, textAlign: 'left', fontWeight: '500', textAlignVertical: 'top', paddingLeft: windowWidth * 0.052 }}>
                             {username}
                         </Text>
@@ -404,7 +400,7 @@ export default function ProfileScreen({ navigation }) {
 
                         <AirbnbRating count={5} defaultRating={rating} size={15} isDisabled={true} showRating={false} selectedColor={'#5F59F7'} starContainerStyle={{ top: -windowHeight * 0.1, left: -windowWidth * 0.32 }} />
 
-                        <Text style={{ position: 'absolute', top: windowHeight * 0.3, right: windowWidth * 0.05, fontSize: 20, textAlign: 'left', fontWeight: '400', color: '#2970FE' }}>
+                        <Text style={{ position: 'absolute', top: windowHeight * 0.3, right: windowWidth * 0.05, fontSize: 20, textAlign: 'left', fontWeight: '400', color: '#0390fc' }}>
                             ${hourlyRate}/hr
                         </Text>
                     </View>
@@ -466,9 +462,9 @@ export default function ProfileScreen({ navigation }) {
                                 </Text>
                             </View>
 
-                            <Text style={{ lineHeight: windowHeight * 0.05, paddingTop: 10, paddingRight: 20, paddingLeft: 20 }}>
+                            <Text style={{ lineHeight: windowHeight * 0.05, paddingTop: windowHeight * 0.0128, paddingRight: windowWidth * 0.052, paddingLeft: windowWidth * 0.052 }}>
                                 {courses.map((course) => (
-                                    <View key={course} style={{ borderWidth: 1, borderColor: '#FFFFFF', borderRadius: 20, backgroundColor: '#5F59F7' }}>
+                                    <View key={course} style={{ borderWidth: 1, borderColor: '#FFFFFF', borderRadius: windowHeight * 0.0256, backgroundColor: '#5F59F7' }}>
                                         <Text style={{ fontSize: 15, fontWeight: '400', color: 'white' }}>
                                             {"   "}{course}{"   "}
                                         </Text>

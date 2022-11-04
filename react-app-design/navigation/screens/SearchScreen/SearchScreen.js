@@ -1,9 +1,10 @@
 import * as React from 'react';
 import { useState, useEffect } from 'react';
 import { useGlobalState, setGlobalState } from '../../../index';
-import { View, Text, Button, Image, TextInput, Pressable, ScrollView, StyleSheet, Dimensions } from 'react-native';
+import { View, Text, Button, Image, TextInput, Pressable, ScrollView, StyleSheet, Dimensions, Linking } from 'react-native';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import { Rating, AirbnbRating } from 'react-native-ratings';
 
 export default function SearchScreen({ navigation }) {
     const [user] = useGlobalState("user");
@@ -23,6 +24,9 @@ export default function SearchScreen({ navigation }) {
     const [university, setUniversity] = useState("");
     const [zipCode, setZipCode] = useState("");
     const [hourlyRate, setHourlyRate] = useState("");
+    const [totalLessons, setTotalLessons] = useState(0);
+    const [totalHours, setTotalHours] = useState(0);
+    const [rating, setRating] = useState(0);
     const [profilePicture, setProfilePicture] = useState("");
     const [coverPicture, setCoverPicture] = useState("");
     const [searchPageBar, setSearchPageBar] = useState(searchValue);
@@ -46,7 +50,7 @@ export default function SearchScreen({ navigation }) {
             height: windowHeight * 0.256,
             width: 1,
             position: 'absolute',
-            top: windowHeight * 0.448,
+            top: windowHeight * 0.47,
             backgroundColor: '#E5E5E5',
         },
         horizontalLine1: {
@@ -54,28 +58,35 @@ export default function SearchScreen({ navigation }) {
             width: windowWidth,
             position: 'absolute',
             backgroundColor: '#E5E5E5',
-            top: windowHeight * 0.448
+            top: windowHeight * 0.47
         },
         horizontalLine2: {
             height: 1,
             width: windowWidth,
             position: 'absolute',
             backgroundColor: '#E5E5E5',
-            top: windowHeight * 0.576
+            top: windowHeight * 0.598
         },
         horizontalLine3: {
             height: 1,
             width: windowWidth,
             position: 'absolute',
             backgroundColor: '#E5E5E5',
-            top: windowHeight * 0.704
+            top: windowHeight * 0.726
         },
         horizontalLine4: {
             height: 1,
             width: windowWidth,
             position: 'absolute',
             backgroundColor: '#E5E5E5',
-            top: windowHeight * 0.896
+            top: windowHeight * 0.918
+        },
+        horizontalLine5: {
+            height: 1,
+            width: windowWidth,
+            position: 'absolute',
+            backgroundColor: '#E5E5E5',
+            top: windowHeight * 1.15
         }
     });
 
@@ -92,14 +103,29 @@ export default function SearchScreen({ navigation }) {
         setUniversity(currentUser.university);
         setZipCode(currentUser.zipCode);
         setHourlyRate(currentUser.hourlyRate);
+        setTotalLessons(currentUser.totalLessons);
+        setTotalHours(currentUser.totalHours);
+        setRating(currentUser.rating);
         setProfilePicture(currentUser.profilePicture);
         setCoverPicture(currentUser.coverPicture);
-        setUsername(currentUser.username);
     }
 
     const handleBackClick = (e) => {
         e.preventDefault();
         setboxClicked(false);
+    }
+
+    const handleEmailClick = (e) => {
+        e.preventDefault();
+        Linking.openURL(`mailto:${email}`);
+    }
+
+    const handleMessageClick = (e) => {
+        e.preventDefault();
+    }
+
+    const handleBookClick = (e) => {
+        e.preventDefault();
     }
 
     return (
@@ -158,15 +184,7 @@ export default function SearchScreen({ navigation }) {
                                                         {currentUser.major} {currentUser.role}
                                                     </Text>
 
-                                                    <Text style={{ paddingLeft: windowWidth * 0.042, top: -windowHeight * 0.045 }}>
-                                                        {currentUser.courses.map((course) => (
-                                                            <Text key={course} style={{
-                                                                fontSize: 10, textAlign: 'left', fontWeight: '400', color: 'gray'
-                                                            }}>
-                                                                {course} {"  "}
-                                                            </Text>
-                                                        ))}
-                                                    </Text>
+                                                    <AirbnbRating count={5} defaultRating={currentUser.rating} size={12} isDisabled={true} showRating={false} selectedColor={'#5F59F7'} starContainerStyle={{ position: 'absolute', top: -windowHeight * 0.05, left: windowWidth * 0.035 }} />
                                                 </View>
 
                                                 <Text style={{
@@ -213,51 +231,59 @@ export default function SearchScreen({ navigation }) {
                     <View style={{ top: -windowHeight * 0.019 }}>
                         <Image source={{ uri: coverPicture === "" ? publicFolder + "defaultBackground.jpg" : coverPicture }} style={{ height: windowHeight * 0.166, width: windowWidth }} />
 
-                        <View style={{ top: -windowHeight * 0.0768, height: 120, width: 120, borderRadius: 60, paddingLeft: 20 }}>
-                            <Image source={{ uri: profilePicture === "" ? publicFolder + "defaultProfilePicture.png" : profilePicture }} style={{
-                                height: windowHeight * 0.1536, width: windowHeight * 0.1536, borderRadius: windowHeight * 0.0768, borderWidth: 3, borderColor: '#FFFFFF'
-                            }} />
+                        <View style={{
+                            top: -windowHeight * 0.0768, height: windowHeight * 0.1536, width: windowHeight * 0.1536,
+                            borderRadius: windowHeight * 0.0768, paddingLeft: windowWidth * 0.052
+                        }}>
+                            <Image source={{ uri: profilePicture === "" ? publicFolder + "defaultProfilePicture.png" : profilePicture }} style=
+                                {{ height: windowHeight * 0.1536, width: windowHeight * 0.1536, borderRadius: windowHeight * 0.0768, borderWidth: 3, borderColor: '#FFFFFF' }} />
                         </View>
 
-                        <Pressable>
-                            <Ionicons name={"chatbubbles"} color={"#5F59F7"} size={24} style={{ marginLeft: 'auto', marginRight: 'auto', top: -windowHeight * 0.128, right: -windowWidth * 0.4167 }} />
+                        <Pressable onPress={handleMessageClick}>
+                            <Ionicons name={"chatbubbles"} color={"#5F59F7"} size={23} style={{ marginLeft: 'auto', marginRight: 'auto', top: -windowHeight * 0.128, right: -windowWidth * 0.4167 }} />
                         </Pressable>
 
-                        <Pressable>
-                            <Ionicons name={"calendar"} color={"#5F59F7"} size={24} style={{ position: 'absolute', top: -windowHeight * 0.1, right: windowWidth * 0.05 }} />
+                        <Pressable onPress={handleEmailClick}>
+                            <MaterialCommunityIcons name={"email"} color={"#5F59F7"} size={24} style={{ position: 'absolute', top: -windowHeight * 0.16, right: windowWidth * 0.2 }} />
                         </Pressable>
 
                         <Text style={{ top: -windowHeight * 0.105, fontSize: 24, textAlign: 'left', fontWeight: '500', textAlignVertical: 'top', paddingLeft: windowWidth * 0.052 }}>
                             {username}
                         </Text>
 
-                        <Text style={{ top: -windowHeight * 0.106, fontSize: 15, textAlign: 'left', textAlignVertical: 'top', paddingLeft: windowWidth * 0.052 }}>
+                        <Text style={{ top: -windowHeight * 0.105, fontSize: 15, textAlign: 'left', textAlignVertical: 'top', paddingLeft: windowWidth * 0.052 }}>
                             {major} {role}
+                        </Text>
+
+                        <AirbnbRating count={5} defaultRating={rating} size={15} isDisabled={true} showRating={false} selectedColor={'#5F59F7'} starContainerStyle={{ top: -windowHeight * 0.1, left: -windowWidth * 0.32 }} />
+
+                        <Text style={{ position: 'absolute', top: windowHeight * 0.3, right: windowWidth * 0.05, fontSize: 20, textAlign: 'left', fontWeight: '400', color: '#0390fc' }}>
+                            ${hourlyRate}/hr
                         </Text>
                     </View>
 
                     <View style={{ top: -windowHeight * 0.105, flex: 1, flexDirection: 'row', flexWrap: 'wrap' }}>
                         <View style={{ alignItems: 'center', width: '50%', paddingTop: windowHeight * 0.0384 }}>
                             <View style={{ flexDirection: 'row' }}>
-                                <MaterialCommunityIcons name={"email"} color={"#5F59F7"} size={20} style={{ paddingRight: windowWidth * 0.013 }} />
+                                <MaterialCommunityIcons name={"head-lightbulb"} color={"#5F59F7"} size={20} style={{ paddingRight: windowWidth * 0.013 }} />
                                 <Text style={{ fontSize: 15, fontWeight: 'bold', color: '#5F59F7' }}>
-                                    Email Address:
+                                    Total Lessons:
                                 </Text>
                             </View>
                             <Text style={{ fontSize: 15, color: 'grey' }}>
-                                {email}
+                                {totalLessons}
                             </Text>
                         </View>
 
                         <View style={{ alignItems: 'center', width: '50%', paddingTop: windowHeight * 0.0384 }}>
                             <View style={{ flexDirection: 'row' }}>
-                                <MaterialCommunityIcons name={"school"} color={"#5F59F7"} size={20} style={{ paddingRight: windowWidth * 0.013 }} />
+                                <MaterialCommunityIcons name={"clock-time-eight"} color={"#5F59F7"} size={20} style={{ paddingRight: windowWidth * 0.013 }} />
                                 <Text style={{ fontSize: 15, fontWeight: 'bold', color: '#5F59F7' }}>
-                                    University:
+                                    Total Hours:
                                 </Text>
                             </View>
                             <Text style={{ fontSize: 15, color: 'grey' }}>
-                                {university}
+                                {totalHours}
                             </Text>
                         </View>
 
@@ -269,36 +295,49 @@ export default function SearchScreen({ navigation }) {
                                 </Text>
                             </View>
                             <Text style={{ fontSize: 15, color: 'grey', paddingLeft: windowWidth * 0.03 }}>
-                                {city}
+                                {city}, {zipCode}
                             </Text>
                         </View>
 
                         <View style={{ alignItems: 'center', width: '50%', paddingTop: windowHeight * 0.0768 }}>
                             <View style={{ flexDirection: 'row' }}>
-                                <MaterialCommunityIcons name={"book-open-variant"} color={"#5F59F7"} size={20} style={{ paddingRight: windowWidth * 0.013 }} />
+                                <MaterialCommunityIcons name={"school"} color={"#5F59F7"} size={20} style={{ paddingRight: windowWidth * 0.013 }} />
                                 <Text style={{ fontSize: 15, fontWeight: 'bold', color: '#5F59F7' }}>
-                                    Courses:
+                                    School:
                                 </Text>
                             </View>
-                            <Text style={{ textAlign: 'center', lineHeight: windowHeight * 0.029449 }}>
+                            <Text style={{ fontSize: 15, color: 'grey' }}>
+                                {university}
+                            </Text>
+                        </View>
+
+                        <View style={{ alignItems: 'center', width: '100%', position: 'absolute', top: windowHeight * 0.28 }}>
+                            <View style={{ flexDirection: 'row' }}>
+                                <MaterialCommunityIcons name={"book-open-variant"} color={"#5F59F7"} size={20} style={{ paddingRight: windowWidth * 0.013 }} />
+                                <Text style={{ fontSize: 15, fontWeight: 'bold', color: '#5F59F7' }}>
+                                    Subjects:
+                                </Text>
+                            </View>
+
+                            <Text style={{ lineHeight: windowHeight * 0.05, paddingTop: windowHeight * 0.0128, paddingRight: windowWidth * 0.052, paddingLeft: windowWidth * 0.052 }}>
                                 {courses.map((course) => (
-                                    <Text key={course} style={{
-                                        top: -windowHeight * 0.05, fontSize: 12, fontWeight: '400', color: 'gray'
-                                    }}>
-                                        {course}{"  "}
-                                    </Text>
+                                    <View key={course} style={{ borderWidth: 1, borderColor: '#FFFFFF', borderRadius: windowHeight * 0.0256, backgroundColor: '#5F59F7' }}>
+                                        <Text style={{ fontSize: 15, fontWeight: '400', color: 'white' }}>
+                                            {"   "}{course}{"   "}
+                                        </Text>
+                                    </View>
                                 ))}
                             </Text>
                         </View>
 
-                        <View style={{ alignItems: 'center', width: '100%', position: 'absolute', top: windowHeight * 0.27 }}>
+                        <View style={{ alignItems: 'center', width: '100%', position: 'absolute', top: windowHeight * 0.47 }}>
                             <View style={{ flexDirection: 'row' }}>
                                 <MaterialCommunityIcons name={"lead-pencil"} color={"#5F59F7"} size={20} style={{ paddingRight: windowWidth * 0.013 }} />
                                 <Text style={{ fontSize: 15, fontWeight: 'bold', color: '#5F59F7' }}>
                                     About:
                                 </Text>
                             </View>
-                            <Text style={{ fontSize: 15, textAlign: 'center', color: 'grey', paddingLeft: windowWidth * 0.026, paddingRight: windowWidth * 0.026 }}>
+                            <Text style={{ fontSize: 15, textAlign: 'center', color: 'grey', paddingLeft: windowWidth * 0.026, paddingRight: windowWidth * 0.026, paddingTop: windowHeight * 0.01 }}>
                                 {about}
                             </Text>
                         </View>
@@ -308,7 +347,20 @@ export default function SearchScreen({ navigation }) {
                     <View style={styles.horizontalLine2} />
                     <View style={styles.horizontalLine3} />
                     <View style={styles.horizontalLine4} />
+                    <View style={styles.horizontalLine5} />
                     <View style={styles.verticalLine} />
+
+                    <View style={{ padding: windowHeight * 0.23 }}></View>
+
+                    <Pressable onPress={handleBookClick} backgroundColor={'#5F59F7'} style={{
+                        top: windowHeight * 1.17, height: windowHeight * 0.0768, width: windowWidth * 0.833,
+                        borderRadius: windowHeight * 0.0512, alignItems: 'center', justifyContent: 'center', position: 'absolute'
+                    }} >
+                        <Text style={{ color: 'white', fontSize: 18 }}>
+                            Book Now
+                        </Text>
+                    </Pressable>
+
                 </ScrollView>
             )}
         </View>
