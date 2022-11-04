@@ -23,7 +23,7 @@ export default function MainContainer() {
     return (
         <NavigationContainer independent={true}>
             <Tab.Navigator
-                initialRouteName={homeName}
+                initialRouteName={searchName}
                 screenOptions={({ route }) => ({
                     tabBarIcon: ({ focused, color, size }) => {
                         let iconName;

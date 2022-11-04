@@ -35,7 +35,7 @@ const UserSchema = new mongoose.Schema(
 
         courses: {
             type: Array,
-            default: ["CSC 4330"]
+            default: ["Programming"]
         },
 
         about: {
@@ -75,6 +75,21 @@ const UserSchema = new mongoose.Schema(
         university: {
             type: String,
             default: "LSU"
+        },
+
+        totalLessons: {
+            type: Number,
+            default: 0
+        },
+
+        totalHours: {
+            type: Number,
+            default: 0
+        },
+
+        rating: {
+            type: Number,
+            default: 4
         }
     },
 
