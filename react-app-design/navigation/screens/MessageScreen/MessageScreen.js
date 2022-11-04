@@ -6,6 +6,7 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import * as ImagePicker from 'expo-image-picker';
 
 export default function MessageScreen({ navigation }) {
+    const [replying, setEditing] = useState(false);
     const [user] = useGlobalState("user");
     const [searchValue] = useGlobalState("searchValue");
     const [username, setUsername] = useState(user.username);
@@ -26,7 +27,7 @@ export default function MessageScreen({ navigation }) {
         horizontalLine1: {
             height: 1,
             width: windowWidth,
-            position: 'center',
+            position: 'absolute',
             backgroundColor: '#E5E5E5',
             top: 10
         },
@@ -34,17 +35,17 @@ export default function MessageScreen({ navigation }) {
         horizontalLine2: {
             height: 1,
             width: windowWidth,
-            position: 'center',
+            position: 'absolute',
             backgroundColor: '#E5E5E5',
-            top: -25
+            top: 95
         },
 
         horizontalLine3: {
             height: 1,
             width: windowWidth,
-            position: 'center',
+            position: 'absolute',
             backgroundColor: '#E5E5E5',
-            top: -45
+            top: 45
         }
     });
 
@@ -58,7 +59,7 @@ export default function MessageScreen({ navigation }) {
                     <MaterialCommunityIcons name={"magnify"} color={"#9E9E9E"} size={20} style={{ top: windowHeight * 0.0128, position: 'absolute', paddingLeft: windowWidth * 0.026 }} />
                 </View>
 
-                <Text style={{ fontSize: 35, fontWeight: 'bold' }}>
+                <Text style={{ fontSize: 30, fontWeight: 'bold', top: -15 }}>
                     Messages
                 </Text>
 
@@ -70,11 +71,11 @@ export default function MessageScreen({ navigation }) {
                             style={{ height: 70, width: 70, borderRadius: 70, borderWidth: 2, borderColor: '#FFFFFF' }}
                         />
                     </View>
-                    <View style={{ alignItems: 'left', top: -45, paddingLeft: 80, paddingRight: 10 }}>
+                    <View style={{ alignItems: 'flex-start', top: -50, paddingLeft: 90, paddingRight: 10 }}>
                         <Text style={{ fontSize: 20, fontWeight: 'bold' }}>
                             Abdel Rahman Mansour
                         </Text>
-                        <Text style={{ color: 'gray', fontSize: 15, top: 5, paddingRight: 15 }}>
+                        <Text style={{ color: 'gray', fontSize: 15, top: -5, paddingRight: 15 }}>
                             Sure! I'd be happy to help you with that.
                             What is a convienent time for you?
                         </Text>
@@ -82,17 +83,17 @@ export default function MessageScreen({ navigation }) {
                     <View style={styles.horizontalLine2} />
                 </Pressable>
                 <Pressable>
-                    <View style={{ paddingLeft: 5, top: -15 }}>
+                    <View style={{ paddingLeft: 5, top: -30 }}>
                         <Image
                             source={{uri: imageURL + 'nash.jpg'}}
                             style={{ height: 70, width: 70, borderRadius: 70, borderWidth: 2, borderColor: '#FFFFFF' }}
                         />
                     </View>
-                    <View style={{ alignItems: 'left', top: -80, paddingLeft: 80, paddingRight: 10 }}>
+                    <View style={{ alignItems: 'flex-start', top: -100, paddingLeft: 90, paddingRight: 60 }}>
                         <Text style={{ fontSize: 20, fontWeight: 'bold' }}>
                             Nash
                         </Text>
-                        <Text style={{ color: 'gray', fontSize: 15, top: 5, paddingRight: 15 }}>
+                        <Text style={{ color: 'gray', fontSize: 15, top: -5, paddingRight: 15 }}>
                             So I left my calculator at home...
                         </Text>
                     </View>
