@@ -6,7 +6,7 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import * as ImagePicker from 'expo-image-picker';
 
 export default function MessageScreen({ navigation }) {
-    const [replying, setEditing] = useState(false);
+    const [replying, setReplying] = useState(false);
     const [user] = useGlobalState("user");
     const [searchValue] = useGlobalState("searchValue");
     const [username, setUsername] = useState(user.username);
@@ -17,9 +17,19 @@ export default function MessageScreen({ navigation }) {
     const [staticContentURL] = useGlobalState("staticContentURL");
     const imageURL = staticContentURL + '/images/';
 
+    const handleReplyToMessageClick = (e) => {
+            e.preventDefault();
+            setReplying(true);
+    }
+
+    const handleBackButtonClick = (e) => {
+            e.preventDefault();
+            setReplying(false);
+    }
+
     const styles = StyleSheet.create({
         contentContainer: {
-            paddingVertical: 50,
+            paddingVertical: windowHeight * 0.064,
             alignItems: 'center',
             flexGrow: 1
         },
@@ -29,7 +39,7 @@ export default function MessageScreen({ navigation }) {
             width: windowWidth,
             position: 'absolute',
             backgroundColor: '#E5E5E5',
-            top: 10
+            top: 150
         },
 
         horizontalLine2: {
@@ -37,7 +47,7 @@ export default function MessageScreen({ navigation }) {
             width: windowWidth,
             position: 'absolute',
             backgroundColor: '#E5E5E5',
-            top: 95
+            top: 238
         },
 
         horizontalLine3: {
@@ -45,11 +55,61 @@ export default function MessageScreen({ navigation }) {
             width: windowWidth,
             position: 'absolute',
             backgroundColor: '#E5E5E5',
-            top: 45
+            top: 323
+        },
+
+        replyPageHorizontalLine1: {
+            height: 1,
+            width: windowWidth,
+            position: 'absolute',
+            backgroundColor: '#5A5A5A',
+            top: 105
+        },
+
+        replyPageHorizontalLine2: {
+            height: 1,
+            width: windowWidth,
+            position: 'absolute',
+            backgroundColor: '#5A5A5A',
+            top: 660
         }
     });
 
     return (
+        <View style={{ backgroundColor: '#FFFFFF', flex: 1 }}>
+        {replying ? (
+              <ScrollView showsVerticalScrollIndicator={false} showsHorizontalScrollIndicator={false} contentContainerStyle={styles.contentContainer} style={{ backgroundColor: '#FFFFFF' }}>
+                  <View style={{ marginBottom: windowHeight * 0.0128, top: windowHeight * 0.005, height: windowHeight * 0.0512 }}>
+                       <Text style={{ fontSize: 21, fontWeight: '500' }}>
+                             Abdel Rahman Mansour
+                       </Text>
+                  </View>
+                  <View style={styles.replyPageHorizontalLine1} />
+
+                  <View style={styles.replyPageHorizontalLine2} />
+
+
+                  <Pressable onPress={handleBackButtonClick}>
+                       <MaterialCommunityIcons name={"chevron-left"} color={"#5F59F7"} size={40} style={{ marginLeft: 'auto', marginRight: 'auto', top: -windowHeight * 0.065, left: -windowWidth * 0.42 }} />
+                  </Pressable>
+
+                  <View style={{ flexDirection: 'row', marginBottom: windowHeight * 0.0128, top: windowHeight * 0.67 }}>
+                       <TextInput placeholder="Reply" style={{ backgroundColor: '#F1F1F1', height: windowHeight * 0.0512, width: windowWidth * 0.95, borderRadius: windowHeight * 0.0256, paddingLeft: windowWidth * 0.05, fontSize: 15 }} />
+                  </View>
+
+                  {/* Start messages sent (currently hardcoded) */}
+                  <View style={{ top: -70, right: -40 }}>
+                       <Text style={{ backgroundColor: '#5F59F7', height: 78, width: 290, borderRadius: windowHeight * 0.0256, paddingLeft: 15, paddingVertical: 5, fontSize: 18, color: 'white' }}>
+                            I need help learning data structures. Would you be able to tutor me?
+                       </Text>
+                  </View>
+                  <View style={{ top: -50, left: -40 }}>
+                       <Text style={{ backgroundColor: 'gray', height: 78, width: 290, borderRadius: windowHeight * 0.0256, paddingLeft: 15, paddingRight: 5, paddingVertical: 5, fontSize: 18, color: 'white' }}>
+                            Sure! I'd be happy to help you with that. What is a convenient time for you?
+                       </Text>
+                  </View>
+              </ScrollView>
+        ) : (
         <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center', backgroundColor: '#FFFFFF' }}>
             <ScrollView showsVerticalScrollIndicator={false} showsHorizontalScrollIndicator={false} contentContainerStyle={styles.contentContainer} style={{ backgroundColor: '#FFFFFF' }}>
                 <View style={{ flexDirection: 'row', marginBottom: windowHeight * 0.0128, top: -windowHeight * 0.019 }}>
@@ -59,12 +119,13 @@ export default function MessageScreen({ navigation }) {
                     <MaterialCommunityIcons name={"magnify"} color={"#9E9E9E"} size={20} style={{ top: windowHeight * 0.0128, position: 'absolute', paddingLeft: windowWidth * 0.026 }} />
                 </View>
 
+
                 <Text style={{ fontSize: 30, fontWeight: 'bold', top: -15 }}>
                     Messages
                 </Text>
 
-                <Pressable>
-                    <View style={styles.horizontalLine1} />
+                <View style={styles.horizontalLine1} />
+                <Pressable onPress = {handleReplyToMessageClick}>
                     <View style={{ paddingLeft: 5, top: 20 }}>
                         <Image
                             source={{uri: imageURL + 'abdel.jpg'}}
@@ -75,31 +136,34 @@ export default function MessageScreen({ navigation }) {
                         <Text style={{ fontSize: 20, fontWeight: 'bold' }}>
                             Abdel Rahman Mansour
                         </Text>
-                        <Text style={{ color: 'gray', fontSize: 15, top: -5, paddingRight: 15 }}>
+                        <Text style={{ color: 'gray', fontSize: 15, top: -5, paddingRight: 20 }}>
                             Sure! I'd be happy to help you with that.
-                            What is a convienent time for you?
+                            What is a convenient time for you?
                         </Text>
                     </View>
-                    <View style={styles.horizontalLine2} />
                 </Pressable>
+                <View style={styles.horizontalLine2} />
+
                 <Pressable>
                     <View style={{ paddingLeft: 5, top: -30 }}>
                         <Image
-                            source={{uri: imageURL + 'nash.jpg'}}
+                            source={{uri: imageURL + 'defaultProfilePicture.png'}}
                             style={{ height: 70, width: 70, borderRadius: 70, borderWidth: 2, borderColor: '#FFFFFF' }}
                         />
                     </View>
                     <View style={{ alignItems: 'flex-start', top: -100, paddingLeft: 90, paddingRight: 60 }}>
                         <Text style={{ fontSize: 20, fontWeight: 'bold' }}>
-                            Nash
+                            John Doe
                         </Text>
-                        <Text style={{ color: 'gray', fontSize: 15, top: -5, paddingRight: 15 }}>
-                            So I left my calculator at home...
+                        <Text style={{ color: 'gray', fontSize: 15, top: -5, paddingRight: 0 }}>
+                            So I really need help with integrals. Are you good at solving them?
                         </Text>
                     </View>
-                    <View style={styles.horizontalLine3} />
                 </Pressable>
+                <View style={styles.horizontalLine3} />
             </ScrollView>
+        </View>
+        )}
         </View>
     )
 }
