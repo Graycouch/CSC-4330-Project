@@ -14,6 +14,7 @@ export default function SearchScreen({ navigation }) {
     const publicFolder = `http://${localhost}:8800/images/`;
 
     const [boxClicked, setboxClicked] = useState(false);
+    const [bookClicked, setbookClicked] = useState(false);
     const [username, setUsername] = useState("");
     const [email, setEmail] = useState("");
     const [role, setRole] = useState("");
@@ -126,6 +127,7 @@ export default function SearchScreen({ navigation }) {
 
     const handleBookClick = (e) => {
         e.preventDefault();
+        setbookClicked(!bookClicked)
     }
 
     return (
@@ -215,7 +217,7 @@ export default function SearchScreen({ navigation }) {
                     </View>
 
                 </ScrollView>
-            ) : (
+            ) : !bookClicked ? (
                 <ScrollView showsVerticalScrollIndicator={false} showsHorizontalScrollIndicator={false} contentContainerStyle={styles.contentContainer} style={{ backgroundColor: '#FFFFFF' }}>
 
                     <View style={{ marginBottom: windowHeight * 0.0128, top: -windowHeight * 0.019, height: windowHeight * 0.05 }}>
@@ -361,6 +363,17 @@ export default function SearchScreen({ navigation }) {
                         </Text>
                     </Pressable>
 
+                </ScrollView>
+            ) : (
+                <ScrollView showsVerticalScrollIndicator={false} showsHorizontalScrollIndicator={false} contentContainerStyle={styles.contentContainer} style={{ backgroundColor: '#FFFFFF' }}>
+                    <Pressable onPress={handleBookClick} backgroundColor={'#5F59F7'} style={{
+                        top: windowHeight * 0.4, height: windowHeight * 0.0768, width: windowWidth * 0.833,
+                        borderRadius: windowHeight * 0.0512, alignItems: 'center', justifyContent: 'center'
+                    }} >
+                        <Text style={{ color: 'white', fontSize: 18 }}>
+                            Book Now
+                        </Text>
+                    </Pressable>
                 </ScrollView>
             )}
         </View>

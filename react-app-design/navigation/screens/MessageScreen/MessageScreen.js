@@ -145,17 +145,17 @@ export default function MessageScreen({ navigation }) {
                 <View style={styles.horizontalLine2} />
 
                 <Pressable>
-                    <View style={{ paddingLeft: 5, top: -30 }}>
+                    <View style={{ paddingLeft: 5, top: -50 }}>
                         <Image
                             source={{uri: imageURL + 'defaultProfilePicture.png'}}
                             style={{ height: 70, width: 70, borderRadius: 70, borderWidth: 2, borderColor: '#FFFFFF' }}
                         />
                     </View>
-                    <View style={{ alignItems: 'flex-start', top: -100, paddingLeft: 90, paddingRight: 60 }}>
+                    <View style={{ alignItems: 'flex-start', top: -120, paddingLeft: 90, paddingRight: 10 }}>
                         <Text style={{ fontSize: 20, fontWeight: 'bold' }}>
                             John Doe
                         </Text>
-                        <Text style={{ color: 'gray', fontSize: 15, top: -5, paddingRight: 0 }}>
+                        <Text style={{ color: 'gray', fontSize: 15, top: -5 }}>
                             So I really need help with integrals. Are you good at solving them?
                         </Text>
                     </View>

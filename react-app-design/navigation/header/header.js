@@ -18,7 +18,6 @@ export default function Header({ navigation }) {
         // Overall Header Container
         Container: {
             // flexGrow: 1,
-            display: 'fixed',
             // flexDirection: 'column',
             // flex: 1,
             // height: 120,
