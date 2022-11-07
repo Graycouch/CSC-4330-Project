@@ -149,222 +149,224 @@ export default function ProfileScreen({ navigation }) {
     return (
         <View style={{ backgroundColor: '#FFFFFF', flex: 1 }}>
             {editing ? (
-                <ScrollView showsVerticalScrollIndicator={false} showsHorizontalScrollIndicator={false} contentContainerStyle={styles.contentContainer} style={{ backgroundColor: '#FFFFFF' }}>
-                    <View style={{ marginBottom: windowHeight * 0.0128, top: -windowHeight * 0.019, height: windowHeight * 0.0512 }}>
-                        <Text style={{ fontSize: 24, fontWeight: '500' }}>
-                            Edit Profile
-                        </Text>
-                    </View>
+                <View>
+                    <ScrollView showsVerticalScrollIndicator={false} showsHorizontalScrollIndicator={false} contentContainerStyle={styles.contentContainer} style={{ backgroundColor: '#FFFFFF' }}>
+                        <View style={{ marginBottom: windowHeight * 0.0128, top: -windowHeight * 0.019, height: windowHeight * 0.0512 }}>
+                            <Text style={{ fontSize: 24, fontWeight: '500' }}>
+                                Edit Profile
+                            </Text>
+                        </View>
 
-                    <View style={{ top: -windowHeight * 0.019 }}>
-                        <Pressable onPress={handleChooseCoverPicture}>
-                            <Image source={{ uri: coverPicture === "" ? publicFolder + "defaultBackground.jpg" : coverPicture }} style={{ height: windowHeight * 0.166, width: windowWidth }} />
-                        </Pressable>
-
-                        <View style={{
-                            top: -windowHeight * 0.0768, height: windowHeight * 0.1536, width: windowHeight * 0.1536,
-                            borderRadius: windowHeight * 0.0768, paddingLeft: windowWidth * 0.052
-                        }}>
-                            <Pressable onPress={handleChooseProfilePicture}>
-                                <Image source={{ uri: profilePicture === "" ? publicFolder + "defaultProfilePicture.png" : profilePicture }} style=
-                                    {{ height: windowHeight * 0.1536, width: windowHeight * 0.1536, borderRadius: windowHeight * 0.0768, borderWidth: 3, borderColor: '#FFFFFF' }} />
+                        <View style={{ top: -windowHeight * 0.019 }}>
+                            <Pressable onPress={handleChooseCoverPicture}>
+                                <Image source={{ uri: coverPicture === "" ? publicFolder + "defaultBackground.jpg" : coverPicture }} style={{ height: windowHeight * 0.166, width: windowWidth }} />
                             </Pressable>
+
+                            <View style={{
+                                top: -windowHeight * 0.0768, height: windowHeight * 0.1536, width: windowHeight * 0.1536,
+                                borderRadius: windowHeight * 0.0768, paddingLeft: windowWidth * 0.052
+                            }}>
+                                <Pressable onPress={handleChooseProfilePicture}>
+                                    <Image source={{ uri: profilePicture === "" ? publicFolder + "defaultProfilePicture.png" : profilePicture }} style=
+                                        {{ height: windowHeight * 0.1536, width: windowHeight * 0.1536, borderRadius: windowHeight * 0.0768, borderWidth: 3, borderColor: '#FFFFFF' }} />
+                                </Pressable>
+                            </View>
+
+                            <Pressable onPress={handleDoneClick}>
+                                <MaterialCommunityIcons name={"check"} color={"#5F59F7"} size={24} style={{ marginLeft: 'auto', marginRight: 'auto', top: -windowHeight * 0.128, right: -windowWidth * 0.417 }} />
+                            </Pressable>
+
+                            <Text style={{ top: -windowHeight * 0.105, fontSize: 24, textAlign: 'left', fontWeight: '500', textAlignVertical: 'top', paddingLeft: windowWidth * 0.052 }}>
+                                {username}
+                            </Text>
+
+                            <Text style={{ top: -windowHeight * 0.105, fontSize: 15, textAlign: 'left', textAlignVertical: 'top', paddingLeft: windowWidth * 0.052 }}>
+                                {major} {role}
+                            </Text>
                         </View>
 
-                        <Pressable onPress={handleDoneClick}>
-                            <MaterialCommunityIcons name={"check"} color={"#5F59F7"} size={24} style={{ marginLeft: 'auto', marginRight: 'auto', top: -windowHeight * 0.128, right: -windowWidth * 0.417 }} />
-                        </Pressable>
+                        <View style={{ top: -windowHeight * 0.102, alignItems: 'flex-start', display: 'flex', marginRight: windowWidth * 0.651 }}>
 
-                        <Text style={{ top: -windowHeight * 0.105, fontSize: 24, textAlign: 'left', fontWeight: '500', textAlignVertical: 'top', paddingLeft: windowWidth * 0.052 }}>
-                            {username}
-                        </Text>
-
-                        <Text style={{ top: -windowHeight * 0.105, fontSize: 15, textAlign: 'left', textAlignVertical: 'top', paddingLeft: windowWidth * 0.052 }}>
-                            {major} {role}
-                        </Text>
-                    </View>
-
-                    <View style={{ top: -windowHeight * 0.102, alignItems: 'flex-start', display: 'flex', marginRight: windowWidth * 0.651 }}>
-
-                        <View style={{ paddingTop: windowHeight * 0.0128 }}>
-                            <Text style={{ fontSize: 18 }}>
-                                Username:
-                            </Text>
-                            <TextInput onChangeText={text => setUsername(text)} style={{
-                                fontSize: 15, width: windowWidth * 0.5989, borderRadius: windowHeight * 0.0256,
-                                position: 'absolute', color: 'black', borderColor: '#9E9E9E', backgroundColor: '#F1F1F1',
-                                borderWidth: 1, marginTop: windowHeight * 0.0128, marginLeft: windowWidth * 0.26,
-                                paddingLeft: windowWidth * 0.026, paddingRight: windowWidth * 0.026
-                            }}>
-                                <Text style={{ paddingLeft: windowWidth * 0.052 }}>
-                                    {username}
+                            <View style={{ paddingTop: windowHeight * 0.0128 }}>
+                                <Text style={{ fontSize: 18 }}>
+                                    Username:
                                 </Text>
-                            </TextInput>
-                        </View>
+                                <TextInput onChangeText={text => setUsername(text)} style={{
+                                    fontSize: 15, width: windowWidth * 0.5989, borderRadius: windowHeight * 0.0256,
+                                    position: 'absolute', color: 'black', borderColor: '#9E9E9E', backgroundColor: '#F1F1F1',
+                                    borderWidth: 1, marginTop: windowHeight * 0.0128, marginLeft: windowWidth * 0.26,
+                                    paddingLeft: windowWidth * 0.026, paddingRight: windowWidth * 0.026
+                                }}>
+                                    <Text style={{ paddingLeft: windowWidth * 0.052 }}>
+                                        {username}
+                                    </Text>
+                                </TextInput>
+                            </View>
 
-                        <View style={{ paddingTop: windowHeight * 0.0384 }}>
-                            <Text style={{ fontSize: 18 }}>
-                                Email:
-                            </Text>
-                            <TextInput onChangeText={text => setEmail(text)} style={{
-                                fontSize: 15, width: windowWidth * 0.5989, borderRadius: windowHeight * 0.0256,
-                                position: 'absolute', color: 'black', borderColor: '#9E9E9E', backgroundColor: '#F1F1F1', borderWidth: 1,
-                                marginTop: windowHeight * 0.0384, marginLeft: windowWidth * 0.26, paddingLeft: windowWidth * 0.026, paddingRight: windowWidth * 0.026
-                            }}>
-                                <Text style={{ paddingLeft: windowWidth * 0.052 }}>
-                                    {email}
+                            <View style={{ paddingTop: windowHeight * 0.0384 }}>
+                                <Text style={{ fontSize: 18 }}>
+                                    Email:
                                 </Text>
-                            </TextInput>
+                                <TextInput onChangeText={text => setEmail(text)} style={{
+                                    fontSize: 15, width: windowWidth * 0.5989, borderRadius: windowHeight * 0.0256,
+                                    position: 'absolute', color: 'black', borderColor: '#9E9E9E', backgroundColor: '#F1F1F1', borderWidth: 1,
+                                    marginTop: windowHeight * 0.0384, marginLeft: windowWidth * 0.26, paddingLeft: windowWidth * 0.026, paddingRight: windowWidth * 0.026
+                                }}>
+                                    <Text style={{ paddingLeft: windowWidth * 0.052 }}>
+                                        {email}
+                                    </Text>
+                                </TextInput>
+                            </View>
+
+                            <View style={{ paddingTop: windowHeight * 0.0384 }}>
+                                <Text style={{ fontSize: 18 }}>
+                                    Major:
+                                </Text>
+                                <TextInput onChangeText={text => setMajor(text)} style={{
+                                    fontSize: 15, width: windowWidth * 0.5989, borderRadius: windowHeight * 0.0256,
+                                    position: 'absolute', color: 'black', borderColor: '#9E9E9E', backgroundColor: '#F1F1F1', borderWidth: 1,
+                                    marginTop: windowHeight * 0.0384, marginLeft: windowWidth * 0.26, paddingLeft: windowWidth * 0.026, paddingRight: windowWidth * 0.026
+                                }}>
+                                    {major}
+                                </TextInput>
+                            </View>
+
+                            <View style={{ paddingTop: windowHeight * 0.0384 }}>
+                                <Text style={{ fontSize: 18 }}>
+                                    Role:
+                                </Text>
+                                <TextInput onChangeText={text => setRole(text)} style={{
+                                    fontSize: 15, width: windowWidth * 0.5989, borderRadius: windowHeight * 0.0256,
+                                    position: 'absolute', color: 'black', borderColor: '#9E9E9E', backgroundColor: '#F1F1F1', borderWidth: 1,
+                                    marginTop: windowHeight * 0.0384, marginLeft: windowWidth * 0.26, paddingLeft: windowWidth * 0.026, paddingRight: windowWidth * 0.026
+                                }}>
+                                    {role}
+                                </TextInput>
+                            </View>
+
+                            <View style={{ paddingTop: windowHeight * 0.0384 }}>
+                                <Text style={{ fontSize: 18 }}>
+                                    School:
+                                </Text>
+                                <TextInput onChangeText={text => setUniversity(text)} style={{
+                                    fontSize: 15, width: windowWidth * 0.5989, borderRadius: windowHeight * 0.0256,
+                                    position: 'absolute', color: 'black', borderColor: '#9E9E9E', backgroundColor: '#F1F1F1', borderWidth: 1,
+                                    marginTop: windowHeight * 0.0384, marginLeft: windowWidth * 0.26, paddingLeft: windowWidth * 0.026, paddingRight: windowWidth * 0.026
+                                }}>
+                                    {university}
+                                </TextInput>
+                            </View>
+
+                            <View style={{ paddingTop: windowHeight * 0.0384 }}>
+                                <Text style={{ fontSize: 18 }}>
+                                    City:
+                                </Text>
+                                <TextInput onChangeText={text => setCity(text)} style={{
+                                    fontSize: 15, width: windowWidth * 0.5989, borderRadius: windowHeight * 0.0256,
+                                    position: 'absolute', color: 'black', borderColor: '#9E9E9E', backgroundColor: '#F1F1F1', borderWidth: 1,
+                                    marginTop: windowHeight * 0.0384, marginLeft: windowWidth * 0.26, paddingLeft: windowWidth * 0.026, paddingRight: windowWidth * 0.026
+                                }}>
+                                    {city}
+                                </TextInput>
+                            </View>
+
+                            <View style={{ paddingTop: windowHeight * 0.0384 }}>
+                                <Text style={{ fontSize: 18 }}>
+                                    Zip Code:
+                                </Text>
+                                <TextInput onChangeText={text => setZipCode(text)} style={{
+                                    fontSize: 15, width: windowWidth * 0.5989, borderRadius: windowHeight * 0.0256,
+                                    position: 'absolute', color: 'black', borderColor: '#9E9E9E', backgroundColor: '#F1F1F1', borderWidth: 1,
+                                    marginTop: windowHeight * 0.0384, marginLeft: windowWidth * 0.26, paddingLeft: windowWidth * 0.026, paddingRight: windowWidth * 0.026
+                                }}>
+                                    {zipCode}
+                                </TextInput>
+                            </View>
+
+                            <View style={{ paddingTop: windowHeight * 0.0384 }}>
+                                <Text style={{ fontSize: 18 }}>
+                                    Courses:
+                                </Text>
+                                <TextInput onChangeText={text => setCoursesView(text)} style={{
+                                    fontSize: 15, width: windowWidth * 0.5989, borderRadius: windowHeight * 0.0256,
+                                    position: 'absolute', color: 'black', borderColor: '#9E9E9E', backgroundColor: '#F1F1F1', borderWidth: 1,
+                                    marginTop: windowHeight * 0.0384, marginLeft: windowWidth * 0.26, paddingLeft: windowWidth * 0.026, paddingRight: windowWidth * 0.026
+                                }}>
+                                    {coursesView}
+                                </TextInput>
+                            </View>
+
+                            <View style={{ paddingTop: windowHeight * 0.0384 }}>
+                                <Text style={{ fontSize: 18 }}>
+                                    Rate:
+                                </Text>
+                                <TextInput onChangeText={text => setHourlyRate(text)} style={{
+                                    fontSize: 15, width: windowWidth * 0.5989, borderRadius: windowHeight * 0.0256,
+                                    position: 'absolute', color: 'black', borderColor: '#9E9E9E', backgroundColor: '#F1F1F1', borderWidth: 1,
+                                    marginTop: windowHeight * 0.0384, marginLeft: windowWidth * 0.26, paddingLeft: windowWidth * 0.026, paddingRight: windowWidth * 0.026
+                                }}>
+                                    {hourlyRate}
+                                </TextInput>
+                            </View>
+
+                            <View style={{ paddingTop: windowHeight * 0.0384 }}>
+                                <Text style={{ fontSize: 18 }}>
+                                    Lessons:
+                                </Text>
+                                <TextInput onChangeText={text => setTotalLessons(text)} style={{
+                                    fontSize: 15, width: windowWidth * 0.5989, borderRadius: windowHeight * 0.0256,
+                                    position: 'absolute', color: 'black', borderColor: '#9E9E9E', backgroundColor: '#F1F1F1', borderWidth: 1,
+                                    marginTop: windowHeight * 0.0384, marginLeft: windowWidth * 0.26, paddingLeft: windowWidth * 0.026, paddingRight: windowWidth * 0.026
+                                }}>
+                                    {totalLessons}
+                                </TextInput>
+                            </View>
+
+
+                            <View style={{ paddingTop: windowHeight * 0.0384 }}>
+                                <Text style={{ fontSize: 18 }}>
+                                    Hours:
+                                </Text>
+                                <TextInput onChangeText={text => setTotalHours(text)} style={{
+                                    fontSize: 15, width: windowWidth * 0.5989, borderRadius: windowHeight * 0.0256,
+                                    position: 'absolute', color: 'black', borderColor: '#9E9E9E', backgroundColor: '#F1F1F1', borderWidth: 1,
+                                    marginTop: windowHeight * 0.0384, marginLeft: windowWidth * 0.26, paddingLeft: windowWidth * 0.026, paddingRight: windowWidth * 0.026
+                                }}>
+                                    {totalHours}
+                                </TextInput>
+                            </View>
+
+                            <View style={{ paddingTop: windowHeight * 0.0384 }}>
+                                <Text style={{ fontSize: 18 }}>
+                                    Rating:
+                                </Text>
+                                <TextInput onChangeText={text => setRating(text)} style={{
+                                    fontSize: 15, width: windowWidth * 0.5989, borderRadius: windowHeight * 0.0256,
+                                    position: 'absolute', color: 'black', borderColor: '#9E9E9E', backgroundColor: '#F1F1F1', borderWidth: 1,
+                                    marginTop: windowHeight * 0.0384, marginLeft: windowWidth * 0.26, paddingLeft: windowWidth * 0.026, paddingRight: windowWidth * 0.026
+                                }}>
+                                    {rating}
+                                </TextInput>
+                            </View>
+
+                            <View style={{ paddingTop: windowHeight * 0.0384 }}>
+                                <Text style={{ fontSize: 18 }}>
+                                    About:
+                                </Text>
+                                <TextInput multiline={true} onChangeText={text => setAbout(text)} style={{
+                                    fontSize: 15, width: windowWidth * 0.5989, borderRadius: windowHeight * 0.0256,
+                                    position: 'absolute', color: 'black', borderColor: '#9E9E9E', backgroundColor: '#F1F1F1', borderWidth: 1,
+                                    marginTop: windowHeight * 0.0384, marginLeft: windowWidth * 0.26, paddingLeft: windowWidth * 0.026, paddingRight: windowWidth * 0.026,
+                                    textAlignVertical: "top", height: windowHeight * 0.256
+                                }}>
+                                    {about}
+                                </TextInput>
+                            </View>
                         </View>
 
-                        <View style={{ paddingTop: windowHeight * 0.0384 }}>
-                            <Text style={{ fontSize: 18 }}>
-                                Major:
-                            </Text>
-                            <TextInput onChangeText={text => setMajor(text)} style={{
-                                fontSize: 15, width: windowWidth * 0.5989, borderRadius: windowHeight * 0.0256,
-                                position: 'absolute', color: 'black', borderColor: '#9E9E9E', backgroundColor: '#F1F1F1', borderWidth: 1,
-                                marginTop: windowHeight * 0.0384, marginLeft: windowWidth * 0.26, paddingLeft: windowWidth * 0.026, paddingRight: windowWidth * 0.026
-                            }}>
-                                {major}
-                            </TextInput>
-                        </View>
-
-                        <View style={{ paddingTop: windowHeight * 0.0384 }}>
-                            <Text style={{ fontSize: 18 }}>
-                                Role:
-                            </Text>
-                            <TextInput onChangeText={text => setRole(text)} style={{
-                                fontSize: 15, width: windowWidth * 0.5989, borderRadius: windowHeight * 0.0256,
-                                position: 'absolute', color: 'black', borderColor: '#9E9E9E', backgroundColor: '#F1F1F1', borderWidth: 1,
-                                marginTop: windowHeight * 0.0384, marginLeft: windowWidth * 0.26, paddingLeft: windowWidth * 0.026, paddingRight: windowWidth * 0.026
-                            }}>
-                                {role}
-                            </TextInput>
-                        </View>
-
-                        <View style={{ paddingTop: windowHeight * 0.0384 }}>
-                            <Text style={{ fontSize: 18 }}>
-                                School:
-                            </Text>
-                            <TextInput onChangeText={text => setUniversity(text)} style={{
-                                fontSize: 15, width: windowWidth * 0.5989, borderRadius: windowHeight * 0.0256,
-                                position: 'absolute', color: 'black', borderColor: '#9E9E9E', backgroundColor: '#F1F1F1', borderWidth: 1,
-                                marginTop: windowHeight * 0.0384, marginLeft: windowWidth * 0.26, paddingLeft: windowWidth * 0.026, paddingRight: windowWidth * 0.026
-                            }}>
-                                {university}
-                            </TextInput>
-                        </View>
-
-                        <View style={{ paddingTop: windowHeight * 0.0384 }}>
-                            <Text style={{ fontSize: 18 }}>
-                                City:
-                            </Text>
-                            <TextInput onChangeText={text => setCity(text)} style={{
-                                fontSize: 15, width: windowWidth * 0.5989, borderRadius: windowHeight * 0.0256,
-                                position: 'absolute', color: 'black', borderColor: '#9E9E9E', backgroundColor: '#F1F1F1', borderWidth: 1,
-                                marginTop: windowHeight * 0.0384, marginLeft: windowWidth * 0.26, paddingLeft: windowWidth * 0.026, paddingRight: windowWidth * 0.026
-                            }}>
-                                {city}
-                            </TextInput>
-                        </View>
-
-                        <View style={{ paddingTop: windowHeight * 0.0384 }}>
-                            <Text style={{ fontSize: 18 }}>
-                                Zip Code:
-                            </Text>
-                            <TextInput onChangeText={text => setZipCode(text)} style={{
-                                fontSize: 15, width: windowWidth * 0.5989, borderRadius: windowHeight * 0.0256,
-                                position: 'absolute', color: 'black', borderColor: '#9E9E9E', backgroundColor: '#F1F1F1', borderWidth: 1,
-                                marginTop: windowHeight * 0.0384, marginLeft: windowWidth * 0.26, paddingLeft: windowWidth * 0.026, paddingRight: windowWidth * 0.026
-                            }}>
-                                {zipCode}
-                            </TextInput>
-                        </View>
-
-                        <View style={{ paddingTop: windowHeight * 0.0384 }}>
-                            <Text style={{ fontSize: 18 }}>
-                                Courses:
-                            </Text>
-                            <TextInput onChangeText={text => setCoursesView(text)} style={{
-                                fontSize: 15, width: windowWidth * 0.5989, borderRadius: windowHeight * 0.0256,
-                                position: 'absolute', color: 'black', borderColor: '#9E9E9E', backgroundColor: '#F1F1F1', borderWidth: 1,
-                                marginTop: windowHeight * 0.0384, marginLeft: windowWidth * 0.26, paddingLeft: windowWidth * 0.026, paddingRight: windowWidth * 0.026
-                            }}>
-                                {coursesView}
-                            </TextInput>
-                        </View>
-
-                        <View style={{ paddingTop: windowHeight * 0.0384 }}>
-                            <Text style={{ fontSize: 18 }}>
-                                Rate:
-                            </Text>
-                            <TextInput onChangeText={text => setHourlyRate(text)} style={{
-                                fontSize: 15, width: windowWidth * 0.5989, borderRadius: windowHeight * 0.0256,
-                                position: 'absolute', color: 'black', borderColor: '#9E9E9E', backgroundColor: '#F1F1F1', borderWidth: 1,
-                                marginTop: windowHeight * 0.0384, marginLeft: windowWidth * 0.26, paddingLeft: windowWidth * 0.026, paddingRight: windowWidth * 0.026
-                            }}>
-                                {hourlyRate}
-                            </TextInput>
-                        </View>
-
-                        <View style={{ paddingTop: windowHeight * 0.0384 }}>
-                            <Text style={{ fontSize: 18 }}>
-                                Lessons:
-                            </Text>
-                            <TextInput onChangeText={text => setTotalLessons(text)} style={{
-                                fontSize: 15, width: windowWidth * 0.5989, borderRadius: windowHeight * 0.0256,
-                                position: 'absolute', color: 'black', borderColor: '#9E9E9E', backgroundColor: '#F1F1F1', borderWidth: 1,
-                                marginTop: windowHeight * 0.0384, marginLeft: windowWidth * 0.26, paddingLeft: windowWidth * 0.026, paddingRight: windowWidth * 0.026
-                            }}>
-                                {totalLessons}
-                            </TextInput>
-                        </View>
-
-
-                        <View style={{ paddingTop: windowHeight * 0.0384 }}>
-                            <Text style={{ fontSize: 18 }}>
-                                Hours:
-                            </Text>
-                            <TextInput onChangeText={text => setTotalHours(text)} style={{
-                                fontSize: 15, width: windowWidth * 0.5989, borderRadius: windowHeight * 0.0256,
-                                position: 'absolute', color: 'black', borderColor: '#9E9E9E', backgroundColor: '#F1F1F1', borderWidth: 1,
-                                marginTop: windowHeight * 0.0384, marginLeft: windowWidth * 0.26, paddingLeft: windowWidth * 0.026, paddingRight: windowWidth * 0.026
-                            }}>
-                                {totalHours}
-                            </TextInput>
-                        </View>
-
-                        <View style={{ paddingTop: windowHeight * 0.0384 }}>
-                            <Text style={{ fontSize: 18 }}>
-                                Rating:
-                            </Text>
-                            <TextInput onChangeText={text => setRating(text)} style={{
-                                fontSize: 15, width: windowWidth * 0.5989, borderRadius: windowHeight * 0.0256,
-                                position: 'absolute', color: 'black', borderColor: '#9E9E9E', backgroundColor: '#F1F1F1', borderWidth: 1,
-                                marginTop: windowHeight * 0.0384, marginLeft: windowWidth * 0.26, paddingLeft: windowWidth * 0.026, paddingRight: windowWidth * 0.026
-                            }}>
-                                {rating}
-                            </TextInput>
-                        </View>
-
-                        <View style={{ paddingTop: windowHeight * 0.0384 }}>
-                            <Text style={{ fontSize: 18 }}>
-                                About:
-                            </Text>
-                            <TextInput multiline={true} onChangeText={text => setAbout(text)} style={{
-                                fontSize: 15, width: windowWidth * 0.5989, borderRadius: windowHeight * 0.0256,
-                                position: 'absolute', color: 'black', borderColor: '#9E9E9E', backgroundColor: '#F1F1F1', borderWidth: 1,
-                                marginTop: windowHeight * 0.0384, marginLeft: windowWidth * 0.26, paddingLeft: windowWidth * 0.026, paddingRight: windowWidth * 0.026,
-                                textAlignVertical: "top", height: windowHeight * 0.256
-                            }}>
-                                {about}
-                            </TextInput>
-                        </View>
-                    </View>
-
-                    <View style={{ padding: windowHeight * 0.128 }} />
-                </ScrollView>
+                        <View style={{ padding: windowHeight * 0.128 }} />
+                    </ScrollView>
+                </View>
             ) : (
                 <ScrollView showsVerticalScrollIndicator={false} showsHorizontalScrollIndicator={false} contentContainerStyle={styles.contentContainer} style={{ backgroundColor: '#FFFFFF' }}>
 
@@ -400,7 +402,7 @@ export default function ProfileScreen({ navigation }) {
 
                         <AirbnbRating count={5} defaultRating={rating} size={15} isDisabled={true} showRating={false} selectedColor={'#5F59F7'} starContainerStyle={{ top: -windowHeight * 0.1, left: -windowWidth * 0.32 }} />
 
-                        <Text style={{ position: 'absolute', top: windowHeight * 0.3, right: windowWidth * 0.05, fontSize: 20, textAlign: 'left', fontWeight: '400', color: '#0390fc' }}>
+                        <Text style={{ position: 'absolute', top: windowHeight * 0.3, right: windowWidth * 0.05, fontSize: 20, textAlign: 'left', fontWeight: '500', color: '#2970FE' }}>
                             ${hourlyRate}/hr
                         </Text>
                     </View>

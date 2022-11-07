@@ -149,13 +149,13 @@ export default function SearchScreen({ navigation }) {
                                 currentUser.role !== user.role && (searchValue !== "" ? (currentUser.major.toLowerCase() === searchValue.toLowerCase()) : (true)) ? (
                                     <Pressable key={currentUser.username} onPress={() => handleUserBoxClick(currentUser)}>
                                         <View style={{
-                                            height: windowHeight * 0.2, width: 0.85 * windowWidth, backgroundColor: '#F5F5F5', borderWidth: 1,
+                                            height: windowHeight * 0.2, width: 0.93 * windowWidth, backgroundColor: '#FFFFFF', borderWidth: 1,
                                             borderColor: '#9E9E9E', borderRadius: windowHeight * 0.0256, marginBottom: windowHeight * 0.032
                                         }}>
 
                                             <Image source={{ uri: currentUser.coverPicture === "" ? publicFolder + "defaultBackground.jpg" : currentUser.coverPicture }}
                                                 style={{
-                                                    height: windowHeight * 0.064, width: windowWidth * 0.845,
+                                                    height: windowHeight * 0.064, width: windowWidth * 0.925,
                                                     borderTopLeftRadius: windowHeight * 0.0256, borderTopRightRadius: windowHeight * 0.0256
                                                 }} />
 
@@ -191,7 +191,7 @@ export default function SearchScreen({ navigation }) {
 
                                                 <Text style={{
                                                     position: 'absolute', top: -windowHeight * 0.073, right: windowHeight * 0.025,
-                                                    fontSize: 15, textAlign: 'left', fontWeight: '400', textAlignVertical: 'top', paddingLeft: windowWidth * 0.039,
+                                                    fontSize: 15, textAlign: 'left', fontWeight: '500', textAlignVertical: 'top', paddingLeft: windowWidth * 0.039,
                                                     paddingTop: windowHeight * 0.0128, color: '#2970FE'
                                                 }}>
                                                     ${currentUser.hourlyRate}/hr
@@ -259,7 +259,7 @@ export default function SearchScreen({ navigation }) {
 
                         <AirbnbRating count={5} defaultRating={rating} size={15} isDisabled={true} showRating={false} selectedColor={'#5F59F7'} starContainerStyle={{ top: -windowHeight * 0.1, left: -windowWidth * 0.32 }} />
 
-                        <Text style={{ position: 'absolute', top: windowHeight * 0.3, right: windowWidth * 0.05, fontSize: 20, textAlign: 'left', fontWeight: '400', color: '#0390fc' }}>
+                        <Text style={{ position: 'absolute', top: windowHeight * 0.3, right: windowWidth * 0.05, fontSize: 20, textAlign: 'left', fontWeight: '500', color: '#2970FE' }}>
                             ${hourlyRate}/hr
                         </Text>
                     </View>

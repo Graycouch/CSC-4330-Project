@@ -113,7 +113,7 @@ export function CardFactory(props) {
     return (
     props.users.map((currentUser, index) => (
             
-        <Pressable key={index} onPress={() => handleUserBoxClick(currentUser)}>
+        <Pressable key={index}>
             {/* Card Container */}
             <View style={[styles.cardContainer, {backgroundImage: currentUser.coverPicture === "" ? "url("+imageURL+"defaultBackground.jpg)" : "url("+imageURL+'lsuBannerTemp2.jpeg)'}]}>
                 {/* BackgroundImage */}                
