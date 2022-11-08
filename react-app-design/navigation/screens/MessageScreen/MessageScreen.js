@@ -81,7 +81,7 @@ export default function MessageScreen({ navigation }) {
               <ScrollView showsVerticalScrollIndicator={false} showsHorizontalScrollIndicator={false} contentContainerStyle={styles.contentContainer} style={{ backgroundColor: '#FFFFFF' }}>
                   <View style={{ marginBottom: windowHeight * 0.0128, top: windowHeight * 0.005, height: windowHeight * 0.0512 }}>
                        <Text style={{ fontSize: 21, fontWeight: '500' }}>
-                             Abdel Rahman Mansour
+                             Abdel Mansour
                        </Text>
                   </View>
                   <View style={styles.replyPageHorizontalLine1} />
@@ -134,7 +134,7 @@ export default function MessageScreen({ navigation }) {
                     </View>
                     <View style={{ alignItems: 'flex-start', top: -50, paddingLeft: 90, paddingRight: 10 }}>
                         <Text style={{ fontSize: 20, fontWeight: 'bold' }}>
-                            Abdel Rahman Mansour
+                            Abdel Mansour
                         </Text>
                         <Text style={{ color: 'gray', fontSize: 15, top: -5, paddingRight: 20 }}>
                             Sure! I'd be happy to help you with that.
