@@ -103,10 +103,10 @@ export default function ProfileScreen({ navigation }) {
             flexGrow: 1
         },
         verticalLine: {
-            height: windowHeight * 0.256,
+            height: windowHeight * 0.23,
             width: 1,
             position: 'absolute',
-            top: windowHeight * 0.47,
+            top: windowHeight * 0.52,
             backgroundColor: '#E5E5E5',
         },
         horizontalLine1: {
@@ -114,21 +114,21 @@ export default function ProfileScreen({ navigation }) {
             width: windowWidth,
             position: 'absolute',
             backgroundColor: '#E5E5E5',
-            top: windowHeight * 0.47
+            top: windowHeight * 0.52
         },
         horizontalLine2: {
             height: 1,
             width: windowWidth,
             position: 'absolute',
             backgroundColor: '#E5E5E5',
-            top: windowHeight * 0.598
+            top: windowHeight * 0.63
         },
         horizontalLine3: {
             height: 1,
             width: windowWidth,
             position: 'absolute',
             backgroundColor: '#E5E5E5',
-            top: windowHeight * 0.726
+            top: windowHeight * 0.75
         },
         horizontalLine4: {
             height: 1,
@@ -136,13 +136,6 @@ export default function ProfileScreen({ navigation }) {
             position: 'absolute',
             backgroundColor: '#E5E5E5',
             top: windowHeight * 0.918
-        },
-        horizontalLine5: {
-            height: 1,
-            width: windowWidth,
-            position: 'absolute',
-            backgroundColor: '#E5E5E5',
-            top: windowHeight * 1.15
         }
     });
 
@@ -388,8 +381,8 @@ export default function ProfileScreen({ navigation }) {
                                 {{ height: windowHeight * 0.1536, width: windowHeight * 0.1536, borderRadius: windowHeight * 0.0768, borderWidth: 3, borderColor: '#FFFFFF' }} />
                         </View>
 
-                        <Pressable onPress={handleEditProfileClick}>
-                            <MaterialCommunityIcons name={"pencil-outline"} color={"#5F59F7"} size={24} style={{ marginLeft: 'auto', marginRight: 'auto', top: -windowHeight * 0.128, right: -windowWidth * 0.4167 }} />
+                        <Pressable onPress={handleEditProfileClick} style={{ top: -windowHeight * 0.128, right: -windowWidth * 0.4167 }}>
+                            <MaterialCommunityIcons name={"pencil-outline"} color={"#5F59F7"} size={24} style={{ marginLeft: 'auto', marginRight: 'auto' }} />
                         </Pressable>
 
                         <Text style={{ top: -windowHeight * 0.105, fontSize: 24, textAlign: 'left', fontWeight: '500', textAlignVertical: 'top', paddingLeft: windowWidth * 0.052 }}>
@@ -402,37 +395,49 @@ export default function ProfileScreen({ navigation }) {
 
                         <AirbnbRating count={5} defaultRating={rating} size={15} isDisabled={true} showRating={false} selectedColor={'#5F59F7'} starContainerStyle={{ top: -windowHeight * 0.1, left: -windowWidth * 0.32 }} />
 
-                        <Text style={{ position: 'absolute', top: windowHeight * 0.3, right: windowWidth * 0.05, fontSize: 20, textAlign: 'left', fontWeight: '500', color: '#2970FE' }}>
+                        <Text style={{ position: 'absolute', top: windowHeight * 0.28, right: windowWidth * 0.05, fontSize: 20, textAlign: 'left', fontWeight: '500', color: '#2970FE' }}>
                             ${hourlyRate}/hr
                         </Text>
                     </View>
 
+                    <View style={{ alignItems: 'flex-start', width: '100%', position: 'absolute', top: windowHeight * 0.47, paddingLeft: 15, paddingRight: 15 }}>
+                        <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
+                            {courses.map((course) => (
+                                <View key={course} style={{ marginRight: 5, borderRadius: windowHeight * 0.0256, backgroundColor: '#5F59F7' }}>
+                                    <Text style={{ fontSize: 15, fontWeight: '400', color: 'white' }}>
+                                        {"   "}{course}{"   "}
+                                    </Text>
+                                </View>
+                            ))}
+                        </ScrollView>
+                    </View>
+
                     <View style={{ top: -windowHeight * 0.105, flex: 1, flexDirection: 'row', flexWrap: 'wrap' }}>
-                        <View style={{ alignItems: 'center', width: '50%', paddingTop: windowHeight * 0.0384 }}>
+                        <View style={{ alignItems: 'center', width: '50%', paddingTop: windowHeight * 0.075 }}>
                             <View style={{ flexDirection: 'row' }}>
                                 <MaterialCommunityIcons name={"head-lightbulb"} color={"#5F59F7"} size={20} style={{ paddingRight: windowWidth * 0.013 }} />
                                 <Text style={{ fontSize: 15, fontWeight: 'bold', color: '#5F59F7' }}>
                                     Total Lessons:
                                 </Text>
                             </View>
-                            <Text style={{ fontSize: 15, color: 'grey' }}>
+                            <Text style={{ fontSize: 22, color: 'grey' }}>
                                 {totalLessons}
                             </Text>
                         </View>
 
-                        <View style={{ alignItems: 'center', width: '50%', paddingTop: windowHeight * 0.0384 }}>
+                        <View style={{ alignItems: 'center', width: '50%', paddingTop: windowHeight * 0.075 }}>
                             <View style={{ flexDirection: 'row' }}>
                                 <MaterialCommunityIcons name={"clock-time-eight"} color={"#5F59F7"} size={20} style={{ paddingRight: windowWidth * 0.013 }} />
                                 <Text style={{ fontSize: 15, fontWeight: 'bold', color: '#5F59F7' }}>
                                     Total Hours:
                                 </Text>
                             </View>
-                            <Text style={{ fontSize: 15, color: 'grey' }}>
+                            <Text style={{ fontSize: 22, color: 'grey' }}>
                                 {totalHours}
                             </Text>
                         </View>
 
-                        <View style={{ alignItems: 'center', width: '50%', paddingTop: windowHeight * 0.0768 }}>
+                        <View style={{ alignItems: 'center', width: '50%', paddingTop: windowHeight * 0.05 }}>
                             <View style={{ flexDirection: 'row' }}>
                                 <MaterialCommunityIcons name={"map-marker"} color={"#5F59F7"} size={20} style={{ paddingRight: windowWidth * 0.013 }} />
                                 <Text style={{ fontSize: 15, fontWeight: 'bold', color: '#5F59F7' }}>
@@ -444,7 +449,7 @@ export default function ProfileScreen({ navigation }) {
                             </Text>
                         </View>
 
-                        <View style={{ alignItems: 'center', width: '50%', paddingTop: windowHeight * 0.0768 }}>
+                        <View style={{ alignItems: 'center', width: '50%', paddingTop: windowHeight * 0.05 }}>
                             <View style={{ flexDirection: 'row' }}>
                                 <MaterialCommunityIcons name={"school"} color={"#5F59F7"} size={20} style={{ paddingRight: windowWidth * 0.013 }} />
                                 <Text style={{ fontSize: 15, fontWeight: 'bold', color: '#5F59F7' }}>
@@ -455,57 +460,35 @@ export default function ProfileScreen({ navigation }) {
                                 {university}
                             </Text>
                         </View>
-
-                        <View style={{ alignItems: 'center', width: '100%', position: 'absolute', top: windowHeight * 0.28 }}>
-                            <View style={{ flexDirection: 'row' }}>
-                                <MaterialCommunityIcons name={"book-open-variant"} color={"#5F59F7"} size={20} style={{ paddingRight: windowWidth * 0.013 }} />
-                                <Text style={{ fontSize: 15, fontWeight: 'bold', color: '#5F59F7' }}>
-                                    Subjects:
-                                </Text>
-                            </View>
-
-                            <Text style={{ lineHeight: windowHeight * 0.05, paddingTop: windowHeight * 0.0128, paddingRight: windowWidth * 0.052, paddingLeft: windowWidth * 0.052 }}>
-                                {courses.map((course) => (
-                                    <View key={course} style={{ borderWidth: 1, borderColor: '#FFFFFF', borderRadius: windowHeight * 0.0256, backgroundColor: '#5F59F7' }}>
-                                        <Text style={{ fontSize: 15, fontWeight: '400', color: 'white' }}>
-                                            {"   "}{course}{"   "}
-                                        </Text>
-                                    </View>
-                                ))}
-                            </Text>
-                        </View>
-
-                        <View style={{ alignItems: 'center', width: '100%', position: 'absolute', top: windowHeight * 0.47 }}>
-                            <View style={{ flexDirection: 'row' }}>
-                                <MaterialCommunityIcons name={"lead-pencil"} color={"#5F59F7"} size={20} style={{ paddingRight: windowWidth * 0.013 }} />
-                                <Text style={{ fontSize: 15, fontWeight: 'bold', color: '#5F59F7' }}>
-                                    About:
-                                </Text>
-                            </View>
-                            <Text style={{ fontSize: 15, textAlign: 'center', color: 'grey', paddingLeft: windowWidth * 0.026, paddingRight: windowWidth * 0.026, paddingTop: windowHeight * 0.01 }}>
-                                {about}
-                            </Text>
-                        </View>
                     </View>
 
-                    <View style={styles.horizontalLine1} />
-                    <View style={styles.horizontalLine2} />
-                    <View style={styles.horizontalLine3} />
-                    <View style={styles.horizontalLine4} />
-                    <View style={styles.horizontalLine5} />
-                    <View style={styles.verticalLine} />
-
-                    <View style={{ padding: windowHeight * 0.23 }}></View>
-
                     <Pressable backgroundColor={'#5F59F7'} style={{
-                        top: windowHeight * 1.17, height: windowHeight * 0.0768, width: windowWidth * 0.833,
-                        borderRadius: windowHeight * 0.0512, alignItems: 'center', justifyContent: 'center', position: 'absolute'
+                        top: -windowHeight * 0.025, height: windowHeight * 0.0768, width: windowWidth * 0.833,
+                        borderRadius: windowHeight * 0.0512, alignItems: 'center', justifyContent: 'center'
                     }} onPress={handleLogOutClick}>
                         <Text style={{ color: 'white', fontSize: 18 }}>
                             Log Out
                         </Text>
                     </Pressable>
 
+                    <View style={{ alignItems: 'center', width: '100%', top: windowHeight * 0.05 }}>
+                        <View style={{ flexDirection: 'row' }}>
+                            <MaterialCommunityIcons name={"lead-pencil"} color={"#5F59F7"} size={20} style={{ paddingRight: windowWidth * 0.013 }} />
+                            <Text style={{ fontSize: 15, fontWeight: 'bold', color: '#5F59F7' }}>
+                                About:
+                            </Text>
+                        </View>
+                        <Text style={{ fontSize: 15, textAlign: 'center', color: 'grey', paddingLeft: windowWidth * 0.026, paddingRight: windowWidth * 0.026, paddingTop: windowHeight * 0.01 }}>
+                            {about}
+                        </Text>
+                    </View>
+
+                    <View style={styles.horizontalLine1} />
+                    <View style={styles.horizontalLine2} />
+                    <View style={styles.horizontalLine3} />
+                    <View style={styles.horizontalLine4} />
+                    <View style={styles.verticalLine} />
+                    <View style={{ padding: windowHeight * 0.2 }}></View>
                 </ScrollView>
             )
             }

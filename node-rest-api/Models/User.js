@@ -40,7 +40,7 @@ const UserSchema = new mongoose.Schema(
 
         about: {
             type: String,
-            max: 200,
+            max: 1000,
             default: "Enter Some Information About Yourself"
         },
 
