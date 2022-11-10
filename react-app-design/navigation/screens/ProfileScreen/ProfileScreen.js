@@ -404,7 +404,7 @@ export default function ProfileScreen({ navigation }) {
                         <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
                             {courses.map((course) => (
                                 <View key={course} style={{ marginRight: 5, borderRadius: windowHeight * 0.0256, backgroundColor: '#5F59F7' }}>
-                                    <Text style={{ fontSize: 15, fontWeight: '400', color: 'white' }}>
+                                    <Text style={{ fontSize: 15, fontWeight: '400', color: 'white', paddingBottom: 3 }}>
                                         {"   "}{course}{"   "}
                                     </Text>
                                 </View>
