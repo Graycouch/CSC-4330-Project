@@ -4,7 +4,7 @@ import { View, Text, Button, Image, TextInput, Pressable, ScrollView, StyleSheet
 import axios from 'axios';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import * as ImagePicker from 'expo-image-picker';
-import { Rating, AirbnbRating } from 'react-native-ratings';
+import { AirbnbRating } from 'react-native-ratings';
 
 export default function ProfileScreen({ navigation }) {
     const [user] = useGlobalState("user");

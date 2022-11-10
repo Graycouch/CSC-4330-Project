@@ -1,10 +1,11 @@
 import * as React from 'react';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useGlobalState, setGlobalState } from '../../../index';
 import { View, Text, Button, Image, TextInput, Pressable, ScrollView, StyleSheet, Dimensions, Linking } from 'react-native';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import { Rating, AirbnbRating } from 'react-native-ratings';
+import { AirbnbRating } from 'react-native-ratings';
+import axios from 'axios';
 
 export default function SearchScreen({ navigation }) {
     const [user] = useGlobalState("user");
@@ -15,22 +16,8 @@ export default function SearchScreen({ navigation }) {
 
     const [boxClicked, setboxClicked] = useState(false);
     const [bookClicked, setbookClicked] = useState(false);
-    const [username, setUsername] = useState("");
-    const [email, setEmail] = useState("");
-    const [role, setRole] = useState("");
-    const [major, setMajor] = useState("");
-    const [courses, setCourses] = useState([""]);
-    const [about, setAbout] = useState("");
-    const [city, setCity] = useState("");
-    const [university, setUniversity] = useState("");
-    const [zipCode, setZipCode] = useState("");
-    const [hourlyRate, setHourlyRate] = useState("");
-    const [totalLessons, setTotalLessons] = useState(0);
-    const [totalHours, setTotalHours] = useState(0);
-    const [rating, setRating] = useState(0);
-    const [profilePicture, setProfilePicture] = useState("");
-    const [coverPicture, setCoverPicture] = useState("");
     const [searchPageBar, setSearchPageBar] = useState(searchValue);
+    const [currentUser, setCurrentUser] = useState({});
 
     const windowWidth = Dimensions.get('window').width;
     const windowHeight = Dimensions.get('window').height;
@@ -86,22 +73,7 @@ export default function SearchScreen({ navigation }) {
 
     function handleUserBoxClick(currentUser) {
         setboxClicked(true);
-
-        setUsername(currentUser.username);
-        setEmail(currentUser.email);
-        setRole(currentUser.role);
-        setMajor(currentUser.major);
-        setCourses(currentUser.courses);
-        setAbout(currentUser.about);
-        setCity(currentUser.city);
-        setUniversity(currentUser.university);
-        setZipCode(currentUser.zipCode);
-        setHourlyRate(currentUser.hourlyRate);
-        setTotalLessons(currentUser.totalLessons);
-        setTotalHours(currentUser.totalHours);
-        setRating(currentUser.rating);
-        setProfilePicture(currentUser.profilePicture);
-        setCoverPicture(currentUser.coverPicture);
+        setCurrentUser(currentUser);
     }
 
     const handleBackClick = (e) => {
@@ -111,16 +83,33 @@ export default function SearchScreen({ navigation }) {
 
     const handleEmailClick = (e) => {
         e.preventDefault();
-        Linking.openURL(`mailto:${email}`);
+        Linking.openURL(`mailto:${currentUser.email}`);
     }
 
     const handleMessageClick = (e) => {
         e.preventDefault();
+
+        axios.post(`http://${localhost}:8800/api/conversations`, {
+            senderId: user._id,
+            receiverId: currentUser._id
+        })
+            .then((response) => {
+                axios.get(`http://${localhost}:8800/api/conversations/${user._id}`, {
+                })
+                    .then((response) => {
+                        setGlobalState("conversations", response.data);
+                        navigation.navigate('Message', { screen: 'Message`' });
+                    }, (error) => {
+                        console.log(error);
+                    });
+            }, (error) => {
+                console.log(error);
+            });
     }
 
     const handleBookClick = (e) => {
         e.preventDefault();
-        setbookClicked(!bookClicked)
+        setbookClicked(!bookClicked);
     }
 
     return (
@@ -224,13 +213,13 @@ export default function SearchScreen({ navigation }) {
                     </View>
 
                     <View style={{ top: -windowHeight * 0.019 }}>
-                        <Image source={{ uri: coverPicture === "" ? publicFolder + "defaultBackground.jpg" : coverPicture }} style={{ height: windowHeight * 0.166, width: windowWidth }} />
+                        <Image source={{ uri: currentUser.coverPicture === "" ? publicFolder + "defaultBackground.jpg" : currentUser.coverPicture }} style={{ height: windowHeight * 0.166, width: windowWidth }} />
 
                         <View style={{
                             top: -windowHeight * 0.0768, height: windowHeight * 0.1536, width: windowHeight * 0.1536,
                             borderRadius: windowHeight * 0.0768, paddingLeft: windowWidth * 0.052
                         }}>
-                            <Image source={{ uri: profilePicture === "" ? publicFolder + "defaultProfilePicture.png" : profilePicture }} style=
+                            <Image source={{ uri: currentUser.profilePicture === "" ? publicFolder + "defaultProfilePicture.png" : currentUser.profilePicture }} style=
                                 {{ height: windowHeight * 0.1536, width: windowHeight * 0.1536, borderRadius: windowHeight * 0.0768, borderWidth: 3, borderColor: '#FFFFFF' }} />
                         </View>
 
@@ -243,23 +232,23 @@ export default function SearchScreen({ navigation }) {
                         </Pressable>
 
                         <Text style={{ top: -windowHeight * 0.105, fontSize: 24, textAlign: 'left', fontWeight: '500', textAlignVertical: 'top', paddingLeft: windowWidth * 0.052 }}>
-                            {username}
+                            {currentUser.username}
                         </Text>
 
                         <Text style={{ top: -windowHeight * 0.105, fontSize: 15, textAlign: 'left', textAlignVertical: 'top', paddingLeft: windowWidth * 0.052 }}>
-                            {major} {role}
+                            {currentUser.major} {currentUser.role}
                         </Text>
 
-                        <AirbnbRating count={5} defaultRating={rating} size={15} isDisabled={true} showRating={false} selectedColor={'#5F59F7'} starContainerStyle={{ top: -windowHeight * 0.1, left: -windowWidth * 0.32 }} />
+                        <AirbnbRating count={5} defaultRating={currentUser.rating} size={15} isDisabled={true} showRating={false} selectedColor={'#5F59F7'} starContainerStyle={{ top: -windowHeight * 0.1, left: -windowWidth * 0.32 }} />
 
                         <Text style={{ position: 'absolute', top: windowHeight * 0.28, right: windowWidth * 0.05, fontSize: 20, textAlign: 'left', fontWeight: '500', color: '#2970FE' }}>
-                            ${hourlyRate}/hr
+                            ${currentUser.hourlyRate}/hr
                         </Text>
                     </View>
 
                     <View style={{ alignItems: 'flex-start', width: '100%', position: 'absolute', top: windowHeight * 0.47, paddingLeft: 15, paddingRight: 15 }}>
                         <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
-                            {courses.map((course) => (
+                            {currentUser.courses.map((course) => (
                                 <View key={course} style={{ marginRight: 5, borderRadius: windowHeight * 0.0256, backgroundColor: '#5F59F7' }}>
                                     <Text style={{ fontSize: 15, fontWeight: '400', color: 'white', paddingBottom: 3 }}>
                                         {"   "}{course}{"   "}
@@ -278,7 +267,7 @@ export default function SearchScreen({ navigation }) {
                                 </Text>
                             </View>
                             <Text style={{ fontSize: 22, color: 'grey' }}>
-                                {totalLessons}
+                                {currentUser.totalLessons}
                             </Text>
                         </View>
 
@@ -290,7 +279,7 @@ export default function SearchScreen({ navigation }) {
                                 </Text>
                             </View>
                             <Text style={{ fontSize: 22, color: 'grey' }}>
-                                {totalHours}
+                                {currentUser.totalHours}
                             </Text>
                         </View>
 
@@ -302,7 +291,7 @@ export default function SearchScreen({ navigation }) {
                                 </Text>
                             </View>
                             <Text style={{ fontSize: 15, color: 'grey', paddingLeft: windowWidth * 0.03 }}>
-                                {city}, {zipCode}
+                                {currentUser.city}, {currentUser.zipCode}
                             </Text>
                         </View>
 
@@ -314,7 +303,7 @@ export default function SearchScreen({ navigation }) {
                                 </Text>
                             </View>
                             <Text style={{ fontSize: 15, color: 'grey' }}>
-                                {university}
+                                {currentUser.university}
                             </Text>
                         </View>
                     </View>
@@ -336,7 +325,7 @@ export default function SearchScreen({ navigation }) {
                             </Text>
                         </View>
                         <Text style={{ fontSize: 15, textAlign: 'center', color: 'grey', paddingLeft: windowWidth * 0.026, paddingRight: windowWidth * 0.026, paddingTop: windowHeight * 0.01 }}>
-                            {about}
+                            {currentUser.about}
                         </Text>
                     </View>
 
