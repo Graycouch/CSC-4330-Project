@@ -74,7 +74,7 @@ export default function Header({ navigation }) {
             <View style={styles.logoProfileContainer}>
                 {/* Logo */}
                 <Image
-                    source={{uri : imageURL + 'logo2.png'}}
+                    source={{ uri: imageURL + 'logo2.png' }}
                     style={{ height: 50, width: 85, resizeMode: "contain" }}
                     onPress={() =>
                         navigation.navigate('Home')
@@ -88,23 +88,11 @@ export default function Header({ navigation }) {
                     }
                 >
                     <Image
-                        source={{uri : imageURL + 'abdel.jpg'}}
+                        source={{ uri: imageURL + 'abdel.jpg' }}
                         style={{ height: 50, width: 50, borderRadius: 60, borderWidth: 3, borderColor: '#FFFFFF' }}
                     />
                 </Pressable>
             </View>
-
-
-            {/* Search Bar */}
-            {/* <View style={styles.searchSection}>
-                <MaterialCommunityIcons name={"magnify"} color={"#9E9E9E"} size={20} style={styles.searchIcon} />
-                <TextInput placeholder="Search" value={searchValue} onChangeText={newText => setGlobalState("searchValue", newText)}
-                    onSubmitEditing={() => navigation.navigate('Search', { screen: 'Search' })}
-                    style={styles.input} />
-            </View> */}
-
-
-
         </View>
     )
 }
