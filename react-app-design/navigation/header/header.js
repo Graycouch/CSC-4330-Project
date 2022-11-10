@@ -18,10 +18,10 @@ export default function Header({ navigation }) {
         // Overall Header Container
         Container: {
             // flexGrow: 1,
-            display: 'fixed',
+            display: 'flex',
             // flexDirection: 'column',
-            // flex: 1,
-            // height: 120,
+            flex: 1,
+            height: 80,
             backgroundColor: '#ffffff',
             // // border for debugging flex
             // border: "solid",

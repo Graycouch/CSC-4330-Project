@@ -1,3 +1,4 @@
+import { useState, useEffect } from 'react';
 import { bundleDirectory } from 'expo-file-system';
 import { View, Text, Button, Image, ImageBackground, TextInput, Pressable, ScrollView, StyleSheet, Dimensions } from 'react-native';
 import { useGlobalState, setGlobalState } from '../../index.js';
@@ -38,7 +39,7 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         borderColor: '#9E9E9E', 
         borderRadius: 20, 
-        marginBottom: 30,
+        marginBottom: 30
     },
 
     // ProfilePicture
@@ -108,6 +109,78 @@ const styles = StyleSheet.create({
 
 
 export function CardFactory(props) {
+
+    const [user] = useGlobalState("user");
+    const [allUsers] = useGlobalState("allUsers");
+    const [searchValue] = useGlobalState("searchValue");
+    const [localhost] = useGlobalState("localhost");
+    const publicFolder = `http://${localhost}:8800/images/`;
+
+
+    const [boxClicked, setboxClicked] = useState(false);
+    const [username, setUsername] = useState("");
+    const [email, setEmail] = useState("");
+    const [role, setRole] = useState("");
+    const [major, setMajor] = useState("");
+    const [courses, setCourses] = useState([""]);
+    const [about, setAbout] = useState("");
+    const [city, setCity] = useState("");
+    const [university, setUniversity] = useState("");
+    const [zipCode, setZipCode] = useState("");
+    const [hourlyRate, setHourlyRate] = useState("");
+    const [totalLessons, setTotalLessons] = useState(0);
+    const [totalHours, setTotalHours] = useState(0);
+    const [rating, setRating] = useState(0);
+    const [profilePicture, setProfilePicture] = useState("");
+    const [coverPicture, setCoverPicture] = useState("");
+    const [searchPageBar, setSearchPageBar] = useState(searchValue);
+
+    function handleUserBoxClick(currentUser) {
+        setboxClicked(true);
+    
+        setUsername(currentUser.username);
+        setEmail(currentUser.email);
+        setRole(currentUser.role);
+        setMajor(currentUser.major);
+        setCourses(currentUser.courses);
+        setAbout(currentUser.about);
+        setCity(currentUser.city);
+        setUniversity(currentUser.university);
+        setZipCode(currentUser.zipCode);
+        setHourlyRate(currentUser.hourlyRate);
+        setTotalLessons(currentUser.totalLessons);
+        setTotalHours(currentUser.totalHours);
+        setRating(currentUser.rating);
+        setProfilePicture(currentUser.profilePicture);
+        setCoverPicture(currentUser.coverPicture);
+    }
+    
+    
+    const handleBackClick = (e) => {
+        e.preventDefault();
+        setboxClicked(false);
+    }
+    
+    const handleEmailClick = (e) => {
+        e.preventDefault();
+        Linking.openURL(`mailto:${email}`);
+    }
+    
+    const handleMessageClick = (e) => {
+        e.preventDefault();
+    }
+    
+    const handleBookClick = (e) => {
+        e.preventDefault();
+    }
+    
+    
+    
+
+
+
+
+
     const [staticContentURL] = useGlobalState("staticContentURL");
     const imageURL = staticContentURL + '/images/';
     return (
@@ -115,14 +188,14 @@ export function CardFactory(props) {
             
         <Pressable key={index} onPress={() => handleUserBoxClick(currentUser)}>
             {/* Card Container */}
-            <View style={[styles.cardContainer, {backgroundImage: currentUser.coverPicture === "" ? "url("+imageURL+"defaultBackground.jpg)" : "url("+imageURL+'lsuBannerTemp2.jpeg)'}]}>
+            <View style={[styles.cardContainer, {backgroundImage: currentUser.coverPicture.length === 0 ? "url("+imageURL+"defaultBackground.jpg)" : "url("+imageURL+'lsuBannerTemp2.jpeg)'}]}>
                 {/* BackgroundImage */}                
                 <ImageBackground source={{uri: imageURL+'lsuBannerTemp3.jpg'}} resizeMode="stretch" imageStyle={{borderRadius: 18}}>
 
                 {/* ProfilePictureContainer */}
                 <View style={{flexDirection: 'row'}}>
                     {/* ProfilePicture */}
-                    <Image source={{ uri: currentUser.profilePicture !== "" ? imageURL + "abdel.jpg" : currentUser.profilePicture }}
+                    <Image source={{ uri: currentUser.profilePicture.length === 0 ? imageURL + "abdel.jpg" : currentUser.profilePicture }}
                         style={styles.profilePicture} />
                 </View>
 

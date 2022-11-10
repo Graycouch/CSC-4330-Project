@@ -27,7 +27,6 @@ export default function HomeScreen({ navigation }) {
     const SuggestedTeachers = allUsers.slice(2,5);
 
 
-
     // DEBUG
     const debugBorders = false;
 
@@ -41,6 +40,7 @@ export default function HomeScreen({ navigation }) {
             justifyContent: 'center',
             marginLeft: 10,
             marginRight: 10,
+            marginTop: 100
         },
 
         // Inner Container for each Section
@@ -80,7 +80,7 @@ export default function HomeScreen({ navigation }) {
                 <ScrollView showsVerticalScrollIndicator={false} showsHorizontalScrollIndicator={false} contentContainerStyle={styles.contentContainer} style={{}}>
                     
                     <Text style={{ fontSize: 26, fontWeight: 'bold', margin: 10, marginTop: 20 }}>
-                        Welcome back, {username}!
+                        Welcome back, {"\n"}{username}!
                     </Text>
                     {/* Upcoming Lessons */}
                     <View style={styles.sectionContainer}>
