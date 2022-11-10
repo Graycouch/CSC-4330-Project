@@ -3,6 +3,8 @@ import { bundleDirectory } from 'expo-file-system';
 import { View, Text, Button, Image, ImageBackground, TextInput, Pressable, ScrollView, StyleSheet, Dimensions } from 'react-native';
 import { useGlobalState, setGlobalState } from '../../index.js';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import { Rating, AirbnbRating } from 'react-native-ratings';
+
 
 
 
@@ -39,7 +41,8 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         borderColor: '#9E9E9E', 
         borderRadius: 20, 
-        marginBottom: 30
+        marginBottom: 30,
+        backgroundColor: '#F5F5F5'
     },
 
     // ProfilePicture
@@ -49,7 +52,9 @@ const styles = StyleSheet.create({
         borderRadius: 999, 
         borderWidth: 2, 
         borderColor: '#FFFFFF',
-        margin: 15
+        marginLeft: 15,
+        marginTop: 10,
+        marginBottom: 2
     },
 
     // ProfileInfoContainer
@@ -64,6 +69,14 @@ const styles = StyleSheet.create({
         color: '#2970FE'
     },
 
+    grey : {
+        color: 'grey'
+    },
+
+    bold : {
+        fontWeight: '500'
+    },
+
     right : {
         textAlign: 'right',
         marginRight: 20,
@@ -71,27 +84,30 @@ const styles = StyleSheet.create({
     },
 
     top : {
-        fontSize: 18, 
-        fontWeight: '500',
-
+        fontSize: 15, 
         
         marginTop: 0,
         marginLeft: 20,
-        marginBottom: 10,
+        marginBottom: 2,
 
-        lineHeight: 20
+ 
     },
 
     bottom : {
-        fontSize: 14, 
+        fontSize: 12, 
 
         marginTop: 0,
         marginLeft: 20,
+        marginBottom: 2,
+
+    },
+
+
+    rating : {
+        marginTop: 0,
+        marginLeft: 18,
         marginBottom: 20,
-
-        color: 'grey',
-
-        lineHeight: 20        
+        alignSelf: 'flex-start'
     }
 });
 
@@ -134,6 +150,8 @@ export function CardFactory(props) {
     const [profilePicture, setProfilePicture] = useState("");
     const [coverPicture, setCoverPicture] = useState("");
     const [searchPageBar, setSearchPageBar] = useState(searchValue);
+
+    
 
     function handleUserBoxClick(currentUser) {
         setboxClicked(true);
@@ -186,11 +204,12 @@ export function CardFactory(props) {
     return (
     props.users.map((currentUser, index) => (
             
-        <Pressable key={index}>
+        <Pressable key={index} onPress={() => handleUserBoxClick(currentUser)}>
             {/* Card Container */}
-            <View style={[styles.cardContainer, {backgroundImage: currentUser.coverPicture.length === 0 ? "url("+imageURL+"defaultBackground.jpg)" : "url("+imageURL+'lsuBannerTemp2.jpeg)'}]}>
+            {/* backgroundImage: currentUser.coverPicture.length === 0 ? "url("+imageURL+"defaultBackground.jpg)" : "url("+imageURL+'lsuBannerTemp2.jpeg)' */}
+            <View style={[styles.cardContainer, {}]}> 
                 {/* BackgroundImage */}                
-                <ImageBackground source={{uri: imageURL+'lsuBannerTemp3.jpg'}} resizeMode="stretch" imageStyle={{borderRadius: 18}}>
+                {/* <ImageBackground source={{uri: imageURL+'lsuBannerTemp3.jpg'}} resizeMode="stretch" imageStyle={{borderRadius: 18}}> */}
 
                 {/* ProfilePictureContainer */}
                 <View style={{flexDirection: 'row'}}>
@@ -204,7 +223,7 @@ export function CardFactory(props) {
                 {renderSwitch(props.CardType, currentUser)}
 
 
-                </ImageBackground>
+                {/* </ImageBackground> */}
             </View>
         </Pressable>     
     ))
@@ -218,16 +237,18 @@ function upcomingLesson(currentUser) {
                     {/* Info (Left Column) */}
                     <View style={{ flexDirection: 'column', justifyContent: 'flex-start'}}>
                         {/* Username */}
-                        <Text style={styles.top}>{currentUser.username}</Text>
+                        <Text style={[styles.top, styles.bold]}>{currentUser.username}</Text>
                         {/* Major */}
-                        <Text style={styles.bottom}>{currentUser.major}</Text>
+                        <Text style={styles.bottom}>{currentUser.major} {currentUser.role}</Text>
+                        {/* Rating */}
+                        <AirbnbRating count={5} defaultRating={currentUser.rating} size={12} isDisabled={true} showRating={false} selectedColor={'#5F59F7'} starContainerStyle={styles.rating} />
                     </View>
                     {/* Info (Right Column) */}
                     <View style={{ flexDirection: 'column', justifyContent: 'flex-start' }}>
                         {/* hourlyRate */}
                         <Text style={[styles.blue, styles.top, styles.right]}> ${currentUser.hourlyRate}/hr</Text>
                         {/* LocationInfo */}
-                        <Text style={[styles.locationInfo, styles.bottom, styles.right]}>Thursday 5:00PM</Text>
+                        <Text style={[styles.locationInfo, styles.bottom, styles.right, styles.grey]}>Thursday 5:00PM</Text>
                     </View>
                 </View>
     );
@@ -240,17 +261,19 @@ function myTeachers(currentUser) {
                     {/* Info (Left Column) */}
                     <View style={{ flexDirection: 'column', justifyContent: 'flex-start'}}>
                         {/* Username */}
-                        <Text style={styles.top}>{currentUser.username}</Text>
+                        <Text style={[styles.top, styles.bold]}>{currentUser.username}</Text>
                         {/* Major */}
-                        <Text style={styles.bottom}>{currentUser.major}</Text>
+                        <Text style={styles.bottom}>{currentUser.major} {currentUser.role}</Text>
+                        {/* Rating */}
+                        <AirbnbRating count={5} defaultRating={currentUser.rating} size={12} isDisabled={true} showRating={false} selectedColor={'#5F59F7'} starContainerStyle={styles.rating} />
                     </View>
                     {/* Info (Right Column) */}
                     <View style={{ flexDirection: 'column', justifyContent: 'flex-start' }}>
                         {/* hourlyRate */}
                         <Text style={[styles.blue, styles.top, styles.right]}> ${currentUser.hourlyRate}/hr</Text>
                         {/* LocationInfo */}
-                        <Text style={[styles.locationInfo, styles.bottom, styles.right]}>
-                        <MaterialCommunityIcons name={"calendar-clock-outline"} color={"#9E9E9E"} size={20} style={{}} />
+                        <Text style={[styles.locationInfo, styles.bottom, styles.right, styles.grey]}>
+                        <MaterialCommunityIcons name={"calendar-clock-outline"} color={"#9E9E9E"} size={12} style={{}} />
                              &nbsp;Schedule
                         </Text>
                         
@@ -265,17 +288,19 @@ function suggestedTeachers(currentUser) {
                     {/* Info (Left Column) */}
                     <View style={{ flexDirection: 'column', justifyContent: 'flex-start'}}>
                         {/* Username */}
-                        <Text style={styles.top}>{currentUser.username}</Text>
+                        <Text style={[styles.top, styles.bold]}>{currentUser.username}</Text>
                         {/* Major */}
                         <Text style={styles.bottom}>{currentUser.major}</Text>
+                        {/* Rating */}
+                        <AirbnbRating count={5} defaultRating={currentUser.rating} size={12} isDisabled={true} showRating={false} selectedColor={'#5F59F7'} starContainerStyle={styles.rating} />
                     </View>
                     {/* Info (Right Column) */}
                     <View style={{ flexDirection: 'column', justifyContent: 'flex-start' }}>
                         {/* hourlyRate */}
                         <Text style={[styles.blue, styles.top, styles.right]}> ${currentUser.hourlyRate}/hr</Text>
                         {/* LocationInfo */}
-                        <Text style={[styles.locationInfo, styles.bottom, styles.right]}>
-                        <MaterialCommunityIcons name={"card-account-details-outline"} color={"#9E9E9E"} size={20} style={{}} />
+                        <Text style={[styles.locationInfo, styles.bottom, styles.right, styles.grey]}>
+                        <MaterialCommunityIcons name={"card-account-details-outline"} color={"#9E9E9E"} size={12} style={{}} />
                              &nbsp;Check Profile
                         </Text>
                     </View>

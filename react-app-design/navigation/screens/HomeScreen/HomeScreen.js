@@ -46,7 +46,8 @@ export default function HomeScreen({ navigation }) {
         // Inner Container for each Section
         sectionContainer: {
             flexDirection: 'column',
-            alignContent: 'flex-start',
+            alignContent: 'stretch',
+            alignItems: 'stretch',
             justifyContent: "flex-start",
             borderColor: debugBorders ? 'blue' : '#ffffff',
             borderWidth: 2,
@@ -79,13 +80,13 @@ export default function HomeScreen({ navigation }) {
             <View style={styles.homepageContainer}>
                 <ScrollView showsVerticalScrollIndicator={false} showsHorizontalScrollIndicator={false} contentContainerStyle={styles.contentContainer} style={{}}>
                     
-                    <Text style={{ fontSize: 26, fontWeight: 'bold', margin: 10, marginTop: 20 }}>
+                    <Text style={{ fontSize: 26, fontWeight: 'bold', margin: 18, marginTop: 18 }}>
                         Welcome back, {"\n"}{username}!
                     </Text>
                     {/* Upcoming Lessons */}
                     <View style={styles.sectionContainer}>
                         <Text style={styles.heading}>Upcoming Lessons</Text>
-                        <View style={{ flexDirection: 'column' }}>
+                        <View style={{ flexDirection: 'column', marginLeft: 18, marginRight: 18 }}>
                             <CardFactory CardType="UpcomingLesson" users={UpcomingLessons} />
                         </View>
                     </View>
@@ -93,13 +94,17 @@ export default function HomeScreen({ navigation }) {
                     {/* My Teachers */}
                     <View style={styles.sectionContainer}>
                         <Text style={styles.heading}>My Teachers</Text>
-                        <CardFactory CardType="MyTeachers" users={MyTeachers} />
+                        <View style={{ flexDirection: 'column', marginLeft: 18, marginRight: 18 }}>
+                            <CardFactory CardType="MyTeachers" users={MyTeachers} />
+                        </View>
                     </View>
 
                     {/* Suggested Teachers */}
                     <View style={styles.sectionContainer}>
                         <Text style={styles.heading}>Suggested Teachers</Text>
-                        <CardFactory CardType="SuggestedTeachers" users={SuggestedTeachers} />
+                        <View style={{ flexDirection: 'column', marginLeft: 18, marginRight: 18 }}>
+                            <CardFactory CardType="SuggestedTeachers" users={SuggestedTeachers} />
+                        </View>
                     </View>
 
                     {/* footer spacing */}
