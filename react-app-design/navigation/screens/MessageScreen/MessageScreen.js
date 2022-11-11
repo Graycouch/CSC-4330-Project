@@ -22,6 +22,7 @@ export default function MessageScreen({ navigation }) {
     const windowWidth = Dimensions.get('window').width;
     const windowHeight = Dimensions.get('window').height;
 
+    const publicFolder = `http://${localhost}:8800/images/`;
     const [staticContentURL] = useGlobalState("staticContentURL");
     const imageURL = staticContentURL + '/images/';
 
@@ -48,7 +49,6 @@ export default function MessageScreen({ navigation }) {
     }, [conversations])
 
     async function handleMessageBoxClick(chatUser) {
-        setReplying(true);
         setChatUser(chatUser);
 
         currentConversation.current = conversations.find(conversation =>
@@ -56,13 +56,15 @@ export default function MessageScreen({ navigation }) {
             (conversation.members[0] === chatUser._id && user._id !== conversation.members[0])
         );
 
-        axios.get(`http://${localhost}:8800/api/messages/${currentConversation.current._id}`, {
+        await axios.get(`http://${localhost}:8800/api/messages/${currentConversation.current._id}`, {
         })
             .then((response) => {
                 setMessages(response.data);
             }, (error) => {
                 console.log(error);
             });
+
+        setReplying(true);
     };
 
     const handleBackButtonClick = (e) => {
@@ -135,7 +137,7 @@ export default function MessageScreen({ navigation }) {
         <View style={{ backgroundColor: '#FFFFFF', flex: 1 }}>
             {replying ? (
                 <ScrollView showsVerticalScrollIndicator={false} showsHorizontalScrollIndicator={false} contentContainerStyle={styles.contentContainer} style={{ backgroundColor: '#FFFFFF' }}>
-                    <View style={{ position: 'absolute', flexDirection: 'row', top: windowWidth * 0.15}}>
+                    <View style={{ position: 'absolute', flexDirection: 'row', top: windowWidth * 0.15 }}>
 
                         <View style={{
                             height: windowHeight * 0.06144, width: windowHeight * 0.06144,
@@ -163,7 +165,7 @@ export default function MessageScreen({ navigation }) {
                         <MaterialCommunityIcons name={"phone"} color={"#5F59F7"} size={30} style={{ marginLeft: 'auto', marginRight: 'auto', top: -windowHeight * 0.04, left: windowWidth * 0.4 }} />
                     </Pressable>
 
-                    <View style={{ top: windowHeight * 0.68}}>
+                    <View style={{ top: windowHeight * 0.68 }}>
                         <TextInput placeholder="Send Message" style={{
                             backgroundColor: '#F1F1F1', height: windowHeight * 0.0512, width: windowWidth * 0.8,
                             borderRadius: windowHeight * 0.0256, paddingLeft: windowWidth * 0.05, fontSize: 15, left: -windowWidth * 0.07
@@ -220,14 +222,13 @@ export default function MessageScreen({ navigation }) {
                             <>
                                 {conversationUsers.map((currentUser, index) => (
                                     <Pressable key={index} onPress={() => handleMessageBoxClick(currentUser)}>
-                                        {/* changed height from windowHeight * 0.15 to windowHeight * 0.11 */}
                                         <View style={{
-                                            height: windowHeight * 0.11, width: windowWidth, backgroundColor: '#FFFFFF', borderWidth: 0.5,
+                                            height: windowHeight * 0.13, width: windowWidth, backgroundColor: '#FFFFFF', borderWidth: 0.5,
                                             borderColor: '#9E9E9E'
                                         }}>
 
                                             <View style={{
-                                                top: windowHeight * 0.02, height: windowHeight * 0.1024, width: windowHeight * 0.1024,
+                                                top: windowHeight * 0.01, height: windowHeight * 0.1024, width: windowHeight * 0.1024,
                                                 borderRadius: windowHeight * 0.0512, paddingLeft: windowWidth * 0.039
                                             }}>
                                                 <Image source={{ uri: currentUser.profilePicture === "" ? publicFolder + "defaultProfilePicture.png" : currentUser.profilePicture }}
@@ -236,8 +237,6 @@ export default function MessageScreen({ navigation }) {
                                                         borderRadius: windowHeight * 0.0512
                                                     }} />
                                             </View>
-                                            {/* In view style, changed top from -windowHeight * 0.0896 to -windowHeight * 0.095 */}
-                                            {/* In Text style, changed paddingBottom from windowHeight * 0.0064 to windowHeight * 0.0001 */}
                                             <View style={{ alignItems: 'flex-start', top: -windowHeight * 0.095, paddingLeft: windowWidth * 0.286, paddingRight: windowWidth * 0.026 }}>
                                                 <Text style={{ fontSize: 20, fontWeight: 'bold', paddingBottom: windowHeight * 0.0001 }}>
                                                     {currentUser.username}
