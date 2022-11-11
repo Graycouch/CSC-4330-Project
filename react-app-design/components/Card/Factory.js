@@ -42,7 +42,7 @@ const styles = StyleSheet.create({
         borderColor: '#9E9E9E', 
         borderRadius: 20, 
         marginBottom: 30,
-        backgroundColor: '#F5F5F5'
+        backgroundColor: '#ffffff'
     },
 
     // ProfilePicture
