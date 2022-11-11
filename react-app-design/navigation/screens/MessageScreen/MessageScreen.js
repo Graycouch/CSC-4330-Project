@@ -220,8 +220,9 @@ export default function MessageScreen({ navigation }) {
                             <>
                                 {conversationUsers.map((currentUser, index) => (
                                     <Pressable key={index} onPress={() => handleMessageBoxClick(currentUser)}>
+                                        {/* changed height from windowHeight * 0.15 to windowHeight * 0.11 */}
                                         <View style={{
-                                            height: windowHeight * 0.15, width: windowWidth, backgroundColor: '#FFFFFF', borderWidth: 0.5,
+                                            height: windowHeight * 0.11, width: windowWidth, backgroundColor: '#FFFFFF', borderWidth: 0.5,
                                             borderColor: '#9E9E9E'
                                         }}>
 
@@ -235,9 +236,10 @@ export default function MessageScreen({ navigation }) {
                                                         borderRadius: windowHeight * 0.0512
                                                     }} />
                                             </View>
-
-                                            <View style={{ alignItems: 'flex-start', top: -windowHeight * 0.0896, paddingLeft: windowWidth * 0.286, paddingRight: windowWidth * 0.026 }}>
-                                                <Text style={{ fontSize: 20, fontWeight: 'bold', paddingBottom: windowHeight * 0.0064 }}>
+                                            {/* In view style, changed top from -windowHeight * 0.0896 to -windowHeight * 0.095 */}
+                                            {/* In Text style, changed paddingBottom from windowHeight * 0.0064 to windowHeight * 0.0001 */}
+                                            <View style={{ alignItems: 'flex-start', top: -windowHeight * 0.095, paddingLeft: windowWidth * 0.286, paddingRight: windowWidth * 0.026 }}>
+                                                <Text style={{ fontSize: 20, fontWeight: 'bold', paddingBottom: windowHeight * 0.0001 }}>
                                                     {currentUser.username}
                                                 </Text>
                                                 <Text style={{ color: 'gray', fontSize: 15 }}>
