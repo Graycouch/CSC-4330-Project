@@ -7,8 +7,10 @@ const morgan = require("morgan");
 const multer = require("multer");
 const path = require("path");
 
-const userRoute = require("./routes/users");
-const authRoute = require("./routes/auth");
+const userRoute = require("./Routes/users");
+const authRoute = require("./Routes/auth");
+const conversationRoute = require('./Routes/conversation');
+const messageRoute = require('./Routes/message');
 
 const User = require("./Models/User");
 
@@ -83,7 +85,8 @@ app.post("/api/upload", upload.single("file"), (req, res) => {
 
 app.use("/api/users", userRoute);
 app.use("/api/auth", authRoute);
-
+app.use("/api/conversations", conversationRoute);
+app.use("/api/messages", messageRoute);
 
 app.listen(8800, () => {
     console.log("Backend server is running!");

@@ -1,10 +1,11 @@
 import * as React from 'react';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useGlobalState, setGlobalState } from '../../../index';
 import { View, Text, Button, Image, TextInput, Pressable, ScrollView, StyleSheet, Dimensions, Linking } from 'react-native';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import { Rating, AirbnbRating } from 'react-native-ratings';
+import { AirbnbRating } from 'react-native-ratings';
+import axios from 'axios';
 
 export default function SearchScreen({ navigation }) {
     const [user] = useGlobalState("user");
@@ -14,22 +15,9 @@ export default function SearchScreen({ navigation }) {
     const publicFolder = `http://${localhost}:8800/images/`;
 
     const [boxClicked, setboxClicked] = useState(false);
-    const [username, setUsername] = useState("");
-    const [email, setEmail] = useState("");
-    const [role, setRole] = useState("");
-    const [major, setMajor] = useState("");
-    const [courses, setCourses] = useState([""]);
-    const [about, setAbout] = useState("");
-    const [city, setCity] = useState("");
-    const [university, setUniversity] = useState("");
-    const [zipCode, setZipCode] = useState("");
-    const [hourlyRate, setHourlyRate] = useState("");
-    const [totalLessons, setTotalLessons] = useState(0);
-    const [totalHours, setTotalHours] = useState(0);
-    const [rating, setRating] = useState(0);
-    const [profilePicture, setProfilePicture] = useState("");
-    const [coverPicture, setCoverPicture] = useState("");
+    const [bookClicked, setbookClicked] = useState(false);
     const [searchPageBar, setSearchPageBar] = useState(searchValue);
+    const [currentUser, setCurrentUser] = useState({});
 
     const windowWidth = Dimensions.get('window').width;
     const windowHeight = Dimensions.get('window').height;
@@ -47,10 +35,10 @@ export default function SearchScreen({ navigation }) {
             flexGrow: 1
         },
         verticalLine: {
-            height: windowHeight * 0.256,
+            height: windowHeight * 0.23,
             width: 1,
             position: 'absolute',
-            top: windowHeight * 0.47,
+            top: windowHeight * 0.52,
             backgroundColor: '#E5E5E5',
         },
         horizontalLine1: {
@@ -58,21 +46,21 @@ export default function SearchScreen({ navigation }) {
             width: windowWidth,
             position: 'absolute',
             backgroundColor: '#E5E5E5',
-            top: windowHeight * 0.47
+            top: windowHeight * 0.52
         },
         horizontalLine2: {
             height: 1,
             width: windowWidth,
             position: 'absolute',
             backgroundColor: '#E5E5E5',
-            top: windowHeight * 0.598
+            top: windowHeight * 0.63
         },
         horizontalLine3: {
             height: 1,
             width: windowWidth,
             position: 'absolute',
             backgroundColor: '#E5E5E5',
-            top: windowHeight * 0.726
+            top: windowHeight * 0.75
         },
         horizontalLine4: {
             height: 1,
@@ -80,34 +68,12 @@ export default function SearchScreen({ navigation }) {
             position: 'absolute',
             backgroundColor: '#E5E5E5',
             top: windowHeight * 0.918
-        },
-        horizontalLine5: {
-            height: 1,
-            width: windowWidth,
-            position: 'absolute',
-            backgroundColor: '#E5E5E5',
-            top: windowHeight * 1.15
         }
     });
 
     function handleUserBoxClick(currentUser) {
         setboxClicked(true);
-
-        setUsername(currentUser.username);
-        setEmail(currentUser.email);
-        setRole(currentUser.role);
-        setMajor(currentUser.major);
-        setCourses(currentUser.courses);
-        setAbout(currentUser.about);
-        setCity(currentUser.city);
-        setUniversity(currentUser.university);
-        setZipCode(currentUser.zipCode);
-        setHourlyRate(currentUser.hourlyRate);
-        setTotalLessons(currentUser.totalLessons);
-        setTotalHours(currentUser.totalHours);
-        setRating(currentUser.rating);
-        setProfilePicture(currentUser.profilePicture);
-        setCoverPicture(currentUser.coverPicture);
+        setCurrentUser(currentUser);
     }
 
     const handleBackClick = (e) => {
@@ -117,15 +83,33 @@ export default function SearchScreen({ navigation }) {
 
     const handleEmailClick = (e) => {
         e.preventDefault();
-        Linking.openURL(`mailto:${email}`);
+        Linking.openURL(`mailto:${currentUser.email}`);
     }
 
     const handleMessageClick = (e) => {
         e.preventDefault();
+
+        axios.post(`http://${localhost}:8800/api/conversations`, {
+            senderId: user._id,
+            receiverId: currentUser._id
+        })
+            .then((response) => {
+                axios.get(`http://${localhost}:8800/api/conversations/${user._id}`, {
+                })
+                    .then((response) => {
+                        setGlobalState("conversations", response.data);
+                        navigation.navigate('Message', { screen: 'Message`' });
+                    }, (error) => {
+                        console.log(error);
+                    });
+            }, (error) => {
+                console.log(error);
+            });
     }
 
     const handleBookClick = (e) => {
         e.preventDefault();
+        setbookClicked(!bookClicked);
     }
 
     return (
@@ -147,13 +131,13 @@ export default function SearchScreen({ navigation }) {
                                 currentUser.role !== user.role && (searchValue !== "" ? (currentUser.major.toLowerCase() === searchValue.toLowerCase()) : (true)) ? (
                                     <Pressable key={currentUser.username} onPress={() => handleUserBoxClick(currentUser)}>
                                         <View style={{
-                                            height: windowHeight * 0.2, width: 0.85 * windowWidth, backgroundColor: '#F5F5F5', borderWidth: 1,
+                                            height: windowHeight * 0.2, width: 0.93 * windowWidth, backgroundColor: '#FFFFFF', borderWidth: 1,
                                             borderColor: '#9E9E9E', borderRadius: windowHeight * 0.0256, marginBottom: windowHeight * 0.032
                                         }}>
 
                                             <Image source={{ uri: currentUser.coverPicture === "" ? publicFolder + "defaultBackground.jpg" : currentUser.coverPicture }}
                                                 style={{
-                                                    height: windowHeight * 0.064, width: windowWidth * 0.845,
+                                                    height: windowHeight * 0.064, width: windowWidth * 0.925,
                                                     borderTopLeftRadius: windowHeight * 0.0256, borderTopRightRadius: windowHeight * 0.0256
                                                 }} />
 
@@ -189,7 +173,7 @@ export default function SearchScreen({ navigation }) {
 
                                                 <Text style={{
                                                     position: 'absolute', top: -windowHeight * 0.073, right: windowHeight * 0.025,
-                                                    fontSize: 15, textAlign: 'left', fontWeight: '400', textAlignVertical: 'top', paddingLeft: windowWidth * 0.039,
+                                                    fontSize: 15, textAlign: 'left', fontWeight: '500', textAlignVertical: 'top', paddingLeft: windowWidth * 0.039,
                                                     paddingTop: windowHeight * 0.0128, color: '#2970FE'
                                                 }}>
                                                     ${currentUser.hourlyRate}/hr
@@ -215,7 +199,7 @@ export default function SearchScreen({ navigation }) {
                     </View>
 
                 </ScrollView>
-            ) : (
+            ) : !bookClicked ? (
                 <ScrollView showsVerticalScrollIndicator={false} showsHorizontalScrollIndicator={false} contentContainerStyle={styles.contentContainer} style={{ backgroundColor: '#FFFFFF' }}>
 
                     <View style={{ marginBottom: windowHeight * 0.0128, top: -windowHeight * 0.019, height: windowHeight * 0.05 }}>
@@ -229,18 +213,18 @@ export default function SearchScreen({ navigation }) {
                     </View>
 
                     <View style={{ top: -windowHeight * 0.019 }}>
-                        <Image source={{ uri: coverPicture === "" ? publicFolder + "defaultBackground.jpg" : coverPicture }} style={{ height: windowHeight * 0.166, width: windowWidth }} />
+                        <Image source={{ uri: currentUser.coverPicture === "" ? publicFolder + "defaultBackground.jpg" : currentUser.coverPicture }} style={{ height: windowHeight * 0.166, width: windowWidth }} />
 
                         <View style={{
                             top: -windowHeight * 0.0768, height: windowHeight * 0.1536, width: windowHeight * 0.1536,
                             borderRadius: windowHeight * 0.0768, paddingLeft: windowWidth * 0.052
                         }}>
-                            <Image source={{ uri: profilePicture === "" ? publicFolder + "defaultProfilePicture.png" : profilePicture }} style=
+                            <Image source={{ uri: currentUser.profilePicture === "" ? publicFolder + "defaultProfilePicture.png" : currentUser.profilePicture }} style=
                                 {{ height: windowHeight * 0.1536, width: windowHeight * 0.1536, borderRadius: windowHeight * 0.0768, borderWidth: 3, borderColor: '#FFFFFF' }} />
                         </View>
 
-                        <Pressable onPress={handleMessageClick}>
-                            <Ionicons name={"chatbubbles"} color={"#5F59F7"} size={23} style={{ marginLeft: 'auto', marginRight: 'auto', top: -windowHeight * 0.128, right: -windowWidth * 0.4167 }} />
+                        <Pressable onPress={handleMessageClick} style={{ top: -windowHeight * 0.128, right: -windowWidth * 0.4167 }}>
+                            <Ionicons name={"chatbubbles"} color={"#5F59F7"} size={23} style={{ marginLeft: 'auto', marginRight: 'auto' }} />
                         </Pressable>
 
                         <Pressable onPress={handleEmailClick}>
@@ -248,46 +232,58 @@ export default function SearchScreen({ navigation }) {
                         </Pressable>
 
                         <Text style={{ top: -windowHeight * 0.105, fontSize: 24, textAlign: 'left', fontWeight: '500', textAlignVertical: 'top', paddingLeft: windowWidth * 0.052 }}>
-                            {username}
+                            {currentUser.username}
                         </Text>
 
                         <Text style={{ top: -windowHeight * 0.105, fontSize: 15, textAlign: 'left', textAlignVertical: 'top', paddingLeft: windowWidth * 0.052 }}>
-                            {major} {role}
+                            {currentUser.major} {currentUser.role}
                         </Text>
 
-                        <AirbnbRating count={5} defaultRating={rating} size={15} isDisabled={true} showRating={false} selectedColor={'#5F59F7'} starContainerStyle={{ top: -windowHeight * 0.1, left: -windowWidth * 0.32 }} />
+                        <AirbnbRating count={5} defaultRating={currentUser.rating} size={15} isDisabled={true} showRating={false} selectedColor={'#5F59F7'} starContainerStyle={{ top: -windowHeight * 0.1, left: -windowWidth * 0.32 }} />
 
-                        <Text style={{ position: 'absolute', top: windowHeight * 0.3, right: windowWidth * 0.05, fontSize: 20, textAlign: 'left', fontWeight: '400', color: '#0390fc' }}>
-                            ${hourlyRate}/hr
+                        <Text style={{ position: 'absolute', top: windowHeight * 0.28, right: windowWidth * 0.05, fontSize: 20, textAlign: 'left', fontWeight: '500', color: '#2970FE' }}>
+                            ${currentUser.hourlyRate}/hr
                         </Text>
                     </View>
 
+                    <View style={{ alignItems: 'flex-start', width: '100%', position: 'absolute', top: windowHeight * 0.47, paddingLeft: 15, paddingRight: 15 }}>
+                        <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
+                            {currentUser.courses.map((course) => (
+                                <View key={course} style={{ marginRight: 5, borderRadius: windowHeight * 0.0256, backgroundColor: '#5F59F7' }}>
+                                    <Text style={{ fontSize: 15, fontWeight: '400', color: 'white', paddingBottom: 3 }}>
+                                        {"   "}{course}{"   "}
+                                    </Text>
+                                </View>
+                            ))}
+                        </ScrollView>
+                    </View>
+
                     <View style={{ top: -windowHeight * 0.105, flex: 1, flexDirection: 'row', flexWrap: 'wrap' }}>
-                        <View style={{ alignItems: 'center', width: '50%', paddingTop: windowHeight * 0.0384 }}>
+                        <View style={{ alignItems: 'center', width: '50%', paddingTop: windowHeight * 0.075 }}>
                             <View style={{ flexDirection: 'row' }}>
                                 <MaterialCommunityIcons name={"head-lightbulb"} color={"#5F59F7"} size={20} style={{ paddingRight: windowWidth * 0.013 }} />
                                 <Text style={{ fontSize: 15, fontWeight: 'bold', color: '#5F59F7' }}>
                                     Total Lessons:
                                 </Text>
                             </View>
-                            <Text style={{ fontSize: 15, color: 'grey' }}>
-                                {totalLessons}
+                            <Text style={{ fontSize: 22, color: 'grey' }}>
+                                {currentUser.totalLessons}
                             </Text>
                         </View>
 
-                        <View style={{ alignItems: 'center', width: '50%', paddingTop: windowHeight * 0.0384 }}>
+                        <View style={{ alignItems: 'center', width: '50%', paddingTop: windowHeight * 0.075 }}>
                             <View style={{ flexDirection: 'row' }}>
                                 <MaterialCommunityIcons name={"clock-time-eight"} color={"#5F59F7"} size={20} style={{ paddingRight: windowWidth * 0.013 }} />
                                 <Text style={{ fontSize: 15, fontWeight: 'bold', color: '#5F59F7' }}>
                                     Total Hours:
                                 </Text>
                             </View>
-                            <Text style={{ fontSize: 15, color: 'grey' }}>
-                                {totalHours}
+                            <Text style={{ fontSize: 22, color: 'grey' }}>
+                                {currentUser.totalHours}
                             </Text>
                         </View>
 
-                        <View style={{ alignItems: 'center', width: '50%', paddingTop: windowHeight * 0.0768 }}>
+                        <View style={{ alignItems: 'center', width: '50%', paddingTop: windowHeight * 0.05 }}>
                             <View style={{ flexDirection: 'row' }}>
                                 <MaterialCommunityIcons name={"map-marker"} color={"#5F59F7"} size={20} style={{ paddingRight: windowWidth * 0.013 }} />
                                 <Text style={{ fontSize: 15, fontWeight: 'bold', color: '#5F59F7' }}>
@@ -295,11 +291,11 @@ export default function SearchScreen({ navigation }) {
                                 </Text>
                             </View>
                             <Text style={{ fontSize: 15, color: 'grey', paddingLeft: windowWidth * 0.03 }}>
-                                {city}, {zipCode}
+                                {currentUser.city}, {currentUser.zipCode}
                             </Text>
                         </View>
 
-                        <View style={{ alignItems: 'center', width: '50%', paddingTop: windowHeight * 0.0768 }}>
+                        <View style={{ alignItems: 'center', width: '50%', paddingTop: windowHeight * 0.05 }}>
                             <View style={{ flexDirection: 'row' }}>
                                 <MaterialCommunityIcons name={"school"} color={"#5F59F7"} size={20} style={{ paddingRight: windowWidth * 0.013 }} />
                                 <Text style={{ fontSize: 15, fontWeight: 'bold', color: '#5F59F7' }}>
@@ -307,60 +303,49 @@ export default function SearchScreen({ navigation }) {
                                 </Text>
                             </View>
                             <Text style={{ fontSize: 15, color: 'grey' }}>
-                                {university}
+                                {currentUser.university}
                             </Text>
                         </View>
+                    </View>
 
-                        <View style={{ alignItems: 'center', width: '100%', position: 'absolute', top: windowHeight * 0.28 }}>
-                            <View style={{ flexDirection: 'row' }}>
-                                <MaterialCommunityIcons name={"book-open-variant"} color={"#5F59F7"} size={20} style={{ paddingRight: windowWidth * 0.013 }} />
-                                <Text style={{ fontSize: 15, fontWeight: 'bold', color: '#5F59F7' }}>
-                                    Subjects:
-                                </Text>
-                            </View>
+                    <Pressable backgroundColor={'#5F59F7'} style={{
+                        top: -windowHeight * 0.025, height: windowHeight * 0.0768, width: windowWidth * 0.833,
+                        borderRadius: windowHeight * 0.0512, alignItems: 'center', justifyContent: 'center'
+                    }} onPress={handleBookClick}>
+                        <Text style={{ color: 'white', fontSize: 18 }}>
+                            Book Now
+                        </Text>
+                    </Pressable>
 
-                            <Text style={{ lineHeight: windowHeight * 0.05, paddingTop: windowHeight * 0.0128, paddingRight: windowWidth * 0.052, paddingLeft: windowWidth * 0.052 }}>
-                                {courses.map((course) => (
-                                    <View key={course} style={{ borderWidth: 1, borderColor: '#FFFFFF', borderRadius: windowHeight * 0.0256, backgroundColor: '#5F59F7' }}>
-                                        <Text style={{ fontSize: 15, fontWeight: '400', color: 'white' }}>
-                                            {"   "}{course}{"   "}
-                                        </Text>
-                                    </View>
-                                ))}
+                    <View style={{ alignItems: 'center', width: '100%', top: windowHeight * 0.05 }}>
+                        <View style={{ flexDirection: 'row' }}>
+                            <MaterialCommunityIcons name={"lead-pencil"} color={"#5F59F7"} size={20} style={{ paddingRight: windowWidth * 0.013 }} />
+                            <Text style={{ fontSize: 15, fontWeight: 'bold', color: '#5F59F7' }}>
+                                About:
                             </Text>
                         </View>
-
-                        <View style={{ alignItems: 'center', width: '100%', position: 'absolute', top: windowHeight * 0.47 }}>
-                            <View style={{ flexDirection: 'row' }}>
-                                <MaterialCommunityIcons name={"lead-pencil"} color={"#5F59F7"} size={20} style={{ paddingRight: windowWidth * 0.013 }} />
-                                <Text style={{ fontSize: 15, fontWeight: 'bold', color: '#5F59F7' }}>
-                                    About:
-                                </Text>
-                            </View>
-                            <Text style={{ fontSize: 15, textAlign: 'center', color: 'grey', paddingLeft: windowWidth * 0.026, paddingRight: windowWidth * 0.026, paddingTop: windowHeight * 0.01 }}>
-                                {about}
-                            </Text>
-                        </View>
+                        <Text style={{ fontSize: 15, textAlign: 'center', color: 'grey', paddingLeft: windowWidth * 0.026, paddingRight: windowWidth * 0.026, paddingTop: windowHeight * 0.01 }}>
+                            {currentUser.about}
+                        </Text>
                     </View>
 
                     <View style={styles.horizontalLine1} />
                     <View style={styles.horizontalLine2} />
                     <View style={styles.horizontalLine3} />
                     <View style={styles.horizontalLine4} />
-                    <View style={styles.horizontalLine5} />
                     <View style={styles.verticalLine} />
-
-                    <View style={{ padding: windowHeight * 0.23 }}></View>
-
+                    <View style={{ padding: windowHeight * 0.2 }}></View>
+                </ScrollView>
+            ) : (
+                <ScrollView showsVerticalScrollIndicator={false} showsHorizontalScrollIndicator={false} contentContainerStyle={styles.contentContainer} style={{ backgroundColor: '#FFFFFF' }}>
                     <Pressable onPress={handleBookClick} backgroundColor={'#5F59F7'} style={{
-                        top: windowHeight * 1.17, height: windowHeight * 0.0768, width: windowWidth * 0.833,
-                        borderRadius: windowHeight * 0.0512, alignItems: 'center', justifyContent: 'center', position: 'absolute'
+                        top: windowHeight * 0.4, height: windowHeight * 0.0768, width: windowWidth * 0.833,
+                        borderRadius: windowHeight * 0.0512, alignItems: 'center', justifyContent: 'center'
                     }} >
                         <Text style={{ color: 'white', fontSize: 18 }}>
                             Book Now
                         </Text>
                     </Pressable>
-
                 </ScrollView>
             )}
         </View>
