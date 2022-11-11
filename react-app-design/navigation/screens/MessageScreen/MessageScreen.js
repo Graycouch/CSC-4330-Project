@@ -1,7 +1,6 @@
 import * as React from 'react';
-import { useState, useEffect } from 'react';
-import { View, Text, Button, Image, TextInput, Pressable, ScrollView, StyleSheet, Dimensions } from 'react-native';
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
+import { useState, useEffect, useRef } from 'react';
+import { View, Text, Button, Image, TextInput, Pressable, ScrollView, StyleSheet, Dimensions, KeyboardAvoidingView, Linking } from 'react-native';
 import { useGlobalState, setGlobalState } from '../../../index';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import axios from 'axios';
@@ -16,6 +15,9 @@ export default function MessageScreen({ navigation }) {
     const [chatUser, setChatUser] = useState(null);
     const [replying, setReplying] = useState(false);
     const [conversationUsers, setConversationUsers] = useState([]);
+    const currentConversation = useRef(null);
+    const [messages, setMessages] = useState([]);
+    const [currentMessage, setCurrentMessage] = useState("");
 
     const windowWidth = Dimensions.get('window').width;
     const windowHeight = Dimensions.get('window').height;
@@ -37,19 +39,56 @@ export default function MessageScreen({ navigation }) {
         if (conversations.length !== 0) {
             setConversationUsers([]);
             conversations.map((conversation) => (
-                setConversationUsers(conversationUsers => [...conversationUsers, allUsers.find(currentUser => currentUser._id === conversation.members[1])])
+                setConversationUsers(conversationUsers => [...conversationUsers, allUsers.find(currentUser =>
+                    (currentUser._id === conversation.members[1] && user._id !== conversation.members[1]) ||
+                    (currentUser._id === conversation.members[0] && user._id !== conversation.members[0])
+                )])
             ))
         }
     }, [conversations])
 
-    function handleMessageBoxClick(chatUser) {
+    async function handleMessageBoxClick(chatUser) {
         setReplying(true);
         setChatUser(chatUser);
-    }
+
+        currentConversation.current = conversations.find(conversation =>
+            (conversation.members[1] === chatUser._id && user._id !== conversation.members[1]) ||
+            (conversation.members[0] === chatUser._id && user._id !== conversation.members[0])
+        );
+
+        axios.get(`http://${localhost}:8800/api/messages/${currentConversation.current._id}`, {
+        })
+            .then((response) => {
+                setMessages(response.data);
+            }, (error) => {
+                console.log(error);
+            });
+    };
 
     const handleBackButtonClick = (e) => {
         e.preventDefault();
         setReplying(false);
+    }
+
+    const handlePhoneButtonClick = (e) => {
+        e.preventDefault();
+        Linking.openURL(`tel:${5044931415}`);
+    }
+
+    async function handleSendButtonClick() {
+        if (currentMessage !== "") {
+            try {
+                const res = await axios.post(`http://${localhost}:8800/api/messages`, {
+                    conversationId: currentConversation.current._id,
+                    sender: user._id,
+                    text: currentMessage
+                });
+                setMessages([...messages, res.data]);
+                setCurrentMessage("");
+            } catch (err) {
+                console.log(err);
+            }
+        }
     }
 
     const styles = StyleSheet.create({
@@ -96,7 +135,7 @@ export default function MessageScreen({ navigation }) {
         <View style={{ backgroundColor: '#FFFFFF', flex: 1 }}>
             {replying ? (
                 <ScrollView showsVerticalScrollIndicator={false} showsHorizontalScrollIndicator={false} contentContainerStyle={styles.contentContainer} style={{ backgroundColor: '#FFFFFF' }}>
-                    <View style={{ marginBottom: windowHeight * 0.0128, top: windowHeight * 0.005, height: windowHeight * 0.0512, flexDirection: 'row', left: -windowWidth * 0.13 }}>
+                    <View style={{ position: 'absolute', flexDirection: 'row', top: windowWidth * 0.15}}>
 
                         <View style={{
                             height: windowHeight * 0.06144, width: windowHeight * 0.06144,
@@ -117,15 +156,19 @@ export default function MessageScreen({ navigation }) {
                     <View style={styles.replyPageHorizontalLine1} />
 
                     <Pressable onPress={handleBackButtonClick}>
-                        <MaterialCommunityIcons name={"chevron-left"} color={"#5F59F7"} size={40} style={{ marginLeft: 'auto', marginRight: 'auto', top: -windowHeight * 0.065, left: -windowWidth * 0.42 }} />
+                        <MaterialCommunityIcons name={"chevron-left"} color={"#5F59F7"} size={40} style={{ marginLeft: 'auto', marginRight: 'auto', left: -windowWidth * 0.42, top: windowHeight * 0.01 }} />
                     </Pressable>
 
-                    <View style={{ top: windowHeight * 0.65 }}>
+                    <Pressable onPress={handlePhoneButtonClick}>
+                        <MaterialCommunityIcons name={"phone"} color={"#5F59F7"} size={30} style={{ marginLeft: 'auto', marginRight: 'auto', top: -windowHeight * 0.04, left: windowWidth * 0.4 }} />
+                    </Pressable>
+
+                    <View style={{ top: windowHeight * 0.68}}>
                         <TextInput placeholder="Send Message" style={{
                             backgroundColor: '#F1F1F1', height: windowHeight * 0.0512, width: windowWidth * 0.8,
                             borderRadius: windowHeight * 0.0256, paddingLeft: windowWidth * 0.05, fontSize: 15, left: -windowWidth * 0.07
-                        }} />
-                        <Pressable backgroundColor={'#5F59F7'} style={{
+                        }} value={currentMessage} onChangeText={newText => setCurrentMessage(newText)} onSubmitEditing={handleSendButtonClick} />
+                        <Pressable onPress={handleSendButtonClick} backgroundColor={'#5F59F7'} style={{
                             top: -windowHeight * 0.05, left: windowWidth * 0.76, height: windowHeight * 0.0512, width: windowHeight * 0.0512,
                             borderRadius: windowHeight * 0.0512
                         }}>
@@ -133,19 +176,31 @@ export default function MessageScreen({ navigation }) {
                         </Pressable>
                     </View>
 
-
-                    {/* <View style={{ top: -90, right: -40 }}>
-                        <Text style={{ backgroundColor: '#5F59F7', height: 78, width: 290, borderRadius: windowHeight * 0.0256, paddingLeft: 15, paddingVertical: 5, fontSize: 18, color: 'white' }}>
-                            I need help learning data structures. Would you be able to tutor me?
-                        </Text>
+                    <View style={{ flexDirection: 'column' }}>
+                        {messages.map((message, index) => (
+                            message.sender === user._id ? (
+                                <View key={index} style={{
+                                    top: -windowHeight * 0.1, right: -windowWidth * 0.14, alignItems: 'flex-end',
+                                    paddingBottom: windowHeight * 0.01, width: windowWidth * 0.7
+                                }}>
+                                    <Text style={{ backgroundColor: '#5F59F7', borderRadius: windowHeight * 0.0256, paddingLeft: 15, paddingRight: 15, paddingVertical: 5, fontSize: 18, color: 'white' }}>
+                                        {message.text}
+                                    </Text>
+                                </View>
+                            ) : (
+                                <View key={index} style={{
+                                    top: -windowHeight * 0.1, left: -windowWidth * 0.14, alignItems: 'flex-start',
+                                    paddingBottom: windowHeight * 0.01, width: windowWidth * 0.7
+                                }}>
+                                    <Text style={{ backgroundColor: 'gray', borderRadius: windowHeight * 0.0256, paddingLeft: 15, paddingRight: 15, paddingVertical: 5, fontSize: 18, color: 'white' }}>
+                                        {message.text}
+                                    </Text>
+                                </View>
+                            )
+                        ))
+                        }
                     </View>
-                    <View style={{ top: -70, left: -40 }}>
-                        <Text style={{ backgroundColor: 'gray', height: 78, width: 290, borderRadius: windowHeight * 0.0256, paddingLeft: 15, paddingRight: 5, paddingVertical: 5, fontSize: 18, color: 'white' }}>
-                            Sure! I'd be happy to help you with that. What is a convenient time for you?
-                        </Text>
-                    </View> */}
                 </ScrollView>
-
             ) : (
                 <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center', backgroundColor: '#FFFFFF' }}>
                     <ScrollView showsVerticalScrollIndicator={false} showsHorizontalScrollIndicator={false} contentContainerStyle={styles.contentContainer} style={{ backgroundColor: '#FFFFFF' }}>
