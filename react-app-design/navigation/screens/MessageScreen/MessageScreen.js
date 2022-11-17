@@ -18,6 +18,8 @@ export default function MessageScreen({ navigation }) {
     const currentConversation = useRef(null);
     const [messages, setMessages] = useState([]);
     const [currentMessage, setCurrentMessage] = useState("");
+    const [textBoxPosition, setTextBoxPosition] = useState(0.68);
+    const [placeholderTextPosition, setPlaceholderTextPosition] = useState(0.2);
 
     const windowWidth = Dimensions.get('window').width;
     const windowHeight = Dimensions.get('window').height;
@@ -166,13 +168,16 @@ export default function MessageScreen({ navigation }) {
                             <MaterialCommunityIcons name={"phone"} color={"#5F59F7"} size={30} style={{ marginLeft: 'auto', marginRight: 'auto', top: -windowHeight * 0.04, left: windowWidth * 0.4 }} />
                         </Pressable>
 
-                        <View style={{ top: windowHeight * 0.68 }}>
-                            <TextInput placeholder="Send Message" style={{
+                        <View style={{ top: windowHeight * textBoxPosition, zIndex: 5, backgroundColor: 'white', width: windowWidth, alignItems: 'center' }}>
+                            <TextInput placeholder="Message..." style={{
                                 backgroundColor: '#F1F1F1', height: windowHeight * 0.0512, width: windowWidth * 0.8,
                                 borderRadius: windowHeight * 0.0256, paddingLeft: windowWidth * 0.05, fontSize: 15, left: -windowWidth * 0.07
-                            }} value={currentMessage} onChangeText={newText => setCurrentMessage(newText)} onSubmitEditing={handleSendButtonClick} />
+                            }} value={currentMessage} onChangeText={newText => setCurrentMessage(newText)} onSubmitEditing={handleSendButtonClick}
+                                onFocus={() => setTextBoxPosition(0.3)} onEndEditing={() => setTextBoxPosition(0.68)}
+                            />
+
                             <Pressable onPress={handleSendButtonClick} backgroundColor={'#5F59F7'} style={{
-                                top: -windowHeight * 0.05, left: windowWidth * 0.76, height: windowHeight * 0.0512, width: windowHeight * 0.0512,
+                                top: -windowHeight * 0.05, left: windowWidth * 0.41, height: windowHeight * 0.0512, width: windowHeight * 0.0512,
                                 borderRadius: windowHeight * 0.0512, alignItems: 'center', justifyContent: 'center'
                             }}>
                                 <MaterialCommunityIcons name={"send"} color={"white"} size={25} />
@@ -233,11 +238,15 @@ export default function MessageScreen({ navigation }) {
                             <MaterialCommunityIcons name={"phone"} color={"#5F59F7"} size={30} style={{ marginLeft: 'auto', marginRight: 'auto', top: -windowHeight * 0.04, left: windowWidth * 0.4 }} />
                         </Pressable>
 
-                        <View style={{ top: windowHeight * 0.68 }}>
-                            <TextInput placeholder="Send Message" style={{
+                        <View style={{ top: windowHeight * textBoxPosition }}>
+                            <TextInput placeholder="Message..." style={{
                                 backgroundColor: '#F1F1F1', height: windowHeight * 0.0512, width: windowWidth * 0.8,
                                 borderRadius: windowHeight * 0.0256, paddingLeft: windowWidth * 0.05, fontSize: 15, left: -windowWidth * 0.07
-                            }} value={currentMessage} onChangeText={newText => setCurrentMessage(newText)} onSubmitEditing={handleSendButtonClick} />
+                            }} value={currentMessage} onChangeText={newText => setCurrentMessage(newText)} onSubmitEditing={handleSendButtonClick}
+                                onFocus={() => { setTextBoxPosition(0.3); setPlaceholderTextPosition(0.1) }}
+                                onEndEditing={() => { setTextBoxPosition(0.68); setPlaceholderTextPosition(0.2) }}
+                            />
+
                             <Pressable onPress={handleSendButtonClick} backgroundColor={'#5F59F7'} style={{
                                 top: -windowHeight * 0.05, left: windowWidth * 0.76, height: windowHeight * 0.0512, width: windowHeight * 0.0512,
                                 borderRadius: windowHeight * 0.0512, alignItems: 'center', justifyContent: 'center'
@@ -246,7 +255,7 @@ export default function MessageScreen({ navigation }) {
                             </Pressable>
                         </View>
 
-                        <Text style={{ fontSize: 15, fontWeight: '400', color: 'gray', top: -15, textAlign: 'center', top: windowHeight * 0.2, paddingRight: 15, paddingLeft: 15 }}>
+                        <Text style={{ fontSize: 15, fontWeight: '400', color: 'gray', textAlign: 'center', top: windowHeight * placeholderTextPosition, paddingRight: 15, paddingLeft: 15 }}>
                             Start up a conversation with {chatUser.username}
                         </Text>
                     </ScrollView>

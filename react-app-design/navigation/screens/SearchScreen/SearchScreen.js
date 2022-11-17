@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import { useGlobalState, setGlobalState } from '../../../index';
 import { View, Text, Button, Image, TextInput, Pressable, ScrollView, StyleSheet, Dimensions, Linking } from 'react-native';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -18,6 +18,7 @@ export default function SearchScreen({ navigation }) {
     const [bookClicked, setbookClicked] = useState(false);
     const [searchPageBar, setSearchPageBar] = useState(searchValue);
     const [currentUser, setCurrentUser] = useState({});
+    const listRef = useRef(null);
 
     const windowWidth = Dimensions.get('window').width;
     const windowHeight = Dimensions.get('window').height;
@@ -74,6 +75,7 @@ export default function SearchScreen({ navigation }) {
     function handleUserBoxClick(currentUser) {
         setboxClicked(true);
         setCurrentUser(currentUser);
+        listRef.current.scrollTo({ offset: 0, animated: false });
     }
 
     const handleBackClick = (e) => {
@@ -115,7 +117,7 @@ export default function SearchScreen({ navigation }) {
     return (
         <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center', backgroundColor: '#FFFFFF' }}>
             {!boxClicked ? (
-                <ScrollView showsVerticalScrollIndicator={false} showsHorizontalScrollIndicator={false} contentContainerStyle={styles.contentContainer} style={{ backgroundColor: '#FFFFFF' }}>
+                <ScrollView ref={listRef} showsVerticalScrollIndicator={false} showsHorizontalScrollIndicator={false} contentContainerStyle={styles.contentContainer} style={{ backgroundColor: '#FFFFFF' }}>
                     <View style={{ flexDirection: 'row', marginBottom: windowHeight * 0.0128, top: -windowHeight * 0.019 }}>
                         <TextInput placeholder="Search" value={searchPageBar} onChangeText={newText => setSearchPageBar(newText)}
                             onSubmitEditing={() => setGlobalState("searchValue", searchPageBar)} style={{
