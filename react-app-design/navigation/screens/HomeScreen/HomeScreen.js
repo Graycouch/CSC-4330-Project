@@ -103,7 +103,29 @@ export default function HomeScreen({ navigation }) {
                         <CardFactory CardType="SuggestedTeachers" users={SuggestedTeachers} />
                     </View>
 
+                     {/* Scheduled Classes */}
+                     <View style={styles.sectionContainer}>
+                        <Text style={styles.heading}>Scheduled Classes</Text>
+                        <CardFactory CardType="ScheduledClasses" users={SuggestedTeachers} />
+                    </View>
+
+                    {/* TODO: These buttons don't have any purpose, in my previuos version I had them navigate to other Pages -Parimal  */}
+                    <Button    title='Schedule Classes'
+                        color="#5F59F7"
+                        onPress={()=> navigation.navigate('Schedule')}
+                    />
+                    <View style={styles.scheduleClassesButton} />
+                    <Button
+                        title='Request Classes'
+                        color="#5F59F7"
+                        onPress={()=> navigation.navigate('Request')}
+                    />
+
+                   
+
+
                     {/* footer spacing */}
+                    
                     <View style={{height: 100}}></View>
 
                 </ScrollView>

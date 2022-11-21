@@ -6,6 +6,7 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { AirbnbRating } from 'react-native-ratings';
 import axios from 'axios';
+import DropDownPicker from 'react-native-dropdown-picker';
 
 export default function SearchScreen({ navigation }) {
     const [user] = useGlobalState("user");
@@ -23,11 +24,23 @@ export default function SearchScreen({ navigation }) {
     const windowWidth = Dimensions.get('window').width;
     const windowHeight = Dimensions.get('window').height;
 
+    const [dropdownOpen, setDropdownOpen] = useState(false);
+    const [dropdownValue, setDropdownValue] = useState('zipCode');
+    const [dropdownItems, setDropdownItems] = useState([
+        { label: 'ZIP CODE', value: 'zipCode' },
+        { label: 'City', value: 'city' },
+        { label: 'Major', value: 'major' },
+        { label: 'Rating', value: 'rating' }
+    ]);
+
+    console.log(allUsers[0])
+
     allUsers.sort((a, b) => {
         let aZipCode = Math.abs(parseInt(a.zipCode) - parseInt(user.zipCode));
         let bZipCode = Math.abs(parseInt(b.zipCode) - parseInt(user.zipCode));
         return aZipCode - bZipCode;
     });
+    console.log(allUsers[0])
 
     const styles = StyleSheet.create({
         contentContainer: {
@@ -69,6 +82,11 @@ export default function SearchScreen({ navigation }) {
             position: 'absolute',
             backgroundColor: '#E5E5E5',
             top: windowHeight * 0.918
+        },
+        dropDown: {
+            width: windowWidth * 0.93,
+            marginTop: 20,
+            marginBottom: 20
         }
     });
 
@@ -96,6 +114,7 @@ export default function SearchScreen({ navigation }) {
             receiverId: currentUser._id
         })
             .then((response) => {
+                console.log(response)
                 axios.get(`http://${localhost}:8800/api/conversations/${user._id}`, {
                 })
                     .then((response) => {
@@ -129,6 +148,15 @@ export default function SearchScreen({ navigation }) {
 
                     <View>
                         <>
+                            <DropDownPicker
+                                open={dropdownOpen}
+                                value={dropdownValue}
+                                items={dropdownItems}
+                                setOpen={setDropdownOpen}
+                                setValue={setDropdownValue}
+                                setItems={setDropdownItems}
+                                style={styles.dropDown}
+                            />
                             {allUsers.map((currentUser, index) => (
                                 currentUser.role !== user.role && (searchValue !== "" ? (currentUser.major.toLowerCase() === searchValue.toLowerCase()) : (true)) ? (
                                     <Pressable key={currentUser.username} onPress={() => handleUserBoxClick(currentUser)}>
@@ -195,6 +223,7 @@ export default function SearchScreen({ navigation }) {
                                 ) : (
                                     <View key={currentUser.username} />
                                 )
+
                             )
                             )}
                         </>

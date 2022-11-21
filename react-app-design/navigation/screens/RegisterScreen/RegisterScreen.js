@@ -4,9 +4,9 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { useGlobalState, setGlobalState } from '../../../index';
 import axios from 'axios';
-import localhost from 'react-native-localhost';
 
 export default function RegisterScreen({ navigation }) {
+    const [localhost] = useGlobalState("localhost");
     const [username, setUsername] = useState(false);
     const [email, setEmail] = useState(false);
     const [password, setPassword] = useState(false);
@@ -21,7 +21,7 @@ export default function RegisterScreen({ navigation }) {
 
     const handleCreateAccountClick = (e) => {
         e.preventDefault();
-
+        console.log(localhost)
         axios.post(`http://${localhost}:8800/api/auth/register`, {
             username: username,
             email: email,
@@ -31,7 +31,7 @@ export default function RegisterScreen({ navigation }) {
                 setGlobalState("user", response.data);
                 setGlobalState("isLoggedIn", true);
             }, (error) => {
-                console.log(error);
+                console.log(JSON.stringify(error));
             });
     }
 
