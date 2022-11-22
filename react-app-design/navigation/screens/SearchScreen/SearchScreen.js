@@ -1,11 +1,12 @@
 import * as React from 'react';
 import { useState, useRef } from 'react';
 import { useGlobalState, setGlobalState } from '../../../index';
-import { View, Text, Button, Image, TextInput, Pressable, ScrollView, StyleSheet, Dimensions, Linking } from 'react-native';
+import { View, Text, Button, Image, TextInput, Pressable, ScrollView, StyleSheet, Dimensions, Linking, Modal, TouchableOpacity } from 'react-native';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { AirbnbRating } from 'react-native-ratings';
 import axios from 'axios';
+import { CheckBox, Divider } from '@rneui/themed';
 
 export default function SearchScreen({ navigation }) {
     const [user] = useGlobalState("user");
@@ -16,8 +17,14 @@ export default function SearchScreen({ navigation }) {
 
     const [boxClicked, setboxClicked] = useState(false);
     const [bookClicked, setbookClicked] = useState(false);
+    const [sessionClicked, setSessionClicked] = useState(false);
+    const [filterClicked, setFilterClicked] = useState(false);
     const [searchPageBar, setSearchPageBar] = useState(searchValue);
     const [currentUser, setCurrentUser] = useState({});
+    const [checkedZip, setCheckedZip] = useState(false);
+    const [checkedMajor, setCheckedMajor] = useState(false);
+    const [checkedRate, setCheckedRate] = useState(false);
+    const [checkedReview, setCheckedReview] = useState(false);
     const listRef = useRef(null);
 
     const windowWidth = Dimensions.get('window').width;
@@ -114,6 +121,16 @@ export default function SearchScreen({ navigation }) {
         setbookClicked(!bookClicked);
     }
 
+    const handleSessionClick = (e) => {
+        e.preventDefault();
+        setSessionClicked(!sessionClicked);
+    }
+
+    const handleFilterClick = (e) => {
+        e.preventDefault();
+        setFilterClicked(!filterClicked);
+    }
+
     return (
         <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center', backgroundColor: '#FFFFFF' }}>
             {!boxClicked ? (
@@ -125,7 +142,40 @@ export default function SearchScreen({ navigation }) {
                                 width: windowWidth * 0.95, borderRadius: windowHeight * 0.0256, paddingLeft: windowWidth * 0.104, fontSize: 15
                             }} />
                         <MaterialCommunityIcons name={"magnify"} color={"#9E9E9E"} size={20} style={{ top: windowHeight * 0.0128, position: 'absolute', paddingLeft: windowWidth * 0.026 }} />
+
+                        <Pressable onPress={handleFilterClick} style={{ top: windowHeight * 0.0128, position: 'absolute', left: windowWidth * 0.85 }}>
+                            <MaterialCommunityIcons name={"filter-variant"} color={"#9E9E9E"} size={20} />
+                        </Pressable>
+
                     </View>
+
+                    <Modal animationType="none" transparent={true} visible={filterClicked} onRequestClose={handleFilterClick}>
+                        <TouchableOpacity style={{ flex: 1 }} onPress={handleFilterClick}>
+                            <View style={{ backgroundColor: '#000000AA', flex: 1 }}>
+                                <View style={{ backgroundColor: '#FFFFFF', margin: 80, padding: 10, borderRadius: 20, flex: 0.6, alignItems: 'center' }}>
+                                    <Text style={{ fontSize: 30, paddingBottom: 5 }}>
+                                        Filter
+                                    </Text>
+                                    <Divider style={{ width: '100%' }} />
+                                    <View style={{ alignItems: 'flex-start', left: -30, paddingBottom: 15 }}>
+                                        <CheckBox title={"Zip Code"} checked={checkedZip} onPress={() => setCheckedZip(!checkedZip)} checkedColor='#5F59F7' uncheckedColor='#5F59F7' />
+                                        <CheckBox title={"Major"} checked={checkedMajor} onPress={() => setCheckedMajor(!checkedMajor)} checkedColor='#5F59F7' uncheckedColor='#5F59F7' />
+                                        <CheckBox title={"Hourly Rate"} checked={checkedRate} onPress={() => setCheckedRate(!checkedRate)} checkedColor='#5F59F7' uncheckedColor='#5F59F7' />
+                                        <CheckBox title={"Reviews"} checked={checkedReview} onPress={() => setCheckedReview(!checkedReview)} checkedColor='#5F59F7' uncheckedColor='#5F59F7' />
+                                    </View>
+
+                                    <Pressable onPress={handleFilterClick} backgroundColor={'#5F59F7'} style={{
+                                        height: windowHeight * 0.0568, width: windowWidth * 0.4,
+                                        borderRadius: windowHeight * 0.0512, alignItems: 'center', justifyContent: 'center'
+                                    }} >
+                                        <Text style={{ color: 'white', fontSize: 18 }}>
+                                            Apply
+                                        </Text>
+                                    </Pressable>
+                                </View>
+                            </View>
+                        </TouchableOpacity>
+                    </Modal>
 
                     <View>
                         <>
@@ -338,16 +388,78 @@ export default function SearchScreen({ navigation }) {
                     <View style={styles.verticalLine} />
                     <View style={{ padding: windowHeight * 0.2 }}></View>
                 </ScrollView>
+            ) : !sessionClicked ? (
+                <ScrollView showsVerticalScrollIndicator={false} showsHorizontalScrollIndicator={false} contentContainerStyle={styles.contentContainer} style={{ backgroundColor: '#FFFFFF' }}>
+                    <View style={{ marginBottom: windowHeight * 0.0128, top: -windowHeight * 0.019, height: windowHeight * 0.05 }}>
+                        <Text style={{ fontSize: 24, fontWeight: '500', marginLeft: 10 }}>
+                            Session Scheduler
+                        </Text>
+
+                        <Pressable onPress={handleBookClick}>
+                            <MaterialCommunityIcons name={"chevron-left"} color={"#5F59F7"} size={40} style={{ marginLeft: 'auto', marginRight: 'auto', top: -windowHeight * 0.045, left: -windowWidth * 0.42 }} />
+                        </Pressable>
+                    </View>
+
+                    <View style={{ top: -windowHeight * 0.019 }}>
+                        <Image source={{ uri: currentUser.coverPicture === "" ? publicFolder + "defaultBackground.jpg" : currentUser.coverPicture }} style={{ height: windowHeight * 0.166, width: windowWidth }} />
+
+                        <View style={{
+                            top: -windowHeight * 0.0768, height: windowHeight * 0.1536, width: windowHeight * 0.1536,
+                            borderRadius: windowHeight * 0.0768, paddingLeft: windowWidth * 0.052
+                        }}>
+                            <Image source={{ uri: currentUser.profilePicture === "" ? publicFolder + "defaultProfilePicture.png" : currentUser.profilePicture }} style=
+                                {{ height: windowHeight * 0.1536, width: windowHeight * 0.1536, borderRadius: windowHeight * 0.0768, borderWidth: 3, borderColor: '#FFFFFF' }} />
+                        </View>
+
+                        <Pressable onPress={handleMessageClick} style={{ top: -windowHeight * 0.128, right: -windowWidth * 0.4167 }}>
+                            <Ionicons name={"chatbubbles"} color={"#5F59F7"} size={23} style={{ marginLeft: 'auto', marginRight: 'auto' }} />
+                        </Pressable>
+
+                        <Pressable onPress={handleEmailClick}>
+                            <MaterialCommunityIcons name={"email"} color={"#5F59F7"} size={24} style={{ position: 'absolute', top: -windowHeight * 0.16, right: windowWidth * 0.2 }} />
+                        </Pressable>
+
+                        <Text style={{ top: -windowHeight * 0.105, fontSize: 24, textAlign: 'left', fontWeight: '500', textAlignVertical: 'top', paddingLeft: windowWidth * 0.052 }}>
+                            {currentUser.username}
+                        </Text>
+
+                        <Text style={{ top: -windowHeight * 0.105, fontSize: 15, textAlign: 'left', textAlignVertical: 'top', paddingLeft: windowWidth * 0.052 }}>
+                            {currentUser.major} {currentUser.role}
+                        </Text>
+
+                        <AirbnbRating count={5} defaultRating={currentUser.rating} size={15} isDisabled={true} showRating={false} selectedColor={'#5F59F7'} starContainerStyle={{ top: -windowHeight * 0.1, left: -windowWidth * 0.32 }} />
+
+                        <Text style={{ position: 'absolute', top: windowHeight * 0.28, right: windowWidth * 0.05, fontSize: 20, textAlign: 'left', fontWeight: '500', color: '#2970FE' }}>
+                            ${currentUser.hourlyRate}/hr
+                        </Text>
+                    </View>
+
+                    <View style={{ width: windowWidth, alignItems: 'center' }}>
+                        <Pressable onPress={handleSessionClick} backgroundColor={'#5F59F7'} style={{
+                            top: windowHeight * 0.218, height: windowHeight * 0.0768, width: windowWidth * 0.833,
+                            borderRadius: windowHeight * 0.0512, alignItems: 'center', justifyContent: 'center'
+                        }} >
+                            <Text style={{ color: 'white', fontSize: 18 }}>
+                                Request Session
+                            </Text>
+                        </Pressable>
+                    </View>
+                </ScrollView>
             ) : (
                 <ScrollView showsVerticalScrollIndicator={false} showsHorizontalScrollIndicator={false} contentContainerStyle={styles.contentContainer} style={{ backgroundColor: '#FFFFFF' }}>
-                    <Pressable onPress={handleBookClick} backgroundColor={'#5F59F7'} style={{
-                        top: windowHeight * 0.4, height: windowHeight * 0.0768, width: windowWidth * 0.833,
-                        borderRadius: windowHeight * 0.0512, alignItems: 'center', justifyContent: 'center'
-                    }} >
-                        <Text style={{ color: 'white', fontSize: 18 }}>
-                            Book Now
+                    <View style={{ marginBottom: windowHeight * 0.0128, top: -windowHeight * 0.019, height: windowHeight * 0.05 }}>
+                        <Text style={{ fontSize: 24, fontWeight: '500', marginLeft: 20 }}>
+                            Payment Confirmation
                         </Text>
-                    </Pressable>
+
+                        <Pressable onPress={handleSessionClick}>
+                            <MaterialCommunityIcons name={"chevron-left"} color={"#5F59F7"} size={40} style={{ marginLeft: 'auto', marginRight: 'auto', top: -windowHeight * 0.045, left: -windowWidth * 0.42 }} />
+                        </Pressable>
+                    </View>
+
+                    <View style={{ width: windowWidth }}>
+
+                    </View>
                 </ScrollView>
             )}
         </View>

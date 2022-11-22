@@ -187,7 +187,7 @@ export default function ProfileScreen({ navigation }) {
                                 <TextInput onChangeText={text => setUsername(text)} style={{
                                     fontSize: 15, width: windowWidth * 0.5989, borderRadius: windowHeight * 0.0256,
                                     position: 'absolute', color: 'black', borderColor: '#9E9E9E', backgroundColor: '#F1F1F1',
-                                    borderWidth: 1, marginTop: windowHeight * 0.0128, marginLeft: windowWidth * 0.26,
+                                    borderWidth: 0.5, marginTop: windowHeight * 0.0128, marginLeft: windowWidth * 0.26,
                                     paddingLeft: windowWidth * 0.026, paddingRight: windowWidth * 0.026
                                 }}>
                                     <Text style={{ paddingLeft: windowWidth * 0.052 }}>
@@ -202,7 +202,7 @@ export default function ProfileScreen({ navigation }) {
                                 </Text>
                                 <TextInput onChangeText={text => setEmail(text)} style={{
                                     fontSize: 15, width: windowWidth * 0.5989, borderRadius: windowHeight * 0.0256,
-                                    position: 'absolute', color: 'black', borderColor: '#9E9E9E', backgroundColor: '#F1F1F1', borderWidth: 1,
+                                    position: 'absolute', color: 'black', borderColor: '#9E9E9E', backgroundColor: '#F1F1F1', borderWidth: 0.5,
                                     marginTop: windowHeight * 0.0384, marginLeft: windowWidth * 0.26, paddingLeft: windowWidth * 0.026, paddingRight: windowWidth * 0.026
                                 }}>
                                     <Text style={{ paddingLeft: windowWidth * 0.052 }}>
@@ -217,7 +217,7 @@ export default function ProfileScreen({ navigation }) {
                                 </Text>
                                 <TextInput onChangeText={text => setMajor(text)} style={{
                                     fontSize: 15, width: windowWidth * 0.5989, borderRadius: windowHeight * 0.0256,
-                                    position: 'absolute', color: 'black', borderColor: '#9E9E9E', backgroundColor: '#F1F1F1', borderWidth: 1,
+                                    position: 'absolute', color: 'black', borderColor: '#9E9E9E', backgroundColor: '#F1F1F1', borderWidth: 0.5,
                                     marginTop: windowHeight * 0.0384, marginLeft: windowWidth * 0.26, paddingLeft: windowWidth * 0.026, paddingRight: windowWidth * 0.026
                                 }}>
                                     {major}
@@ -230,7 +230,7 @@ export default function ProfileScreen({ navigation }) {
                                 </Text>
                                 <TextInput onChangeText={text => setRole(text)} style={{
                                     fontSize: 15, width: windowWidth * 0.5989, borderRadius: windowHeight * 0.0256,
-                                    position: 'absolute', color: 'black', borderColor: '#9E9E9E', backgroundColor: '#F1F1F1', borderWidth: 1,
+                                    position: 'absolute', color: 'black', borderColor: '#9E9E9E', backgroundColor: '#F1F1F1', borderWidth: 0.5,
                                     marginTop: windowHeight * 0.0384, marginLeft: windowWidth * 0.26, paddingLeft: windowWidth * 0.026, paddingRight: windowWidth * 0.026
                                 }}>
                                     {role}
@@ -243,7 +243,7 @@ export default function ProfileScreen({ navigation }) {
                                 </Text>
                                 <TextInput onChangeText={text => setUniversity(text)} style={{
                                     fontSize: 15, width: windowWidth * 0.5989, borderRadius: windowHeight * 0.0256,
-                                    position: 'absolute', color: 'black', borderColor: '#9E9E9E', backgroundColor: '#F1F1F1', borderWidth: 1,
+                                    position: 'absolute', color: 'black', borderColor: '#9E9E9E', backgroundColor: '#F1F1F1', borderWidth: 0.5,
                                     marginTop: windowHeight * 0.0384, marginLeft: windowWidth * 0.26, paddingLeft: windowWidth * 0.026, paddingRight: windowWidth * 0.026
                                 }}>
                                     {university}
@@ -256,7 +256,7 @@ export default function ProfileScreen({ navigation }) {
                                 </Text>
                                 <TextInput onChangeText={text => setCity(text)} style={{
                                     fontSize: 15, width: windowWidth * 0.5989, borderRadius: windowHeight * 0.0256,
-                                    position: 'absolute', color: 'black', borderColor: '#9E9E9E', backgroundColor: '#F1F1F1', borderWidth: 1,
+                                    position: 'absolute', color: 'black', borderColor: '#9E9E9E', backgroundColor: '#F1F1F1', borderWidth: 0.5,
                                     marginTop: windowHeight * 0.0384, marginLeft: windowWidth * 0.26, paddingLeft: windowWidth * 0.026, paddingRight: windowWidth * 0.026
                                 }}>
                                     {city}
@@ -269,7 +269,7 @@ export default function ProfileScreen({ navigation }) {
                                 </Text>
                                 <TextInput onChangeText={text => setZipCode(text)} style={{
                                     fontSize: 15, width: windowWidth * 0.5989, borderRadius: windowHeight * 0.0256,
-                                    position: 'absolute', color: 'black', borderColor: '#9E9E9E', backgroundColor: '#F1F1F1', borderWidth: 1,
+                                    position: 'absolute', color: 'black', borderColor: '#9E9E9E', backgroundColor: '#F1F1F1', borderWidth: 0.5,
                                     marginTop: windowHeight * 0.0384, marginLeft: windowWidth * 0.26, paddingLeft: windowWidth * 0.026, paddingRight: windowWidth * 0.026
                                 }}>
                                     {zipCode}
@@ -282,7 +282,7 @@ export default function ProfileScreen({ navigation }) {
                                 </Text>
                                 <TextInput onChangeText={text => setCoursesView(text)} style={{
                                     fontSize: 15, width: windowWidth * 0.5989, borderRadius: windowHeight * 0.0256,
-                                    position: 'absolute', color: 'black', borderColor: '#9E9E9E', backgroundColor: '#F1F1F1', borderWidth: 1,
+                                    position: 'absolute', color: 'black', borderColor: '#9E9E9E', backgroundColor: '#F1F1F1', borderWidth: 0.5,
                                     marginTop: windowHeight * 0.0384, marginLeft: windowWidth * 0.26, paddingLeft: windowWidth * 0.026, paddingRight: windowWidth * 0.026
                                 }}>
                                     {coursesView}
@@ -295,7 +295,7 @@ export default function ProfileScreen({ navigation }) {
                                 </Text>
                                 <TextInput onChangeText={text => setHourlyRate(text)} style={{
                                     fontSize: 15, width: windowWidth * 0.5989, borderRadius: windowHeight * 0.0256,
-                                    position: 'absolute', color: 'black', borderColor: '#9E9E9E', backgroundColor: '#F1F1F1', borderWidth: 1,
+                                    position: 'absolute', color: 'black', borderColor: '#9E9E9E', backgroundColor: '#F1F1F1', borderWidth: 0.5,
                                     marginTop: windowHeight * 0.0384, marginLeft: windowWidth * 0.26, paddingLeft: windowWidth * 0.026, paddingRight: windowWidth * 0.026
                                 }}>
                                     {hourlyRate}
@@ -308,7 +308,7 @@ export default function ProfileScreen({ navigation }) {
                                 </Text>
                                 <TextInput onChangeText={text => setTotalLessons(text)} style={{
                                     fontSize: 15, width: windowWidth * 0.5989, borderRadius: windowHeight * 0.0256,
-                                    position: 'absolute', color: 'black', borderColor: '#9E9E9E', backgroundColor: '#F1F1F1', borderWidth: 1,
+                                    position: 'absolute', color: 'black', borderColor: '#9E9E9E', backgroundColor: '#F1F1F1', borderWidth: 0.5,
                                     marginTop: windowHeight * 0.0384, marginLeft: windowWidth * 0.26, paddingLeft: windowWidth * 0.026, paddingRight: windowWidth * 0.026
                                 }}>
                                     {totalLessons}
@@ -322,7 +322,7 @@ export default function ProfileScreen({ navigation }) {
                                 </Text>
                                 <TextInput onChangeText={text => setTotalHours(text)} style={{
                                     fontSize: 15, width: windowWidth * 0.5989, borderRadius: windowHeight * 0.0256,
-                                    position: 'absolute', color: 'black', borderColor: '#9E9E9E', backgroundColor: '#F1F1F1', borderWidth: 1,
+                                    position: 'absolute', color: 'black', borderColor: '#9E9E9E', backgroundColor: '#F1F1F1', borderWidth: 0.5,
                                     marginTop: windowHeight * 0.0384, marginLeft: windowWidth * 0.26, paddingLeft: windowWidth * 0.026, paddingRight: windowWidth * 0.026
                                 }}>
                                     {totalHours}
@@ -335,7 +335,7 @@ export default function ProfileScreen({ navigation }) {
                                 </Text>
                                 <TextInput onChangeText={text => setRating(text)} style={{
                                     fontSize: 15, width: windowWidth * 0.5989, borderRadius: windowHeight * 0.0256,
-                                    position: 'absolute', color: 'black', borderColor: '#9E9E9E', backgroundColor: '#F1F1F1', borderWidth: 1,
+                                    position: 'absolute', color: 'black', borderColor: '#9E9E9E', backgroundColor: '#F1F1F1', borderWidth: 0.5,
                                     marginTop: windowHeight * 0.0384, marginLeft: windowWidth * 0.26, paddingLeft: windowWidth * 0.026, paddingRight: windowWidth * 0.026
                                 }}>
                                     {rating}
@@ -348,7 +348,7 @@ export default function ProfileScreen({ navigation }) {
                                 </Text>
                                 <TextInput multiline={true} onChangeText={text => setAbout(text)} style={{
                                     fontSize: 15, width: windowWidth * 0.5989, borderRadius: windowHeight * 0.0256,
-                                    position: 'absolute', color: 'black', borderColor: '#9E9E9E', backgroundColor: '#F1F1F1', borderWidth: 1,
+                                    position: 'absolute', color: 'black', borderColor: '#9E9E9E', backgroundColor: '#F1F1F1', borderWidth: 0.5,
                                     marginTop: windowHeight * 0.0384, marginLeft: windowWidth * 0.26, paddingLeft: windowWidth * 0.026, paddingRight: windowWidth * 0.026,
                                     textAlignVertical: "top", height: windowHeight * 0.256
                                 }}>
