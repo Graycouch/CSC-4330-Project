@@ -7,7 +7,8 @@ const { setGlobalState, useGlobalState } = createGlobalState({
     conversations: [],
     searchValue: "",
     user: null,
-    allUsers: []
+    allUsers: [],
+    bookedSessions: []
 })
 
 export { useGlobalState, setGlobalState };

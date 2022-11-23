@@ -7,6 +7,8 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import { AirbnbRating } from 'react-native-ratings';
 import axios from 'axios';
 import { CheckBox, Divider } from '@rneui/themed';
+import { Calendar } from 'react-native-calendars';
+import moment from 'moment';
 
 export default function SearchScreen({ navigation }) {
     const [user] = useGlobalState("user");
@@ -26,6 +28,11 @@ export default function SearchScreen({ navigation }) {
     const [checkedRate, setCheckedRate] = useState(false);
     const [checkedReview, setCheckedReview] = useState(false);
     const listRef = useRef(null);
+
+    const [state, setState] = useState({
+        selectedDate: "",
+        markedDates: {}
+    });
 
     const windowWidth = Dimensions.get('window').width;
     const windowHeight = Dimensions.get('window').height;
@@ -119,6 +126,10 @@ export default function SearchScreen({ navigation }) {
     const handleBookClick = (e) => {
         e.preventDefault();
         setbookClicked(!bookClicked);
+        setState({
+            selectedDate: "",
+            markedDates: {}
+        })
     }
 
     const handleSessionClick = (e) => {
@@ -130,6 +141,17 @@ export default function SearchScreen({ navigation }) {
         e.preventDefault();
         setFilterClicked(!filterClicked);
     }
+
+    function getSelectedDayEvents(date) {
+        let markedDates = {};
+        markedDates[date] = { selected: true, selectedColor: '#5F59F7', textColor: '#FFFFFF' };
+        let serviceDate = moment(date);
+        serviceDate = serviceDate.format("DD.MM.YYYY");
+        setState({
+            selectedDate: serviceDate,
+            markedDates: markedDates
+        });
+    };
 
     return (
         <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center', backgroundColor: '#FFFFFF' }}>
@@ -400,43 +422,17 @@ export default function SearchScreen({ navigation }) {
                         </Pressable>
                     </View>
 
-                    <View style={{ top: -windowHeight * 0.019 }}>
-                        <Image source={{ uri: currentUser.coverPicture === "" ? publicFolder + "defaultBackground.jpg" : currentUser.coverPicture }} style={{ height: windowHeight * 0.166, width: windowWidth }} />
-
-                        <View style={{
-                            top: -windowHeight * 0.0768, height: windowHeight * 0.1536, width: windowHeight * 0.1536,
-                            borderRadius: windowHeight * 0.0768, paddingLeft: windowWidth * 0.052
-                        }}>
-                            <Image source={{ uri: currentUser.profilePicture === "" ? publicFolder + "defaultProfilePicture.png" : currentUser.profilePicture }} style=
-                                {{ height: windowHeight * 0.1536, width: windowHeight * 0.1536, borderRadius: windowHeight * 0.0768, borderWidth: 3, borderColor: '#FFFFFF' }} />
-                        </View>
-
-                        <Pressable onPress={handleMessageClick} style={{ top: -windowHeight * 0.128, right: -windowWidth * 0.4167 }}>
-                            <Ionicons name={"chatbubbles"} color={"#5F59F7"} size={23} style={{ marginLeft: 'auto', marginRight: 'auto' }} />
-                        </Pressable>
-
-                        <Pressable onPress={handleEmailClick}>
-                            <MaterialCommunityIcons name={"email"} color={"#5F59F7"} size={24} style={{ position: 'absolute', top: -windowHeight * 0.16, right: windowWidth * 0.2 }} />
-                        </Pressable>
-
-                        <Text style={{ top: -windowHeight * 0.105, fontSize: 24, textAlign: 'left', fontWeight: '500', textAlignVertical: 'top', paddingLeft: windowWidth * 0.052 }}>
-                            {currentUser.username}
-                        </Text>
-
-                        <Text style={{ top: -windowHeight * 0.105, fontSize: 15, textAlign: 'left', textAlignVertical: 'top', paddingLeft: windowWidth * 0.052 }}>
-                            {currentUser.major} {currentUser.role}
-                        </Text>
-
-                        <AirbnbRating count={5} defaultRating={currentUser.rating} size={15} isDisabled={true} showRating={false} selectedColor={'#5F59F7'} starContainerStyle={{ top: -windowHeight * 0.1, left: -windowWidth * 0.32 }} />
-
-                        <Text style={{ position: 'absolute', top: windowHeight * 0.28, right: windowWidth * 0.05, fontSize: 20, textAlign: 'left', fontWeight: '500', color: '#2970FE' }}>
-                            ${currentUser.hourlyRate}/hr
-                        </Text>
+                    <View style={{ top: -windowHeight * 0.019, width: windowWidth }}>
+                        <Divider style={{ width: '100%' }} />
+                        <Calendar theme={{ todayTextColor: '#8C61FF' }} onDayPress={day => {
+                            getSelectedDayEvents(day.dateString);
+                        }}
+                            firstDay={1} hideArrows={true} enableSwipeMonths={true} markedDates={state.markedDates} />
                     </View>
 
                     <View style={{ width: windowWidth, alignItems: 'center' }}>
                         <Pressable onPress={handleSessionClick} backgroundColor={'#5F59F7'} style={{
-                            top: windowHeight * 0.218, height: windowHeight * 0.0768, width: windowWidth * 0.833,
+                            height: windowHeight * 0.0768, width: windowWidth * 0.833,
                             borderRadius: windowHeight * 0.0512, alignItems: 'center', justifyContent: 'center'
                         }} >
                             <Text style={{ color: 'white', fontSize: 18 }}>
@@ -461,7 +457,8 @@ export default function SearchScreen({ navigation }) {
 
                     </View>
                 </ScrollView>
-            )}
+            )
+            }
         </View>
     )
 }
