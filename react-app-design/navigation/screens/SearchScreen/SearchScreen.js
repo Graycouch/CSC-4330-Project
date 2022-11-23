@@ -5,16 +5,19 @@ import { View, Text, Button, Image, TextInput, Pressable, ScrollView, StyleSheet
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { AirbnbRating } from 'react-native-ratings';
+import { Input } from '@rneui/themed';
 import axios from 'axios';
 import { CheckBox, Divider } from '@rneui/themed';
 import { Calendar } from 'react-native-calendars';
 import moment from 'moment';
+import DateTimePicker from '@react-native-community/datetimepicker';
 
 export default function SearchScreen({ navigation }) {
     const [user] = useGlobalState("user");
     const [allUsers] = useGlobalState("allUsers");
     const [searchValue] = useGlobalState("searchValue");
     const [localhost] = useGlobalState("localhost");
+    const [bookedSessions] = useGlobalState("bookedSessions");
     const publicFolder = `http://${localhost}:8800/images/`;
 
     const [boxClicked, setboxClicked] = useState(false);
@@ -27,7 +30,11 @@ export default function SearchScreen({ navigation }) {
     const [checkedMajor, setCheckedMajor] = useState(false);
     const [checkedRate, setCheckedRate] = useState(false);
     const [checkedReview, setCheckedReview] = useState(false);
+    const [calendarClick, setCalendarClick] = useState(false);
     const listRef = useRef(null);
+    const [time, setTime] = useState("N/A");
+    const [show, setShow] = useState(false);
+    const newDate = new Date();
 
     const [state, setState] = useState({
         selectedDate: "",
@@ -134,6 +141,8 @@ export default function SearchScreen({ navigation }) {
 
     const handleSessionClick = (e) => {
         e.preventDefault();
+        currentUser.time = time;
+        currentUser.date = state.selectedDate;
         setSessionClicked(!sessionClicked);
     }
 
@@ -153,9 +162,42 @@ export default function SearchScreen({ navigation }) {
         });
     };
 
+    const handleSubmitPayment = (e) => {
+        e.preventDefault();
+
+        currentUser.time = time;
+        currentUser.date = state.selectedDate;
+        setGlobalState("bookedSessions", [...bookedSessions, currentUser]);
+
+        setTime("N/A");
+        setState({
+            selectedDate: "",
+            markedDates: {}
+        });
+        setboxClicked(false);
+        setbookClicked(false);
+        setSessionClicked(false);
+    }
+
+    const onChange = (event, selectedTime) => {
+        setShow(false);
+        const currentDate = selectedTime;
+        let tempDate = new Date(currentDate);
+        let AMPM = tempDate.getHours() >= 12 ? 'PM' : 'AM';
+        let hours = tempDate.getHours() > 12 ? tempDate.getHours() - 12 : tempDate.getHours();
+        setTime(hours + ':' + tempDate.getMinutes() + ' ' + AMPM);
+    }
+
+    const handleCalendarClick = (e) => {
+        e.preventDefault();
+        setCalendarClick(!calendarClick);
+    }
+
     return (
         <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center', backgroundColor: '#FFFFFF' }}>
             {!boxClicked ? (
+                // Search Page
+
                 <ScrollView ref={listRef} showsVerticalScrollIndicator={false} showsHorizontalScrollIndicator={false} contentContainerStyle={styles.contentContainer} style={{ backgroundColor: '#FFFFFF' }}>
                     <View style={{ flexDirection: 'row', marginBottom: windowHeight * 0.0128, top: -windowHeight * 0.019 }}>
                         <TextInput placeholder="Search" value={searchPageBar} onChangeText={newText => setSearchPageBar(newText)}
@@ -273,7 +315,9 @@ export default function SearchScreen({ navigation }) {
                     </View>
 
                 </ScrollView>
-            ) : !bookClicked ? (
+            ) : !bookClicked && !calendarClick ? (
+                // View Profile Page
+
                 <ScrollView showsVerticalScrollIndicator={false} showsHorizontalScrollIndicator={false} contentContainerStyle={styles.contentContainer} style={{ backgroundColor: '#FFFFFF' }}>
 
                     <View style={{ marginBottom: windowHeight * 0.0128, top: -windowHeight * 0.019, height: windowHeight * 0.05 }}>
@@ -303,6 +347,10 @@ export default function SearchScreen({ navigation }) {
 
                         <Pressable onPress={handleEmailClick}>
                             <MaterialCommunityIcons name={"email"} color={"#5F59F7"} size={24} style={{ position: 'absolute', top: -windowHeight * 0.16, right: windowWidth * 0.2 }} />
+                        </Pressable>
+
+                        <Pressable onPress={handleCalendarClick}>
+                            <MaterialCommunityIcons name={"calendar"} color={"#5F59F7"} size={24} style={{ position: 'absolute', top: -windowHeight * 0.16, right: windowWidth * 0.35 }} />
                         </Pressable>
 
                         <Text style={{ top: -windowHeight * 0.105, fontSize: 24, textAlign: 'left', fontWeight: '500', textAlignVertical: 'top', paddingLeft: windowWidth * 0.052 }}>
@@ -410,7 +458,29 @@ export default function SearchScreen({ navigation }) {
                     <View style={styles.verticalLine} />
                     <View style={{ padding: windowHeight * 0.2 }}></View>
                 </ScrollView>
+            ) : calendarClick ? (
+                // Tutor Schedule Page
+
+                <ScrollView showsVerticalScrollIndicator={false} showsHorizontalScrollIndicator={false} contentContainerStyle={styles.contentContainer} style={{ backgroundColor: '#FFFFFF' }}>
+                    <View style={{ marginBottom: windowHeight * 0.0128, top: -windowHeight * 0.019, height: windowHeight * 0.05 }}>
+                        <Text style={{ fontSize: 24, fontWeight: '500' }}>
+                            Tutor Schedule
+                        </Text>
+
+                        <Pressable onPress={handleCalendarClick}>
+                            <MaterialCommunityIcons name={"chevron-left"} color={"#5F59F7"} size={40} style={{ marginLeft: 'auto', marginRight: 'auto', top: -windowHeight * 0.045, left: -windowWidth * 0.42 }} />
+                        </Pressable>
+                    </View>
+
+                    <View style={{ top: -windowHeight * 0.019, width: windowWidth }}>
+                        <Divider style={{ width: '100%' }} />
+                    </View>
+
+                    {/* Start Here Parimal */}
+                </ScrollView>
             ) : !sessionClicked ? (
+                // Session Scheduling Page
+
                 <ScrollView showsVerticalScrollIndicator={false} showsHorizontalScrollIndicator={false} contentContainerStyle={styles.contentContainer} style={{ backgroundColor: '#FFFFFF' }}>
                     <View style={{ marginBottom: windowHeight * 0.0128, top: -windowHeight * 0.019, height: windowHeight * 0.05 }}>
                         <Text style={{ fontSize: 24, fontWeight: '500', marginLeft: 10 }}>
@@ -424,15 +494,32 @@ export default function SearchScreen({ navigation }) {
 
                     <View style={{ top: -windowHeight * 0.019, width: windowWidth }}>
                         <Divider style={{ width: '100%' }} />
-                        <Calendar theme={{ todayTextColor: '#8C61FF' }} onDayPress={day => {
-                            getSelectedDayEvents(day.dateString);
-                        }}
-                            firstDay={1} hideArrows={true} enableSwipeMonths={true} markedDates={state.markedDates} />
+                        <View style={{ marginBottom: windowHeight * 0.01 }}>
+                            <Calendar theme={{ todayTextColor: '#8C61FF' }} onDayPress={day => {
+                                getSelectedDayEvents(day.dateString);
+                            }}
+                                firstDay={1} hideArrows={true} enableSwipeMonths={true} markedDates={state.markedDates} />
+                        </View>
+
+                        <View style={{ marginBottom: windowHeight * 0.095 }}>
+                            <Divider style={{ width: '100%' }} />
+                        </View>
+
+                        <View style={{ alignItems: 'center', flexDirection: 'row', justifyContent: 'center' }}>
+                            <Input disabled={true} label='Select a Time' placeholder={time} containerStyle={{ width: windowWidth * 0.5 }}></Input>
+                            <Pressable onPress={() => setShow(true)}>
+                                <MaterialCommunityIcons name={"calendar-clock"} color={"#5F59F7"} size={30} />
+                            </Pressable>
+                        </View>
                     </View>
+
+                    {show && (
+                        <DateTimePicker value={newDate} mode='time' onChange={onChange} />
+                    )}
 
                     <View style={{ width: windowWidth, alignItems: 'center' }}>
                         <Pressable onPress={handleSessionClick} backgroundColor={'#5F59F7'} style={{
-                            height: windowHeight * 0.0768, width: windowWidth * 0.833,
+                            top: windowHeight * 0.045, height: windowHeight * 0.0768, width: windowWidth * 0.833,
                             borderRadius: windowHeight * 0.0512, alignItems: 'center', justifyContent: 'center'
                         }} >
                             <Text style={{ color: 'white', fontSize: 18 }}>
@@ -442,6 +529,8 @@ export default function SearchScreen({ navigation }) {
                     </View>
                 </ScrollView>
             ) : (
+                // Payment Confirmation Page
+
                 <ScrollView showsVerticalScrollIndicator={false} showsHorizontalScrollIndicator={false} contentContainerStyle={styles.contentContainer} style={{ backgroundColor: '#FFFFFF' }}>
                     <View style={{ marginBottom: windowHeight * 0.0128, top: -windowHeight * 0.019, height: windowHeight * 0.05 }}>
                         <Text style={{ fontSize: 24, fontWeight: '500', marginLeft: 20 }}>
@@ -453,8 +542,21 @@ export default function SearchScreen({ navigation }) {
                         </Pressable>
                     </View>
 
-                    <View style={{ width: windowWidth }}>
+                    {/* Start Here Connor */}
 
+                    <View style={{ top: -windowHeight * 0.019, width: windowWidth }}>
+                        <Divider style={{ width: '100%' }} />
+                    </View>
+
+                    <View style={{ width: windowWidth, alignItems: 'center' }}>
+                        <Pressable onPress={handleSubmitPayment} backgroundColor={'#5F59F7'} style={{
+                            height: windowHeight * 0.0768, width: windowWidth * 0.833,
+                            borderRadius: windowHeight * 0.0512, alignItems: 'center', justifyContent: 'center'
+                        }} >
+                            <Text style={{ color: 'white', fontSize: 18 }}>
+                                Submit Payment
+                            </Text>
+                        </Pressable>
                     </View>
                 </ScrollView>
             )
