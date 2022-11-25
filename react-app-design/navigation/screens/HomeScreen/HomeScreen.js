@@ -12,6 +12,7 @@ export default function HomeScreen({ navigation }) {
     const [user] = useGlobalState("user");
     const [allUsers] = useGlobalState("allUsers");
     const [searchValue] = useGlobalState("searchValue");
+    const [bookedSessions] = useGlobalState("bookedSessions");
 
     const windowWidth = Dimensions.get('window').width;
     const windowHeight = Dimensions.get('window').height;
@@ -22,8 +23,8 @@ export default function HomeScreen({ navigation }) {
     const imageURL = staticContentURL + '/images/';
 
     // Temporary Hardcoding for Mid-term Demo
-    const UpcomingLessons = [...allUsers.slice(0, 1), ...allUsers.slice(0, 1)];
-    const MyTeachers = allUsers.slice(0, 1);
+    const UpcomingLessons = bookedSessions;
+    const MyTeachers = allUsers.slice(5, 6);
     const SuggestedTeachers = allUsers.slice(2, 5);
 
 
@@ -101,18 +102,25 @@ export default function HomeScreen({ navigation }) {
                 <Text style={{ fontSize: 40, fontWeight: 'bold', margin: 4, textAlign: 'center' }}>
                     Welcome back!
                 </Text>
-                <Text style={{ fontSize: 10, fontWeight: 'bold', margin: 4, marginBottom: 20, textAlign: 'center' }}>
+                <Text style={{ fontSize: 10, fontWeight: 'bold', margin: 4, marginBottom: UpcomingLessons.length > 0 ? 20 : 0, textAlign: 'center' }}>
                     We hope you've been doing good  :)
                 </Text>
                 {/* Upcoming Lessons */}
                 <View style={styles.sectionContainer}>
-                    <Text style={styles.heading}>Upcoming Lessons</Text>
-                    <CardFactory CardType="UpcomingLesson" users={UpcomingLessons} />
+                    {UpcomingLessons.length > 0 ? (
+                        <>
+                            <Text style={styles.heading}>Upcoming Lessons</Text>
+                            <CardFactory CardType="UpcomingLesson" users={UpcomingLessons} />
+                        </>
+                    ) : (
+                        <View />
+                    )
+                    }
                 </View>
 
                 {/* My Teachers */}
                 <View style={styles.sectionContainer}>
-                    <Text style={styles.heading}>My Teachers</Text>
+                    <Text style={styles.heading}>Previous Teachers</Text>
                     <CardFactory CardType="MyTeachers" users={MyTeachers} />
                 </View>
 

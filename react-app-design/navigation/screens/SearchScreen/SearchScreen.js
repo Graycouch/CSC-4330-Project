@@ -177,6 +177,8 @@ export default function SearchScreen({ navigation }) {
         setboxClicked(false);
         setbookClicked(false);
         setSessionClicked(false);
+
+        navigation.navigate('Home', { screen: 'Home' })
     }
 
     const onChange = (event, selectedTime) => {
