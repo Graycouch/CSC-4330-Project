@@ -16,14 +16,18 @@ const windowHeight = 1600;
 
 function renderSwitch(cardType, currentUser) {
     switch (cardType) {
-      case "UpcomingLesson":
-        return upcomingLesson(currentUser);
-      case "MyTeachers":
-        return myTeachers(currentUser);
-      case "SuggestedTeachers":
-        return suggestedTeachers(currentUser);
-      default:
-        return <Text>card factory error...</Text>;
+        case "UpcomingLesson":
+            return upcomingLesson(currentUser);
+        case "MyTeachers":
+            return myTeachers(currentUser);
+        case "SuggestedTeachers":
+            return suggestedTeachers(currentUser);
+        case "ScheduledClasses":
+            return ScheduledClasses(currentUser);
+        case "TutorSchedule":
+            return TutorSchedule(currentUser);
+        default:
+            return <Text>card factory error...</Text>;
     }
 }
 
@@ -33,24 +37,24 @@ function renderSwitch(cardType, currentUser) {
 const styles = StyleSheet.create({
 
     //CardContainer
-    cardContainer : {
+    cardContainer: {
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'space-between',
-        width: '100%', 
+        width: '100%',
         borderWidth: 1,
-        borderColor: '#9E9E9E', 
-        borderRadius: 20, 
+        borderColor: '#9E9E9E',
+        borderRadius: 20,
         marginBottom: 30,
         backgroundColor: '#ffffff'
     },
 
     // ProfilePicture
-    profilePicture : {
-        height: 80, 
+    profilePicture: {
+        height: 80,
         width: 80,
-        borderRadius: 999, 
-        borderWidth: 2, 
+        borderRadius: 999,
+        borderWidth: 2,
         borderColor: '#FFFFFF',
         marginLeft: 15,
         marginTop: 10,
@@ -58,52 +62,52 @@ const styles = StyleSheet.create({
     },
 
     // ProfileInfoContainer
-    profileInfoContainer : {
-        textAlign: 'left', 
+    profileInfoContainer: {
+        textAlign: 'left',
         fontWeight: '400',
     },
 
 
     /// Text 
-    blue : {
+    blue: {
         color: '#2970FE'
     },
 
-    grey : {
+    grey: {
         color: 'grey'
     },
 
-    bold : {
+    bold: {
         fontWeight: '500'
     },
 
-    right : {
+    right: {
         textAlign: 'right',
         marginRight: 20,
         marginleft: 0
     },
 
-    top : {
-        fontSize: 15, 
-        
-        marginTop: 0,
-        marginLeft: 20,
-        marginBottom: 2,
-
- 
-    },
-
-    bottom : {
-        fontSize: 12, 
+    top: {
+        fontSize: 15,
 
         marginTop: 0,
         marginLeft: 20,
         marginBottom: 2,
 
+
+    },
+
+    bottom: {
+        fontSize: 12,
+
+        marginTop: 0,
+        marginLeft: 20,
+        marginBottom: 2,
+
     },
 
 
-    rating : {
+    rating: {
         marginTop: 0,
         marginLeft: 18,
         marginBottom: 20,
@@ -114,13 +118,13 @@ const styles = StyleSheet.create({
 
 
 //Container
-    //Flex Row
-        //ProfilePicture
-    //Flex Row
-        //FlexColumn
-            //Info
-        //FlexColum
-            //Info
+//Flex Row
+//ProfilePicture
+//Flex Row
+//FlexColumn
+//Info
+//FlexColum
+//Info
 
 
 
@@ -137,7 +141,7 @@ export function CardFactory(props) {
     const [username, setUsername] = useState("");
     const [email, setEmail] = useState("");
     const [role, setRole] = useState("");
-    const [major, setMajor] = useState("");
+    const [subject, setSubject] = useState("");
     const [courses, setCourses] = useState([""]);
     const [about, setAbout] = useState("");
     const [city, setCity] = useState("");
@@ -150,12 +154,13 @@ export function CardFactory(props) {
     const [profilePicture, setProfilePicture] = useState("");
     const [coverPicture, setCoverPicture] = useState("");
     const [searchPageBar, setSearchPageBar] = useState(searchValue);
+    const [major, setMajor] = useState("");
 
-    
+
 
     function handleUserBoxClick(currentUser) {
         setboxClicked(true);
-    
+
         setUsername(currentUser.username);
         setEmail(currentUser.email);
         setRole(currentUser.role);
@@ -172,29 +177,25 @@ export function CardFactory(props) {
         setProfilePicture(currentUser.profilePicture);
         setCoverPicture(currentUser.coverPicture);
     }
-    
-    
+
+
     const handleBackClick = (e) => {
         e.preventDefault();
         setboxClicked(false);
     }
-    
+
     const handleEmailClick = (e) => {
         e.preventDefault();
         Linking.openURL(`mailto:${email}`);
     }
-    
+
     const handleMessageClick = (e) => {
         e.preventDefault();
     }
-    
+
     const handleBookClick = (e) => {
         e.preventDefault();
     }
-    
-    
-    
-
 
 
 
@@ -202,108 +203,150 @@ export function CardFactory(props) {
     const [staticContentURL] = useGlobalState("staticContentURL");
     const imageURL = staticContentURL + '/images/';
     return (
-    props.users.map((currentUser, index) => (
-            
-        <Pressable key={index} onPress={() => handleUserBoxClick(currentUser)}>
-            {/* Card Container */}
-            {/* backgroundImage: currentUser.coverPicture.length === 0 ? "url("+imageURL+"defaultBackground.jpg)" : "url("+imageURL+'lsuBannerTemp2.jpeg)' */}
-            <View style={[styles.cardContainer, {}]}> 
-                {/* BackgroundImage */}                
-                {/* <ImageBackground source={{uri: imageURL+'lsuBannerTemp3.jpg'}} resizeMode="stretch" imageStyle={{borderRadius: 18}}> */}
+        props.users.map((currentUser, index) => (
 
-                {/* ProfilePictureContainer */}
-                <View style={{flexDirection: 'row'}}>
-                    {/* ProfilePicture */}
-                    <Image source={{ uri: currentUser.profilePicture.length === 0 ? imageURL + "abdel.jpg" : currentUser.profilePicture }}
-                        style={styles.profilePicture} />
+            <Pressable key={index} onPress={() => handleUserBoxClick(currentUser)}>
+                {/* Card Container */}
+                {/* backgroundImage: currentUser.coverPicture.length === 0 ? "url("+imageURL+"defaultBackground.jpg)" : "url("+imageURL+'lsuBannerTemp2.jpeg)' */}
+                <View style={[styles.cardContainer, {}]}>
+                    {/* BackgroundImage */}
+                    {/* <ImageBackground source={{uri: imageURL+'lsuBannerTemp3.jpg'}} resizeMode="stretch" imageStyle={{borderRadius: 18}}> */}
+
+                    {/* ProfilePictureContainer */}
+                    <View style={{ flexDirection: 'row' }}>
+                        {/* ProfilePicture */}
+                        <Image source={{ uri: currentUser.profilePicture.length === 0 ? imageURL + "abdel.jpg" : currentUser.profilePicture }}
+                            style={styles.profilePicture} />
+                    </View>
+
+
+                    {/* Text part of card that changes based on type */}
+                    {renderSwitch(props.CardType, currentUser)}
+
+
+                    {/* </ImageBackground> */}
                 </View>
-
-
-                {/* Text part of card that changes based on type */}
-                {renderSwitch(props.CardType, currentUser)}
-
-
-                {/* </ImageBackground> */}
-            </View>
-        </Pressable>     
-    ))
+            </Pressable>
+        ))
     );
 }
 
 
 function upcomingLesson(currentUser) {
     return (
-                <View style={[styles.profileInfoContainer, { flexDirection: 'row', justifyContent: 'space-between', backgroundColor: "rgba(255,255,255,0)" }]}>
-                    {/* Info (Left Column) */}
-                    <View style={{ flexDirection: 'column', justifyContent: 'flex-start'}}>
-                        {/* Username */}
-                        <Text style={[styles.top, styles.bold]}>{currentUser.username}</Text>
-                        {/* Major */}
-                        <Text style={styles.bottom}>{currentUser.major} {currentUser.role}</Text>
-                        {/* Rating */}
-                        <AirbnbRating count={5} defaultRating={currentUser.rating} size={12} isDisabled={true} showRating={false} selectedColor={'#5F59F7'} starContainerStyle={styles.rating} />
-                    </View>
-                    {/* Info (Right Column) */}
-                    <View style={{ flexDirection: 'column', justifyContent: 'flex-start' }}>
-                        {/* hourlyRate */}
-                        <Text style={[styles.blue, styles.top, styles.right]}> ${currentUser.hourlyRate}/hr</Text>
-                        {/* LocationInfo */}
-                        <Text style={[styles.locationInfo, styles.bottom, styles.right, styles.grey]}>Thursday 5:00PM</Text>
-                    </View>
-                </View>
+        <View style={[styles.profileInfoContainer, { flexDirection: 'row', justifyContent: 'space-between', backgroundColor: "rgba(255,255,255,0)" }]}>
+            {/* Info (Left Column) */}
+            <View style={{ flexDirection: 'column', justifyContent: 'flex-start' }}>
+                {/* Username */}
+                <Text style={[styles.top, styles.bold]}>{currentUser.username}</Text>
+                {/* Major */}
+                <Text style={styles.bottom}>{currentUser.major} {currentUser.role}</Text>
+                {/* Rating */}
+                <AirbnbRating count={5} defaultRating={currentUser.rating} size={12} isDisabled={true} showRating={false} selectedColor={'#5F59F7'} starContainerStyle={styles.rating} />
+            </View>
+            {/* Info (Right Column) */}
+            <View style={{ flexDirection: 'column', justifyContent: 'flex-start' }}>
+                {/* hourlyRate */}
+                <Text style={[styles.blue, styles.top, styles.right]}> ${currentUser.hourlyRate}/hr</Text>
+                {/* LocationInfo */}
+                <Text style={[styles.locationInfo, styles.bottom, styles.right, styles.grey]}>Thursday 5:00PM</Text>
+            </View>
+        </View>
     );
 }
 
 
 function myTeachers(currentUser) {
     return (
-                <View style={[styles.profileInfoContainer, { flexDirection: 'row', justifyContent: 'space-between', backgroundColor: "rgba(255,255,255,0)" }]}>
-                    {/* Info (Left Column) */}
-                    <View style={{ flexDirection: 'column', justifyContent: 'flex-start'}}>
-                        {/* Username */}
-                        <Text style={[styles.top, styles.bold]}>{currentUser.username}</Text>
-                        {/* Major */}
-                        <Text style={styles.bottom}>{currentUser.major} {currentUser.role}</Text>
-                        {/* Rating */}
-                        <AirbnbRating count={5} defaultRating={currentUser.rating} size={12} isDisabled={true} showRating={false} selectedColor={'#5F59F7'} starContainerStyle={styles.rating} />
-                    </View>
-                    {/* Info (Right Column) */}
-                    <View style={{ flexDirection: 'column', justifyContent: 'flex-start' }}>
-                        {/* hourlyRate */}
-                        <Text style={[styles.blue, styles.top, styles.right]}> ${currentUser.hourlyRate}/hr</Text>
-                        {/* LocationInfo */}
-                        <Text style={[styles.locationInfo, styles.bottom, styles.right, styles.grey]}>
-                        <MaterialCommunityIcons name={"calendar-clock-outline"} color={"#9E9E9E"} size={12} style={{}} />
-                             &nbsp;Schedule
-                        </Text>
-                        
-                    </View>
-                </View>
+        <View style={[styles.profileInfoContainer, { flexDirection: 'row', justifyContent: 'space-between', backgroundColor: "rgba(255,255,255,0)" }]}>
+            {/* Info (Left Column) */}
+            <View style={{ flexDirection: 'column', justifyContent: 'flex-start' }}>
+                {/* Username */}
+                <Text style={[styles.top, styles.bold]}>{currentUser.username}</Text>
+                {/* Major */}
+                <Text style={styles.bottom}>{currentUser.major} {currentUser.role}</Text>
+                {/* Rating */}
+                <AirbnbRating count={5} defaultRating={currentUser.rating} size={12} isDisabled={true} showRating={false} selectedColor={'#5F59F7'} starContainerStyle={styles.rating} />
+            </View>
+            {/* Info (Right Column) */}
+            <View style={{ flexDirection: 'column', justifyContent: 'flex-start' }}>
+                {/* hourlyRate */}
+                <Text style={[styles.blue, styles.top, styles.right]}> ${currentUser.hourlyRate}/hr</Text>
+                {/* LocationInfo */}
+                <Text style={[styles.locationInfo, styles.bottom, styles.right, styles.grey]}>
+                    <MaterialCommunityIcons name={"calendar-clock-outline"} color={"#9E9E9E"} size={12} style={{}} />
+                    &nbsp;Schedule
+                </Text>
+
+            </View>
+        </View>
     );
 }
 
 function suggestedTeachers(currentUser) {
     return (
-                <View style={[styles.profileInfoContainer, { flexDirection: 'row', justifyContent: 'space-between', backgroundColor: "rgba(255,255,255,0)" }]}>
-                    {/* Info (Left Column) */}
-                    <View style={{ flexDirection: 'column', justifyContent: 'flex-start'}}>
-                        {/* Username */}
-                        <Text style={[styles.top, styles.bold]}>{currentUser.username}</Text>
-                        {/* Major */}
-                        <Text style={styles.bottom}>{currentUser.major}</Text>
-                        {/* Rating */}
-                        <AirbnbRating count={5} defaultRating={currentUser.rating} size={12} isDisabled={true} showRating={false} selectedColor={'#5F59F7'} starContainerStyle={styles.rating} />
-                    </View>
-                    {/* Info (Right Column) */}
-                    <View style={{ flexDirection: 'column', justifyContent: 'flex-start' }}>
-                        {/* hourlyRate */}
-                        <Text style={[styles.blue, styles.top, styles.right]}> ${currentUser.hourlyRate}/hr</Text>
-                        {/* LocationInfo */}
-                        <Text style={[styles.locationInfo, styles.bottom, styles.right, styles.grey]}>
-                        <MaterialCommunityIcons name={"card-account-details-outline"} color={"#9E9E9E"} size={12} style={{}} />
-                             &nbsp;Check Profile
-                        </Text>
-                    </View>
-                </View>
+        <View style={[styles.profileInfoContainer, { flexDirection: 'row', justifyContent: 'space-between', backgroundColor: "rgba(255,255,255,0)" }]}>
+            {/* Info (Left Column) */}
+            <View style={{ flexDirection: 'column', justifyContent: 'flex-start' }}>
+                {/* Username */}
+                <Text style={[styles.top, styles.bold]}>{currentUser.username}</Text>
+                {/* Major */}
+                <Text style={styles.bottom}>{currentUser.major}</Text>
+                {/* Rating */}
+                <AirbnbRating count={5} defaultRating={currentUser.rating} size={12} isDisabled={true} showRating={false} selectedColor={'#5F59F7'} starContainerStyle={styles.rating} />
+            </View>
+            {/* Info (Right Column) */}
+            <View style={{ flexDirection: 'column', justifyContent: 'flex-start' }}>
+                {/* hourlyRate */}
+                <Text style={[styles.blue, styles.top, styles.right]}> ${currentUser.hourlyRate}/hr</Text>
+                {/* LocationInfo */}
+                <Text style={[styles.locationInfo, styles.bottom, styles.right, styles.grey]}>
+                    <MaterialCommunityIcons name={"card-account-details-outline"} color={"#9E9E9E"} size={12} style={{}} />
+                    &nbsp;Check Profile
+                </Text>
+            </View>
+        </View>
+    );
+}
+// {added the StudentSchedule card and need to edit it according to a time and use it in the appropriate places}
+function ScheduledClasses(currentUser) {
+    return (
+        <View style={[styles.profileInfoContainer, { flexDirection: 'row', justifyContent: 'space-between', backgroundColor: "rgba(255,255,255,0)" }]}>
+            {/* Info (Left Column) */}
+            <View style={{ flexDirection: 'column', justifyContent: 'flex-start' }}>
+                {/* Username */}
+                <Text style={[styles.top, styles.bold]}>{currentUser.username}</Text>
+                {/* Major */}
+                <Text style={styles.bottom}>{currentUser.major} {currentUser.role}</Text>
+            </View>
+            {/* Info (Right Column) */}
+            <View style={{ flexDirection: 'column', justifyContent: 'flex-start' }}>
+                {/* hourlyRate */}
+                <Text style={[styles.blue, styles.top, styles.right]}> ${currentUser.hourlyRate}/hr</Text>
+                {/* LocationInfo */}
+                <Text style={[styles.locationInfo, styles.bottom, styles.right, styles.grey]}>Thursday 5:00PM</Text>
+            </View>
+        </View>
+    );
+}
+
+function TutorSchedule(currentUser) {
+    return (
+        <View style={[styles.profileInfoContainer, { flexDirection: 'row', justifyContent: 'space-between', backgroundColor: "rgba(255,255,255,0)" }]}>
+            {/* Info (Left Column) */}
+            <View style={{ flexDirection: 'column', justifyContent: 'flex-start' }}>
+                {/* Username */}
+                <Text style={[styles.top, styles.bold]}>{currentUser.username}</Text>
+                {/* Major */}
+                <Text style={styles.bottom}>{currentUser.major} {"Student"}</Text>
+                {/* Rating */}
+                <AirbnbRating count={5} defaultRating={currentUser.rating} size={12} isDisabled={true} showRating={false} selectedColor={'#5F59F7'} starContainerStyle={styles.rating} />
+            </View>
+            {/* Info (Right Column) */}
+            <View style={{ flexDirection: 'column', justifyContent: 'flex-start' }}>
+                {/* LocationInfo */}
+                <Text style={[styles.locationInfo, styles.bottom, styles.right, styles.blue]}>Friday 2:00PM</Text>
+            </View>
+        </View >
     );
 }

@@ -8,8 +8,9 @@ import HomeScreen from './screens/HomeScreen/HomeScreen';
 import SearchScreen from './screens/SearchScreen/SearchScreen';
 import MessageScreen from './screens/MessageScreen/MessageScreen';
 import ProfileScreen from './screens/ProfileScreen/ProfileScreen';
+import HomeNavigation from './screens/HomeScreen/HomeNavigation';
 
-const homeName = "Home";
+const homeName = "HomeNavigation";
 const searchName = "Search";
 const messageName = "Message";
 const profileName = "Profile";
@@ -52,7 +53,7 @@ export default function MainContainer() {
                     tabBarStyle: { padding: 10, height: windowHeight * 0.0896, backgroundColor: '#F1F1F1' }
                 })}>
 
-                <Tab.Screen name={homeName} component={HomeScreen} options={{ headerShown: false }} />
+                <Tab.Screen name={homeName} component={HomeNavigation} options={{ headerShown: false }} />
                 <Tab.Screen name={searchName} component={SearchScreen} options={{ headerShown: false }} />
                 <Tab.Screen name={messageName} component={MessageScreen} options={{ headerShown: false }} />
                 <Tab.Screen name={profileName} component={ProfileScreen} options={{ headerShown: false }} />

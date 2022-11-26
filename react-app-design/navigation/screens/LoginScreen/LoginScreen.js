@@ -30,7 +30,7 @@ export default function LoginScreen({ navigation }) {
 
     const handleLogInClick = (e) => {
         e.preventDefault();
-        console.log(email,password)
+
         axios.post(`http://${localhost}:8800/api/auth/login`, {
             email: email,
             password: password
@@ -60,7 +60,7 @@ export default function LoginScreen({ navigation }) {
 
     return (
         <View style={{ alignItems: 'center', justifyContent: 'center' }}>
-            <Image source={{uri: imageURL + 'logo2.png'}} style={{ top: windowHeight * 0.11, height: windowHeight * 0.153, width: windowWidth * 0.57 }} />
+            <Image source={{ uri: imageURL + 'logo2.png' }} style={{ top: windowHeight * 0.11, height: windowHeight * 0.153, width: windowWidth * 0.57 }} />
 
             <Text style={{ fontSize: 30, fontWeight: 'bold', top: windowHeight * 0.19 }}>
                 Login to Your Account

@@ -22,9 +22,10 @@ export default function HomeScreen({ navigation }) {
     const imageURL = staticContentURL + '/images/';
 
     // Temporary Hardcoding for Mid-term Demo
-    const UpcomingLessons = [...allUsers.slice(0,1), ...allUsers.slice(0,1)];
-    const MyTeachers = allUsers.slice(0,1);
-    const SuggestedTeachers = allUsers.slice(2,5);
+    const UpcomingLessons = [...allUsers.slice(0, 1), ...allUsers.slice(0, 1)];
+    const MyTeachers = allUsers.slice(0, 1);
+    const SuggestedTeachers = allUsers.slice(2, 5);
+    const ScheduledClasses = allUsers.slice(6, 9);
 
 
     // DEBUG
@@ -55,33 +56,37 @@ export default function HomeScreen({ navigation }) {
             marginBottom: 10,
             marginLeft: 4,
             marginRight: 4
-            
+
         },
 
-        heading : {
-            fontSize: 22, 
-            fontWeight: 'medium', 
-            borderColor: debugBorders ? 'blue' : '#ffffff', 
-            borderWidth: debugBorders ? 12 : 0, 
+        heading: {
+            fontSize: 22,
+            fontWeight: 'medium',
+            borderColor: debugBorders ? 'blue' : '#ffffff',
+            borderWidth: debugBorders ? 12 : 0,
             flexDirection: 'row',
             marginBottom: 20
         },
 
         flexRow: {
             flexDirection: 'row'
+        },
+
+        scheduleClassesButton: {
+            marginBottom: 10
         }
 
 
     });
 
     return (
-        <View style={{backgroundColor: '#ffffff'}}>
+        <View style={{ backgroundColor: '#ffffff' }}>
             {/* Header */}
             <Header navigation={navigation} />
 
             <View style={styles.homepageContainer}>
                 <ScrollView showsVerticalScrollIndicator={false} showsHorizontalScrollIndicator={false} contentContainerStyle={styles.contentContainer} style={{}}>
-                    
+
                     <Text style={{ fontSize: 26, fontWeight: 'bold', margin: 4, marginTop: 20, marginBottom: 20 }}>
                         Welcome back, {"\n"}{username}!
                     </Text>
@@ -103,33 +108,32 @@ export default function HomeScreen({ navigation }) {
                         <CardFactory CardType="SuggestedTeachers" users={SuggestedTeachers} />
                     </View>
 
-                     {/* Scheduled Classes */}
-                     <View style={styles.sectionContainer}>
+                    {/* Scheduled Classes */}
+                    <View style={styles.sectionContainer}>
                         <Text style={styles.heading}>Scheduled Classes</Text>
-                        <CardFactory CardType="ScheduledClasses" users={SuggestedTeachers} />
+                        <CardFactory CardType="ScheduledClasses" users={ScheduledClasses} />
                     </View>
 
                     {/* TODO: These buttons don't have any purpose, in my previuos version I had them navigate to other Pages -Parimal  */}
-                    <Button    title='Schedule Classes'
+                    <Button title='Schedule Classes'
                         color="#5F59F7"
-                        onPress={()=> navigation.navigate('Schedule')}
+                        onPress={() => navigation.navigate('Schedule')}
                     />
                     <View style={styles.scheduleClassesButton} />
                     <Button
                         title='Request Classes'
                         color="#5F59F7"
-                        onPress={()=> navigation.navigate('Request')}
+                        onPress={() => navigation.navigate('Request')}
                     />
-
-                   
 
 
                     {/* footer spacing */}
-                    
-                    <View style={{height: 100}}></View>
+
+                    <View style={{ height: 100 }}></View>
 
                 </ScrollView>
             </View>
+
         </View>
     )
 }
