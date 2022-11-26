@@ -209,7 +209,7 @@ export function CardFactory(props) {
                 {/* backgroundImage: currentUser.coverPicture.length === 0 ? "url("+imageURL+"defaultBackground.jpg)" : "url("+imageURL+'lsuBannerTemp2.jpeg)' */}
                 <View style={[styles.cardContainer, {}]}>
                     {/* BackgroundImage */}
-                    <ImageBackground source={{ uri: currentUser.coverPicture === "" ? publicFolder + "defaultBackground.jpg" : currentUser.coverPicture }} resizeMode="stretch"
+                    <ImageBackground source={{ uri: currentUser.coverPicture === "" ? publicFolder + "defaultBackground.jpg" : currentUser.coverPicture }} resizeMode="cover"
                         imageStyle={{ borderTopLeftRadius: 18, borderTopRightRadius: 18, height: windowHeight * 0.04 }}>
 
                         {/* ProfilePictureContainer */}
