@@ -5,6 +5,7 @@ import axios from 'axios';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import * as ImagePicker from 'expo-image-picker';
 import { AirbnbRating } from 'react-native-ratings';
+import { RNS3 } from 'react-native-aws3';
 
 export default function ProfileScreen({ navigation }) {
     const [user] = useGlobalState("user");
@@ -33,6 +34,55 @@ export default function ProfileScreen({ navigation }) {
     const windowWidth = Dimensions.get('window').width;
     const windowHeight = Dimensions.get('window').height;
 
+        //
+        //  Image upload to AWS S3 buciket
+        //
+
+  
+    function upload(uri, pictureType) {
+            console.log("beginning upload");
+            const file = {
+            uri: uri,            
+            name: pictureType + "_" + username + ".jpg",      // profile_username.jpg or cover_username.jpg
+            type: "image/jpeg"
+            };
+            const options = {
+            keyPrefix: "images/",
+            bucket: "csc4330project",
+            region: "us-east-1",
+            accessKey: "AKIAZHHZUPPDS4BXOFRM",
+            secretKey: "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",
+            successActionStatus: 201
+            };
+            return RNS3.put(file, options)
+            .then(response => {
+                if (response.status !== 201)
+                    throw new Error("Failed to upload image to S3");
+                else {
+                    if(pictureType == "profile")
+                        setProfilePicture(response.body.postResponse.location);
+                    else
+                        setCoverPicture(response.body.postResponse.location);
+                    console.log(
+                        "Successfully uploaded image to s3. s3 bucket url: ",
+                        response.body.postResponse.location
+                    );
+                }
+            })
+            .catch(error => {
+                console.log(error);
+            });
+        };
+
+
+        //
+        //
+        //
+
+
+
+
+
     const handleLogOutClick = (e) => {
         e.preventDefault();
         setGlobalState("isLoggedIn", false);
@@ -51,7 +101,9 @@ export default function ProfileScreen({ navigation }) {
         }
         let pickerResult = await ImagePicker.launchImageLibraryAsync();
 
-        setProfilePicture(pickerResult.uri);
+            
+        upload(pickerResult.uri, "profile");   //takes in pickerResult.uri
+          //setProfilePicture(pickerResult.uri); // sets this inside upload after success and we know address
     }
 
     const handleChooseCoverPicture = async () => {
@@ -62,7 +114,8 @@ export default function ProfileScreen({ navigation }) {
         }
         let pickerResult = await ImagePicker.launchImageLibraryAsync();
 
-        setCoverPicture(pickerResult.uri);
+        upload(pickerResult.uri, "cover"); 
+        //setCoverPicture(pickerResult.uri);
     }
 
     const handleDoneClick = (e) => {

@@ -26,6 +26,7 @@
     "react": "18.0.0",
     "react-hooks-global-state": "^2.0.0",
     "react-native": "0.69.6",
+    "react-native-aws3": "^0.0.9",
     "react-native-calendars": "^1.1275.0",
     "react-native-localhost": "^1.0.0",
     "react-native-ratings": "^8.1.0",
