@@ -11,6 +11,7 @@ const userRoute = require("./Routes/users");
 const authRoute = require("./Routes/auth");
 const conversationRoute = require('./Routes/conversation');
 const messageRoute = require('./Routes/message');
+const bookedSessionRoute = require('./Routes/bookedSession');
 
 const User = require("./Models/User");
 
@@ -87,6 +88,7 @@ app.use("/api/users", userRoute);
 app.use("/api/auth", authRoute);
 app.use("/api/conversations", conversationRoute);
 app.use("/api/messages", messageRoute);
+app.use("/api/bookedSessions", bookedSessionRoute);
 
 app.listen(8800, () => {
     console.log("Backend server is running!");

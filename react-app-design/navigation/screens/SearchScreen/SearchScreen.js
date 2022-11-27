@@ -167,7 +167,20 @@ export default function SearchScreen({ navigation }) {
 
         currentUser.time = time;
         currentUser.date = state.selectedDate;
-        setGlobalState("bookedSessions", [...bookedSessions, currentUser]);
+
+        axios.post(`http://${localhost}:8800/api/bookedSessions`, {
+            senderId: user._id,
+            receiverId: currentUser._id,
+            time: time,
+            date: state.selectedDate
+        }).then(() =>
+            axios.get(`http://${localhost}:8800/api/bookedSessions/${user._id}`, {})
+                .then((response) => {
+                    setGlobalState("bookedSessions", response.data);
+                }, (error) => {
+                    console.log(error);
+                })
+        )
 
         setTime("N/A");
         setState({
@@ -187,7 +200,15 @@ export default function SearchScreen({ navigation }) {
         let tempDate = new Date(currentDate);
         let AMPM = tempDate.getHours() >= 12 ? 'PM' : 'AM';
         let hours = tempDate.getHours() > 12 ? tempDate.getHours() - 12 : tempDate.getHours();
-        setTime(hours + ':' + tempDate.getMinutes() + ' ' + AMPM);
+        let minutes;
+
+        if (tempDate.getMinutes() < 10) {
+            minutes = '0' + tempDate.getMinutes();
+        } else {
+            minutes = tempDate.getMinutes();
+        }
+
+        setTime(hours + ':' + minutes + ' ' + AMPM);
     }
 
     const handleCalendarClick = (e) => {

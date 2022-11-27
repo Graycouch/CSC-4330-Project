@@ -3,6 +3,7 @@ import { View, Text, Button, Image, TextInput, Pressable, ScrollView, StyleSheet
 import { useState, useEffect } from 'react';
 import { useGlobalState, setGlobalState } from '../../../index';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import axios from 'axios';
 
 
 import Header from '../../header/header.js';
@@ -13,6 +14,7 @@ export default function HomeScreen({ navigation }) {
     const [allUsers] = useGlobalState("allUsers");
     const [searchValue] = useGlobalState("searchValue");
     const [bookedSessions] = useGlobalState("bookedSessions");
+    const [localhost] = useGlobalState("localhost");
 
     const windowWidth = Dimensions.get('window').width;
     const windowHeight = Dimensions.get('window').height;
@@ -21,11 +23,35 @@ export default function HomeScreen({ navigation }) {
 
     const [staticContentURL] = useGlobalState("staticContentURL");
     const imageURL = staticContentURL + '/images/';
+    const [sessionUsers, setSessionUsers] = useState([]);
 
     // Temporary Hardcoding for Mid-term Demo
-    const UpcomingLessons = bookedSessions;
+    const UpcomingLessons = sessionUsers;
     const MyTeachers = allUsers.slice(5, 6);
     const SuggestedTeachers = allUsers.slice(2, 5);
+
+    useEffect(() => {
+        axios.get(`http://${localhost}:8800/api/bookedSessions/${user._id}`, {
+        })
+            .then((response) => {
+                setGlobalState("bookedSessions", response.data);
+            }, (error) => {
+                console.log(error);
+            });
+    }, [])
+
+    useEffect(() => {
+        if (bookedSessions.length !== 0) {
+            setSessionUsers([]);
+            bookedSessions.map((bookedSession) => (
+                setSessionUsers(sessionsUsers => [...sessionsUsers, Object.assign(allUsers.find(currentUser =>
+                    (currentUser._id === bookedSession.members[1] && user._id !== bookedSession.members[1]) ||
+                    (currentUser._id === bookedSession.members[0] && user._id !== bookedSession.members[0])
+                ), { time: bookedSession.time, date: bookedSession.date })
+                ])
+            ))
+        }
+    }, [bookedSessions])
 
 
     // DEBUG
