@@ -44,7 +44,7 @@ export default function SearchScreen({ navigation }) {
     const [cardNumber, setCardNumber] = useState('');
     const [expiration, setExpiration] = useState('');
     const [cvv, setCvv] = useState('');
-
+    
     const [state, setState] = useState({
         selectedDate: "",
         markedDates: {}
@@ -576,7 +576,6 @@ export default function SearchScreen({ navigation }) {
                             <MaterialCommunityIcons name={"chevron-left"} color={"#5F59F7"} size={40} style={{ marginLeft: 'auto', marginRight: 'auto', top: -windowHeight * 0.045, left: -windowWidth * 0.42 }} />
                         </Pressable>
                     </View>
-
                     <View style={{ top: -windowHeight * 0.019, width: windowWidth }}>
                         <Divider style={{ width: '100%' }} />
                     </View>
