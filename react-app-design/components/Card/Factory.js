@@ -22,6 +22,8 @@ function renderSwitch(cardType, currentUser) {
             return myTeachers(currentUser);
         case "SuggestedTeachers":
             return suggestedTeachers(currentUser);
+        case "TutorSchedule":
+            return TutorSchedule(currentUser);
         default:
             return <Text>card factory error...</Text>;
     }
@@ -304,6 +306,27 @@ function suggestedTeachers(currentUser) {
                     <MaterialCommunityIcons name={"card-account-details-outline"} color={"#9E9E9E"} size={12} style={{}} />
                     &nbsp;Check Profile
                 </Text>
+            </View>
+        </View>
+    );
+}
+
+function TutorSchedule(currentUser) {
+    return (
+        <View style={[styles.profileInfoContainer, { flexDirection: 'row', justifyContent: 'space-between', backgroundColor: "rgba(255,255,255,0)" }]}>
+            {/* Info (Left Column) */}
+            <View style={{ flexDirection: 'column', justifyContent: 'flex-start' }}>
+                {/* Username */}
+                <Text style={[styles.top, styles.bold]}>{currentUser.username}</Text>
+                {/* Major */}
+                <Text style={styles.bottom}>{currentUser.major} {"Student"}</Text>
+                {/* Rating */}
+                <AirbnbRating count={5} defaultRating={currentUser.rating} size={12} isDisabled={true} showRating={false} selectedColor={'#5F59F7'} starContainerStyle={styles.rating} />
+            </View>
+            {/* Info (Right Column) */}
+            <View style={{ flexDirection: 'column', justifyContent: 'flex-start' }}>
+                {/* LocationInfo */}
+                <Text style={[styles.locationInfo, styles.bottom, styles.right, styles.blue]}>Friday 2:00PM</Text>
             </View>
         </View>
     );

@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { useState, useRef } from 'react';
 import { useGlobalState, setGlobalState } from '../../../index';
-import { View, Text, Button, Image, TextInput, Pressable, ScrollView, StyleSheet, Dimensions, Linking, Modal, TouchableOpacity } from 'react-native';
+import { View, Text, Image, TextInput, Pressable, ScrollView, StyleSheet, Dimensions, Linking, Modal, TouchableOpacity, Button } from 'react-native';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { AirbnbRating } from 'react-native-ratings';
@@ -11,6 +11,7 @@ import { CheckBox, Divider } from '@rneui/themed';
 import { Calendar } from 'react-native-calendars';
 import moment from 'moment';
 import DateTimePicker from '@react-native-community/datetimepicker';
+import { CardFactory } from '../../../components/Card/Factory';
 
 export default function SearchScreen({ navigation }) {
     const [user] = useGlobalState("user");
@@ -19,6 +20,8 @@ export default function SearchScreen({ navigation }) {
     const [localhost] = useGlobalState("localhost");
     const [bookedSessions] = useGlobalState("bookedSessions");
     const publicFolder = `http://${localhost}:8800/images/`;
+
+    const TutorSchedule = allUsers.slice(0, 3);
 
     const [boxClicked, setboxClicked] = useState(false);
     const [bookClicked, setbookClicked] = useState(false);
@@ -35,6 +38,12 @@ export default function SearchScreen({ navigation }) {
     const [time, setTime] = useState("N/A");
     const [show, setShow] = useState(false);
     const newDate = new Date();
+    const [checked, setchecked] = useState(false);
+
+    const [name, setName] = useState('');
+    const [cardNumber, setCardNumber] = useState('');
+    const [expiration, setExpiration] = useState('');
+    const [cvv, setCvv] = useState('');
 
     const [state, setState] = useState({
         selectedDate: "",
@@ -499,7 +508,10 @@ export default function SearchScreen({ navigation }) {
                         <Divider style={{ width: '100%' }} />
                     </View>
 
-                    {/* Start Here Parimal */}
+                    <View style={{ width: '95%', paddingTop: 10 }}>
+                        <CardFactory CardType="TutorSchedule" users={TutorSchedule} />
+                    </View>
+
                 </ScrollView>
             ) : !sessionClicked ? (
                 // Session Scheduling Page
@@ -565,14 +577,52 @@ export default function SearchScreen({ navigation }) {
                         </Pressable>
                     </View>
 
-                    {/* Start Here Connor */}
-
                     <View style={{ top: -windowHeight * 0.019, width: windowWidth }}>
                         <Divider style={{ width: '100%' }} />
                     </View>
 
+                    <View style={{ width: windowWidth * 0.9, paddingTop: 10 }}>
+                        <Input
+                            label="Cardholder Name"
+                            value={name}
+                            onChangeText={(text) => setName(text)}
+                            leftIcon={{ name: 'person', color: '#9E9E9E' }}
+                            placeholder="Bob Smith"
+                        />
+                        <Input
+                            label="Card Number"
+                            value={cardNumber}
+                            onChangeText={(text) => setCardNumber(text)}
+                            leftIcon={{ name: 'credit-card', color: '#9E9E9E' }}
+                            placeholder="4242 4242 4242 4242"
+                        />
+                        <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+                            <View style={{ width: windowWidth * 0.4 }}>
+                                <Input
+                                    label="Expiration Date"
+                                    value={expiration}
+                                    placeholder="MM/YY"
+                                    onChangeText={(text) => setExpiration(text)}
+                                />
+                            </View>
+                            <View style={{ width: windowWidth * 0.4 }}>
+                                <Input
+                                    label="Security Code"
+                                    value={cvv}
+                                    placeholder="CVC"
+                                    onChangeText={(text) => setCvv(text)}
+                                />
+                            </View>
+                        </View>
+
+                        <View style={{ alignItems: 'center' }}>
+                            <CheckBox title={"Remember Payment Method"} checked={checked} onPress={() => setchecked(!checked)} checkedColor='#5F59F7' uncheckedColor='#5F59F7' />
+                        </View>
+                    </View>
+
                     <View style={{ width: windowWidth, alignItems: 'center' }}>
                         <Pressable onPress={handleSubmitPayment} backgroundColor={'#5F59F7'} style={{
+                            top: windowHeight * 0.05,
                             height: windowHeight * 0.0768, width: windowWidth * 0.833,
                             borderRadius: windowHeight * 0.0512, alignItems: 'center', justifyContent: 'center'
                         }} >
