@@ -34,54 +34,37 @@ export default function ProfileScreen({ navigation }) {
     const windowWidth = Dimensions.get('window').width;
     const windowHeight = Dimensions.get('window').height;
 
-        //
-        //  Image upload to AWS S3 buciket
-        //
+    const secondsSinceEpoch = Math.round(Date.now() / 1000);
 
-  
     function upload(uri, pictureType) {
-            console.log("beginning upload");
-            const file = {
-            uri: uri,            
-            name: pictureType + "_" + username + ".jpg",      // profile_username.jpg or cover_username.jpg
+        const file = {
+            uri: uri,
+            name: pictureType + "_" + username + secondsSinceEpoch.toString() + ".jpg",
             type: "image/jpeg"
-            };
-            const options = {
+        };
+        const options = {
             keyPrefix: "images/",
             bucket: "csc4330project",
             region: "us-east-1",
             accessKey: "AKIAZHHZUPPDS4BXOFRM",
             secretKey: "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",
             successActionStatus: 201
-            };
-            return RNS3.put(file, options)
+        };
+        return RNS3.put(file, options)
             .then(response => {
                 if (response.status !== 201)
                     throw new Error("Failed to upload image to S3");
                 else {
-                    if(pictureType == "profile")
+                    if (pictureType == "profile")
                         setProfilePicture(response.body.postResponse.location);
                     else
                         setCoverPicture(response.body.postResponse.location);
-                    console.log(
-                        "Successfully uploaded image to s3. s3 bucket url: ",
-                        response.body.postResponse.location
-                    );
                 }
             })
             .catch(error => {
                 console.log(error);
             });
-        };
-
-
-        //
-        //
-        //
-
-
-
-
+    };
 
     const handleLogOutClick = (e) => {
         e.preventDefault();
@@ -101,9 +84,8 @@ export default function ProfileScreen({ navigation }) {
         }
         let pickerResult = await ImagePicker.launchImageLibraryAsync();
 
-            
-        upload(pickerResult.uri, "profile");   //takes in pickerResult.uri
-          //setProfilePicture(pickerResult.uri); // sets this inside upload after success and we know address
+
+        upload(pickerResult.uri, "profile");
     }
 
     const handleChooseCoverPicture = async () => {
@@ -114,8 +96,7 @@ export default function ProfileScreen({ navigation }) {
         }
         let pickerResult = await ImagePicker.launchImageLibraryAsync();
 
-        upload(pickerResult.uri, "cover"); 
-        //setCoverPicture(pickerResult.uri);
+        upload(pickerResult.uri, "cover");
     }
 
     const handleDoneClick = (e) => {
