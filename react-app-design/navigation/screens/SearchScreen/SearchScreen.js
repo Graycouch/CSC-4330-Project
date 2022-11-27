@@ -36,6 +36,18 @@ export default function SearchScreen({ navigation }) {
     const [show, setShow] = useState(false);
     const newDate = new Date();
 
+    //Payment const list
+    const [cardnumber, onChangeCard] = React.useState("1234-5678-9012-3456");
+    const [expDate, onChangeExpDate] = React.useState("12/2022");
+    const [sec, onChangeSec] = React.useState("123");
+    const [firstName, onChangeFirst] = React.useState("John");
+    const [lastName, onChangeLast] = React.useState("Hudnall");
+    const [city, onChangeCity] = React.useState("Baton Rouge");
+    const [address, onChangeAddress] = React.useState("1234 Any Street Drive");
+    const [province, onChangeProvince] = React.useState("Louisiana");
+    const [country, onChangeCountry] = React.useState("United States");
+    const [phone, onChangePhone] = React.useState("123-456-7890");
+    
     const [state, setState] = useState({
         selectedDate: "",
         markedDates: {}
@@ -565,7 +577,166 @@ export default function SearchScreen({ navigation }) {
                         </Pressable>
                     </View>
 
-                    {/* Start Here Connor */}
+                    {/* List Begins for Payment Screen */}
+                <View style={{ paddingTop: windowHeight * 0.0128, paddingRight: windowHeight * 0.3}}>
+                    <Text style={{ fontSize: 18 }}>
+                        Card Number:
+                    </Text>
+                    <TextInput onChangeText={text => onChangeCard(text)} style={{
+                        fontSize: 15, width: windowWidth * 0.5, borderRadius: windowHeight * 0.0256,
+                        position: 'absolute', color: 'black', borderColor: '#9E9E9E', backgroundColor: '#F1F1F1',
+                        borderWidth: 0.5, marginTop: windowHeight * 0.0128, marginLeft: windowWidth * 0.3,
+                        paddingLeft: windowWidth * 0.026, paddingRight: windowWidth * 0.026
+                    }}>
+                        <Text style={{ paddingLeft: windowWidth * 0.1 }}>
+                            {cardnumber}
+                        </Text>
+                    </TextInput>
+                </View>
+                                    
+                <View style={{ paddingTop: windowHeight * 0.02, paddingRight: windowHeight * 0.35 }}>
+                    <Text style={{ fontSize: 18 }}>
+                        Exp Date:
+                    </Text>
+                    <TextInput onChangeText={text => onChangeExpDate(text)} style={{
+                        fontSize: 15, width: windowWidth * 0.5, borderRadius: windowHeight * 0.0256,
+                        position: 'absolute', color: 'black', borderColor: '#9E9E9E', backgroundColor: '#F1F1F1',
+                        borderWidth: 0.5, marginTop: windowHeight * 0.02, marginLeft: windowWidth * 0.3,
+                        paddingLeft: windowWidth * 0.026, paddingRight: windowWidth * 0.026
+                    }}>
+                        <Text style={{ paddingLeft: windowWidth * 0.1 }}>
+                            {expDate}
+                        </Text>
+                    </TextInput>
+                </View>
+
+                <View style={{ paddingTop: windowHeight * 0.02, paddingRight: windowHeight * 0.34 }}>
+                    <Text style={{ fontSize: 18 }}>
+                        Sec Code:
+                    </Text>
+                    <TextInput onChangeText={text => onChangeSec(text)} style={{
+                        fontSize: 15, width: windowWidth * 0.5, borderRadius: windowHeight * 0.0256,
+                        position: 'absolute', color: 'black', borderColor: '#9E9E9E', backgroundColor: '#F1F1F1',
+                        borderWidth: 0.5, marginTop: windowHeight * 0.02, marginLeft: windowWidth * 0.3,
+                        paddingLeft: windowWidth * 0.026, paddingRight: windowWidth * 0.026
+                    }}>
+                        <Text style={{ paddingLeft: windowWidth * 0.1 }}>
+                            {sec}
+                        </Text>
+                    </TextInput>
+                </View>
+                
+                <View style={{ paddingTop: windowHeight * 0.02, paddingRight: windowHeight * 0.32 }}>
+                    <Text style={{ fontSize: 18 }}>
+                        First Name:
+                    </Text>
+                    <TextInput onChangeText={text => onChangeFirst(text)} style={{
+                        fontSize: 15, width: windowWidth * 0.5, borderRadius: windowHeight * 0.0256,
+                        position: 'absolute', color: 'black', borderColor: '#9E9E9E', backgroundColor: '#F1F1F1',
+                        borderWidth: 0.5, marginTop: windowHeight * 0.02, marginLeft: windowWidth * 0.3,
+                        paddingLeft: windowWidth * 0.026, paddingRight: windowWidth * 0.026
+                    }}>
+                        <Text style={{ paddingLeft: windowWidth * 0.1 }}>
+                            {firstName}
+                        </Text>
+                    </TextInput>
+                </View>
+                
+                <View style={{ paddingTop: windowHeight * 0.02, paddingRight: windowHeight * 0.32 }}>
+                    <Text style={{ fontSize: 18 }}>
+                        Last Name:
+                    </Text>
+                    <TextInput onChangeText={text => onChangeLast(text)} style={{
+                        fontSize: 15, width: windowWidth * 0.5, borderRadius: windowHeight * 0.0256,
+                        position: 'absolute', color: 'black', borderColor: '#9E9E9E', backgroundColor: '#F1F1F1',
+                        borderWidth: 0.5, marginTop: windowHeight * 0.02, marginLeft: windowWidth * 0.3,
+                        paddingLeft: windowWidth * 0.026, paddingRight: windowWidth * 0.026
+                    }}>
+                        <Text style={{ paddingLeft: windowWidth * 0.1 }}>
+                            {lastName}
+                        </Text>
+                    </TextInput>
+                </View>
+                
+                <View style={{ paddingTop: windowHeight * 0.02, paddingRight: windowHeight * 0.4 }}>
+                    <Text style={{ fontSize: 18 }}>
+                        City:
+                    </Text>
+                    <TextInput onChangeText={text => onChangeCity(text)} style={{
+                        fontSize: 15, width: windowWidth * 0.5, borderRadius: windowHeight * 0.0256,
+                        position: 'absolute', color: 'black', borderColor: '#9E9E9E', backgroundColor: '#F1F1F1',
+                        borderWidth: 0.5, marginTop: windowHeight * 0.02, marginLeft: windowWidth * 0.3,
+                        paddingLeft: windowWidth * 0.026, paddingRight: windowWidth * 0.026
+                    }}>
+                        <Text style={{ paddingLeft: windowWidth * 0.1 }}>
+                            {city}
+                        </Text>
+                    </TextInput>
+                </View>
+                
+                <View style={{ paddingTop: windowHeight * 0.02, paddingRight: windowHeight * 0.35}}>
+                    <Text style={{ fontSize: 18 }}>
+                        Address:
+                    </Text>
+                    <TextInput onChangeText={text => onChangeAddress(text)} style={{
+                        fontSize: 15, width: windowWidth * 0.5, borderRadius: windowHeight * 0.0256,
+                        position: 'absolute', color: 'black', borderColor: '#9E9E9E', backgroundColor: '#F1F1F1',
+                        borderWidth: 0.5, marginTop: windowHeight * 0.02, marginLeft: windowWidth * 0.3,
+                        paddingLeft: windowWidth * 0.026, paddingRight: windowWidth * 0.026
+                    }}>
+                        <Text style={{ paddingLeft: windowWidth * 0.1 }}>
+                            {address}
+                        </Text>
+                    </TextInput>
+                </View>
+                
+                <View style={{ paddingTop: windowHeight * 0.02, paddingRight: windowHeight * 0.38 }}>
+                    <Text style={{ fontSize: 18 }}>
+                        State:
+                    </Text>
+                    <TextInput onChangeText={text => onChangeProvince(text)} style={{
+                        fontSize: 15, width: windowWidth * 0.5, borderRadius: windowHeight * 0.0256,
+                        position: 'absolute', color: 'black', borderColor: '#9E9E9E', backgroundColor: '#F1F1F1',
+                        borderWidth: 0.5, marginTop: windowHeight * 0.02, marginLeft: windowWidth * 0.3,
+                        paddingLeft: windowWidth * 0.026, paddingRight: windowWidth * 0.026
+                    }}>
+                        <Text style={{ paddingLeft: windowWidth * 0.1 }}>
+                            {province}
+                        </Text>
+                    </TextInput>
+                </View>
+                                    
+                <View style={{ paddingTop: windowHeight * 0.02, paddingRight: windowHeight * 0.35 }}>
+                    <Text style={{ fontSize: 18 }}>
+                        Country:
+                    </Text>
+                    <TextInput onChangeText={text => onChangeCountry(text)} style={{
+                        fontSize: 15, width: windowWidth * 0.5, borderRadius: windowHeight * 0.0256,
+                        position: 'absolute', color: 'black', borderColor: '#9E9E9E', backgroundColor: '#F1F1F1',
+                        borderWidth: 0.5, marginTop: windowHeight * 0.02, marginLeft: windowWidth * 0.3,
+                        paddingLeft: windowWidth * 0.026, paddingRight: windowWidth * 0.026
+                    }}>
+                        <Text style={{ paddingLeft: windowWidth * 0.1 }}>
+                            {country}
+                        </Text>
+                    </TextInput>
+                </View>
+
+                <View style={{ paddingTop: windowHeight * 0.02, paddingRight: windowHeight * 0.37 }}>
+                    <Text style={{ fontSize: 18 }}>
+                        Phone:
+                    </Text>
+                    <TextInput onChangeText={text => onChangePhone(text)} style={{
+                        fontSize: 15, width: windowWidth * 0.5, borderRadius: windowHeight * 0.0256,
+                        position: 'absolute', color: 'black', borderColor: '#9E9E9E', backgroundColor: '#F1F1F1',
+                        borderWidth: 0.5, marginTop: windowHeight * 0.02, marginLeft: windowWidth * 0.3,
+                        paddingLeft: windowWidth * 0.026, paddingRight: windowWidth * 0.026
+                    }}>
+                        <Text style={{ paddingLeft: windowWidth * 0.1 }}>
+                            {phone}
+                        </Text>
+                    </TextInput>
+                </View>
 
                     <View style={{ top: -windowHeight * 0.019, width: windowWidth }}>
                         <Divider style={{ width: '100%' }} />
