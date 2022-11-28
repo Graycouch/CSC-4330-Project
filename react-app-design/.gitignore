@@ -14,4 +14,4 @@ web-build/
 .DS_Store
 
 #index.js has the AWS security key
-/ndex.js
+index.js
