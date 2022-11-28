@@ -11,6 +11,8 @@ export default function ProfileScreen({ navigation }) {
     const [user] = useGlobalState("user");
     const [localhost] = useGlobalState("localhost");
     const [searchValue] = useGlobalState("searchValue");
+    const [accessKey] = useGlobalState("accessKey");
+    const [secretKey] = useGlobalState("secretKey");
     const publicFolder = `http://${localhost}:8800/images/`;
 
     const [editing, setEditing] = useState(false);
@@ -46,8 +48,8 @@ export default function ProfileScreen({ navigation }) {
             keyPrefix: "images/",
             bucket: "csc4330project",
             region: "us-east-1",
-            accessKey: "AKIAZHHZUPPDS4BXOFRM",
-            secretKey: "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",
+            accessKey: accessKey,
+            secretKey: secretKey,
             successActionStatus: 201
         };
         return RNS3.put(file, options)

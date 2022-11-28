@@ -12,3 +12,6 @@ web-build/
 
 # macOS
 .DS_Store
+
+#index.js has the AWS security key
+/ndex.js
